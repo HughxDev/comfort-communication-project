@@ -1,0 +1,34 @@
+.ccp-primary {
+  background-color: #2BC2E8;
+}
+
+.ccp-accent {
+  background-color: #fe4080;
+}
+
+.ccp-text-color,
+body {
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, .h1 {
+  font-size: 56px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+h2, .h2,
+h3, .h3 {
+  font-style: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+button {
+
+}
+
+p {
+  font-size: 14px;
+}

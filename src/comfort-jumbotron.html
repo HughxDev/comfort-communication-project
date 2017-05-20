@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="comfort-jumbotron">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        min-height: 253px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+
+        /*background: url('/images/painting-uncropped.png') 0 -100px no-repeat;*/
+        background: url('/images/painting@2x.png') no-repeat;
+        background-size: cover;
+        /* -100px top, -28px bottom */
+      }
+    </style>
+    <h1><slot></slot></h1>
+  </template>
+
+  <script>
+    /**
+     * `comfort-jumbotron`
+     * Big introductory text with background
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComfortJumbotron extends Polymer.Element {
+      static get is() { return 'comfort-jumbotron'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'comfort-jumbotron'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(ComfortJumbotron.is, ComfortJumbotron);
+  </script>
+</dom-module>

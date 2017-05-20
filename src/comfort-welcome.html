@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-jumbotron.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="comfort-welcome">
@@ -16,12 +17,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-
-        /*padding: 10px 65px;*/
       }
     </style>
 
-    <div class="card">
+    <comfort-jumbotron>Welcome</comfort-jumbotron>
+    
+    <section>
       <h2>Learning Outcomes</h2>
       <p>COMFORT™℠ is an acronym that stands for the seven basic principles of palliative care communication. This is module F (Family Caregivers) of the curriculum and you will learn about communication with family caregivers. After viewing this module, you will be able to:</p>
       <ol>
@@ -30,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <li>Respond appropriately to different health events tailored to different caregiver types.</li>
       </ol>
       <button type="button">Get Started</button>
-    </div>
+    </section>
   </template>
 
   <script>

@@ -24,18 +24,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="comfort-icons.html">
 
 <link rel="lazy-import" href="comfort-kitchen-sink.html">
-<link rel="lazy-import" href="comfort-view2.html">
+<link rel="lazy-import" href="comfort-welcome.html">
 <link rel="lazy-import" href="comfort-view3.html">
 <link rel="lazy-import" href="comfort-view404.html">
 
 <dom-module id="comfort-app">
   <template>
     <style>
+      :root {
+        --font-family: 'Open Sans', sans-serif;
+
+        --paper-font-common-base: {
+          font-family: var( --font-family );
+        };
+      }
+
       :host {
         /*--app-primary-color: #4285f4;
         --app-secondary-color: black;*/
         --primary-color: #2BC2E8; /* blue */
         --secondary-color: #fe4080; /* pink */
+
+        --app-primary-color: var( --primary-color );
+        --app-secondary-color: var( --secondary-color );
 
         --paper-toolbar-height: 55px;
 
@@ -72,15 +83,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
       }
 
-      paper-toolbar {
-        /* Existing padding: 16px; */
-        /* Target padding: 65px */
-        padding: 0 49px;
+      app-toolbar {
+        padding: 0 65px;
       }
 
       .title {
-        padding-right: 112px;
-        margin-right: 56px;
+        /*padding-right: 112px;
+        margin-right: 56px;*/
+        margin-left: -112px;
         text-align: center;
         font-weight: lighter;
         font-size: 18px;
@@ -90,9 +100,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
-      .view {
+      /*.view {
         padding: 10px 65px;
-      }
+      }*/
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -117,15 +127,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-header-layout has-scrolling-region>
 
         <app-header slot="header" condenses reveals effects="waterfall">
-          <!-- <app-toolbar>
-            <paper-icon-button icon="comfort-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title></div>
-            <div></div>
-          </app-toolbar> -->
-          <paper-toolbar>
+          <app-toolbar>
+            <!-- <paper-icon-button icon="comfort-icons:menu" drawer-toggle></paper-icon-button> -->
+            <img src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
+            <span main-title class="title">Module F: Family Caregivers</span>
+          </app-toolbar>
+          <!-- <paper-toolbar>
             <img slot="top" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
-            <span slot="top" class="title">Module F: Family Caregivers</span>
-          </paper-toolbar>
+            <span slot="top" >Module F: Family Caregivers</span>
+          </paper-toolbar> -->
         </app-header>
 
         <iron-pages
@@ -186,9 +196,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.page = page || 'kitchen-sink';
 
         // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
-        }
+        // if (!this.$.drawer.persistent) {
+        //   this.$.drawer.close();
+        // }
       }
 
       _pageChanged(page) {

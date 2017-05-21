@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-pretest">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <p class="h3">Section 1</p>
+      <h1>Pre-test</h1>
+      <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
+      <ol>
+        <li>
+          <p>Healthcare providers play a critical role in family caregiver communication interactions.</p>
+          <p>
+            <label><input type="radio" name="question1" value="1" /> True</label><br>
+            <label><input type="radio" name="question1" value="0" /> False</label>
+          </p>
+        </li>
+        <li>
+          
+        </li>
+
+      </ol>
+    </section>
+  </template>
+
+  <script>
+    class ComfortPretest extends Polymer.Element {
+      static get is() { return 'comfort-pretest'; }
+      static get properties() {
+        return {
+          "questions": [
+            {
+              "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
+              "answers": [
+                {
+                  "text": "True",
+                  "correct": false
+                },
+                {
+                  "text": "False",
+                  "correct": true
+                }
+              ]
+            },
+            {
+              "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
+              "answers": [
+                {
+                  "text": "Do not get involved let them work it out amongst themselves because family matters are not your business as a health care provider.",
+                  "correct": false
+                },
+                {
+                  "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
+                  "correct": false
+                },
+                {
+                  "text": "Ask the patient and present family members questions about their family dynamics.",
+                  "correct": true
+                },
+                {
+                  "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        };
+      }
+    }
+
+    window.customElements.define( ComfortPretest.is, ComfortPretest );
+  </script>
+</dom-module>

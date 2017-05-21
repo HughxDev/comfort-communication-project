@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="comfort-button">
+  <template>
+    <style>
+      a, button {
+        width: 218px;
+        height: 68px;
+        font-size: 20px;
+        text-transform: uppercase;
+        background-color: var( --secondary-color, black );
+        color: white;
+        border: none;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        display: flex;
+        border-radius: 5px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        /*transition: top 1s ease-in;*/
+      }
+
+      a:active {
+        top: 2px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+      }
+    </style>
+    <a href$="[[href]]"><slot></slot></a>
+  </template>
+
+  <script>
+    /**
+     * `comfort-button`
+     * Big introductory text with background
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComfortButton extends Polymer.Element {
+      static get is() { return 'comfort-button'; }
+      static get properties() {
+        return {
+          "href": {
+            "type": String,
+            "value": ""
+          }
+        };
+      }
+    }
+
+    window.customElements.define( ComfortButton.is, ComfortButton );
+  </script>
+</dom-module>

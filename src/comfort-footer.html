@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="comfort-footer">
+  <template>
+    <style>
+      :host {
+        height: 21px;
+        background-color: #4D4D4D;
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 300;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <p>Copyright © 2017 The Comfort Communication Project</p>
+  </template>
+
+  <script>
+    /**
+     * `comfort-footer`
+     * Big introductory text with background
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComfortFooter extends Polymer.Element {
+      static get is() { return 'comfort-footer'; }
+      static get properties() {}
+    }
+
+    window.customElements.define( ComfortFooter.is, ComfortFooter );
+  </script>
+</dom-module>

@@ -52,8 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :root {
-        --font-family: 'Open Sans', sans-serif;
-
         --paper-font-common-base: {
           font-family: var( --font-family );
         };
@@ -114,16 +112,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
           <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
           <comfort-welcome name="welcome" class="view"></comfort-welcome>
-          <comfort-pretest name="pretest" class="view"></comfort-view3>
+          <comfort-pretest name="pretest" class="view"></comfort-pretest>
           <comfort-view404 name="view404" class="view"></comfort-view404>
         </iron-pages>
+
       </app-header-layout>
 
       <comfort-footer></comfort-footer>
@@ -170,8 +165,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         // If no page was found in the route data, page will be an empty string.
-        // Deault to 'kitchen-sink' in that case.
-        this.page = page || 'kitchen-sink';
+        // Deault to 'welcome' in that case.
+        this.page = page || 'welcome';
       }
 
       _pageChanged(page) {

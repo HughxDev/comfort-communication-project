@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="comfort-radio.html">
+<link rel="import" href="comfort-radiogroup.html">
 
 <dom-module id="comfort-pretest">
   <template>
@@ -17,6 +19,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .answers {
+        margin-top: 28px;
+      }
+
+      .answer {
+        margin: 9px 0;
+      }
+
+      /*[type="radio"] {
+        margin-left: -20px;
+      }*/
     </style>
 
     <section>
@@ -24,17 +38,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>Pre-test</h1>
       <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
       <ol>
-        <li>
-          <p>Healthcare providers play a critical role in family caregiver communication interactions.</p>
-          <p>
-            <label><input type="radio" name="question1" value="1" /> True</label><br>
-            <label><input type="radio" name="question1" value="0" /> False</label>
-          </p>
-        </li>
-        <li>
-          
-        </li>
-
+        <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
+          <li>
+            <p>[[question.question]]</p>
+            <comfort-radiogroup class="answers" role="radiogroup">
+              <template is="dom-repeat" items="{{question.answers}}">
+                <comfort-radio class="answer">
+                  <input slot="input" id$="question[[questionIndex]]-[[index]]" type="radio" name$="question[[questionIndex]]" value="[[index]]" /> 
+                  <label slot="label" for$="question[[questionIndex]]-[[index]]">[[item.text]]</label>
+                </comfort-radio>
+              </template>
+            </comfort-radiogroup>
+          </li>
+        </template>
       </ol>
     </section>
   </template>
@@ -44,42 +60,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() { return 'comfort-pretest'; }
       static get properties() {
         return {
-          "questions": [
-            {
-              "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
-              "answers": [
+          "questions": {
+            "type": Object,
+            value() {
+              return [
                 {
-                  "text": "True",
-                  "correct": false
+                  "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
+                  "answers": [
+                    {
+                      "text": "True",
+                      "correct": false
+                    },
+                    {
+                      "text": "False",
+                      "correct": true
+                    }
+                  ]
                 },
                 {
-                  "text": "False",
-                  "correct": true
+                  "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
+                  "answers": [
+                    {
+                      "text": "Do not get involved let them work it out amongst themselves because family matters are not your business as a health care provider.",
+                      "correct": false
+                    },
+                    {
+                      "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
+                      "correct": false
+                    },
+                    {
+                      "text": "Ask the patient and present family members questions about their family dynamics.",
+                      "correct": true
+                    },
+                    {
+                      "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
+                      "correct": false
+                    }
+                  ]
                 }
-              ]
-            },
-            {
-              "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
-              "answers": [
-                {
-                  "text": "Do not get involved let them work it out amongst themselves because family matters are not your business as a health care provider.",
-                  "correct": false
-                },
-                {
-                  "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
-                  "correct": false
-                },
-                {
-                  "text": "Ask the patient and present family members questions about their family dynamics.",
-                  "correct": true
-                },
-                {
-                  "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
-                  "correct": false
-                }
-              ]
+              ];
             }
-          ]
+          }
         };
       }
     }

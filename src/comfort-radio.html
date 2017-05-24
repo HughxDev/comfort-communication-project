@@ -1,0 +1,57 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-radio">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      :host([checked]) #radio {
+        color: pink;
+      }
+
+      :host ::slotted([type="radio"]) {
+        /*@apply --sr-only;*/
+      }
+    </style>
+    <span id="radio">(<span id="status">&nbsp;</span>)</span>
+    <slot id="input" name="input"></slot>
+    <slot id="label" name="label"></slot>
+  </template>
+
+  <script>
+    class ComfortRadio extends Polymer.Element {
+      static get is() { return 'comfort-radio'; }
+      static get properties() {
+        return {
+          "checked": {
+            "type": Boolean
+          }
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        const inputSlot = this.shadowRoot.querySelector( '#input' );
+        const input = inputSlot.assignedNodes()[0];
+
+        this.setAttribute( 'value', input.value );
+      }
+    }
+
+    window.customElements.define( ComfortRadio.is, ComfortRadio );
+  </script>
+</dom-module>

@@ -9,52 +9,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,700i" rel="stylesheet">
 
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
   <template>
     <style>
-      .card {
-        /*margin: 24px;*/
-        padding: 16px;
-        color: #757575;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
-
-      .circle {
-        display: inline-block;
-        width: 64px;
-        height: 64px;
-        text-align: center;
-        color: #555;
-        border-radius: 50%;
-        background: #ddd;
-        font-size: 30px;
-        line-height: 64px;
-      }
-
-      /*h1 {
-        margin: 16px 0;
-        color: #212121;
-        font-size: 22px;
-      }*/
-
-      /* ------ */
-
       * {
         box-sizing: border-box;
       }
 
-      body {
-        --color-text: #666; /* gray */
-
-        color: var( --color-text );
-
-        font-family: var( --font-family );
-        font-size: 14px;
+      :root {
+        --sr-only: {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          overflow: hidden;
+          clip: rect(0,0,0,0);
+          white-space: nowrap;
+          clip-path: inset(50%);
+          border: 0;
+        }
       }
 
       h1, .h1,
@@ -101,8 +76,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       section {
-        width: 39em;
+        width: 90%;
         margin: 41px auto;
+        max-width: 39em;
       }
 
       .comfort-kitchen-sink__heading {

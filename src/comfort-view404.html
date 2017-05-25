@@ -24,7 +24,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyView404 extends Polymer.Element {
+    "use strict";
+    
+    class ComfortView404 extends Polymer.Element {
       static get is() { return 'comfort-view404'; }
       static get properties() {
         return {
@@ -35,6 +37,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-    window.customElements.define(MyView404.is, MyView404);
+    window.customElements.define( ComfortView404.is, ComfortView404 );
   </script>
 </dom-module>

@@ -22,6 +22,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+    "use strict";
+    
     class ComfortRadiogroup extends Polymer.Element {
       static get is() { return 'comfort-radiogroup'; }
       static get properties() {}
@@ -32,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         const slot = this.shadowRoot.querySelector( '#slot' );
 
         this.addEventListener( 'change', event => {
-          console.log( event.target.value );
+          // console.log( event.target.value );
 
           /*var radios = */
           slot
@@ -41,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               return element.nodeName.toLowerCase() === 'comfort-radio';
             } )
             .forEach( element => {
+              /* double-equals intentional */
               if ( element.getAttribute( 'value' ) == event.target.value ) {
                 element.setAttribute( 'checked', '' );
               } else {

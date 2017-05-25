@@ -18,20 +18,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
-      :host([checked]) #radio {
-        color: pink;
+      :host([checked]) .radio__circle {
+        fill: #CCC;
       }
+
+      /* ::slotted needs an ancestor qualifier for polyfill support */
 
       :host ::slotted([type="radio"]) {
         /*@apply --sr-only;*/
+        opacity: 0;
+        width: 13px;
+        height: 13px;
+        cursor: pointer;
+      }
+
+      :host ::slotted(label), .radio {
+        cursor: pointer;
+      }
+
+      .radio, :host ::slotted([type="radio"]) {
+        margin-bottom: -1px;
+        margin-left: -19px;
+        margin-right: 2px;
+      }
+
+      .radio__circle {
+        fill: transparent;
+        stroke: #666;
+        stroke-miterlimit: 10;
+        margin-bottom: -1px;
+      }
+
+      .radio__circle--incorrect {
+        fill: #FF1D25;
+      }
+
+      .radio__circle--correct {
+        fill: #7ac943;
       }
     </style>
-    <span id="radio">(<span id="status">&nbsp;</span>)</span>
+    <!-- <a id="radio" href="javascript:void(0)"> -->
+    <svg
+      id="radio"
+      class="radio"
+      width="13"
+      height="13"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 13 13"
+    >
+      <g>
+        <circle class="radio__circle" cx="6.5" cy="6.5" r="6" />
+      </g>
+    </svg>
+    <!-- </a> -->
     <slot id="input" name="input"></slot>
     <slot id="label" name="label"></slot>
   </template>
 
   <script>
+    "use strict";
+    
     class ComfortRadio extends Polymer.Element {
       static get is() { return 'comfort-radio'; }
       static get properties() {
@@ -48,7 +94,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         const inputSlot = this.shadowRoot.querySelector( '#input' );
         const input = inputSlot.assignedNodes()[0];
 
+        const radio = this.shadowRoot.querySelector( '#radio' );
+
+        function radioOnClickTap( event ) {
+          input.checked = true;
+        }
+
         this.setAttribute( 'value', input.value );
+
+        // radio.addEventListener( 'mousedown', radioOnClickTap );
+        // radio.addEventListener( 'touchstart', radioOnClickTap );
       }
     }
 

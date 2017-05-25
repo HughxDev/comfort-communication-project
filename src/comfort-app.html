@@ -76,12 +76,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var( --app-primary-color );
       }
 
-      app-toolbar {
-        padding: 0 65px;
+      .comfort-logo {
+        display: none;
+      }
+
+      @media only screen and (min-width: 720px) {
+        app-toolbar {
+          padding: 0 65px;
+        }
+
+        .comfort-logo {
+          display: initial;
+        }
       }
 
       [main-title] {
-        margin-left: -112px;
         text-align: center;
         font-weight: 300;
         text-transform: uppercase;
@@ -90,6 +99,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         justify-content: center;
         align-items: center;
         height: 100%;
+      }
+
+      @media only screen and (min-width: 720px) {
+        [main-title] {
+          margin-left: -112px;
+        }
+      }
+
+      .comfort-main-title-text {
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+        text-overflow: ellipsis;
+        max-width: 90vw;
+      }
+
+      @media only screen and (min-width: 720px) {
+        .comfort-main-title-text {
+          max-width: 50vw;
+        }
       }
     </style>
 
@@ -107,8 +136,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- <comfort-header slot="header"></comfort-header> -->
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <img src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
-            <span main-title>Module F: Family Caregivers</span>
+            <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
+            <span main-title>
+              <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
+            </span>
           </app-toolbar>
         </app-header>
 
@@ -126,6 +157,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+    "use strict";
+
     class ComfortApp extends Polymer.Element {
 
       static get is() { return 'comfort-app'; }
@@ -154,8 +187,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Get root pattern for app-route, for more info about `rootPath` see:
         // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-        this.rootPattern = (new URL(this.rootPath)).pathname;
+        this.rootPattern = ( new URL( this.rootPath ) ).pathname;
       }
+
+      // connectedCallback() {
+      //   super.connectedCallback();
+
+      //   // const titleText = this.shadowRoot.querySelector( '#main-title-text' );
+      //   const mainTitle = this.shadowRoot.querySelector( '[main-title]' );
+
+      //   console.log( mainTitle.textContent.length );
+      // }
 
       _routePageChanged(page) {
         // Polymer 2.0 will call with `undefined` on initialization.

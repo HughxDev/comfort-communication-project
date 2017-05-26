@@ -27,6 +27,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .answer {
         margin: 9px 0;
       }
+
+      .radio {
+        opacity: 0;
+        width: 13px;
+        height: 13px;
+        cursor: pointer;
+
+        margin-bottom: -1px;
+        margin-left: -19px;
+        margin-right: 2px;
+      }
     </style>
 
     <section>
@@ -42,8 +53,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <comfort-radiogroup class="answers" role="radiogroup">
               <template is="dom-repeat" items="{{question.answers}}">
                 <comfort-radio class="answer">
-                  <input slot="input" id$="question[[questionIndex]]-[[index]]" type="radio" name$="question[[questionIndex]]" value="[[index]]" /> 
-                  <label slot="label" for$="question[[questionIndex]]-[[index]]">[[item.text]]</label>
+                  <!-- <input
+                    slot="input"
+                    id$="question[[questionIndex]]-[[index]]"
+                    type="radio"
+                    name$="question[[questionIndex]]"
+                    value="[[index]]" /> 
+                  <label
+                    slot="label"
+                    for$="question[[questionIndex]]-[[index]]">[[item.text]]</label> -->
+                  <label slot="label">
+                    <input
+                      id$="question[[questionIndex]]-[[index]]"
+                      class="radio"
+                      type="radio"
+                      name$="question[[questionIndex]]"
+                      value="[[index]]"
+                    /> [[item.text]]
+                  </label>
                 </comfort-radio>
               </template>
             </comfort-radiogroup>

@@ -18,7 +18,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
+      /*:host .radio__circle--checked {
+        display: none;
+      }
+
       :host([checked]) .radio__circle {
+        display: none;
+      }
+
+      :host([checked]) .radio__circle--checked {
+        display: initial;
+      }*/
+
+      :host([checked]) .radio__circle
+      /*.radio__circle--checked*/
+      {
         fill: #CCC;
       }
 
@@ -26,10 +40,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       :host ::slotted([type="radio"]) {
         /*@apply --sr-only;*/
-        opacity: 0;
-        width: 13px;
-        height: 13px;
-        cursor: pointer;
       }
 
       :host ::slotted(label), .radio {
@@ -67,12 +77,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       viewBox="0 0 13 13"
     >
       <g>
-        <circle class="radio__circle" cx="6.5" cy="6.5" r="6" />
+        <circle id="unchecked" class="radio__circle" cx="6.5" cy="6.5" r="6" />
+        <!-- <circle id="checked" class="radio__circle radio__circle--checked" cx="6.5" cy="6.5" r="6" /> -->
+        <!-- <circle id="correct" class="radio__circle radio__circle--correct" cx="6.5" cy="6.5" r="6" /> -->
+        <!-- <circle id="incorrect" class="radio__circle radio__circle--incorrect" cx="6.5" cy="6.5" r="6" /> -->
       </g>
     </svg>
     <!-- </a> -->
-    <slot id="input" name="input"></slot>
+    <!-- <slot id="input" name="input"></slot> -->
     <slot id="label" name="label"></slot>
+    <!-- <slot id="input" name="input"></slot> -->
   </template>
 
   <script>
@@ -91,19 +105,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       connectedCallback() {
         super.connectedCallback();
 
-        const inputSlot = this.shadowRoot.querySelector( '#input' );
-        const input = inputSlot.assignedNodes()[0];
+        // const inputSlot = this.shadowRoot.querySelector( '#input' );
+        // const input = inputSlot.assignedNodes()[0];
 
-        const radio = this.shadowRoot.querySelector( '#radio' );
+        // const radio = this.shadowRoot.querySelector( '#radio' );
 
-        function radioOnClickTap( event ) {
-          input.checked = true;
-        }
+        const labelSlot = this.shadowRoot.querySelector( '#label' );
+        const label = labelSlot.assignedNodes()[0];
+        const input = label.children[0];
+
+        // console.log( input );
+
+        // function radioOnClickTap( event ) {
+        //   input.checked = true;
+        // }
 
         this.setAttribute( 'value', input.value );
 
-        // radio.addEventListener( 'mousedown', radioOnClickTap );
+        // radio.addEventListener( 'click', radioOnClickTap );
         // radio.addEventListener( 'touchstart', radioOnClickTap );
+
+        input.style.opacity = 0;
+        input.style.marginLeft = "-15px";
       }
     }
 

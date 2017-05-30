@@ -51,27 +51,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <li>
             <p>[[question.question]]</p>
             <comfort-radiogroup class="answers" role="radiogroup">
-              <template is="dom-repeat" items="{{question.answers}}">
-                <comfort-radio class="answer">
-                  <!-- <input
-                    slot="input"
-                    id$="question[[questionIndex]]-[[index]]"
-                    type="radio"
-                    name$="question[[questionIndex]]"
-                    value="[[index]]" /> 
-                  <label
-                    slot="label"
-                    for$="question[[questionIndex]]-[[index]]">[[item.text]]</label> -->
-                  <label slot="label">
-                    <input
-                      id$="question[[questionIndex]]-[[index]]"
-                      class="radio"
-                      type="radio"
-                      name$="question[[questionIndex]]"
-                      value="[[index]]"
-                    /> [[item.text]]
-                  </label>
-                </comfort-radio>
+              <template is="dom-if" if="{{ isMultipleChoice( question.type ) }}">
+                <template is="dom-repeat" items="{{question.answers}}">
+                  <comfort-radio class="answer">
+                    <label slot="label">
+                      <input
+                        id$="question[[questionIndex]]-[[index]]"
+                        class="radio"
+                        type="radio"
+                        name$="question[[questionIndex]]"
+                        value="[[index]]"
+                      /> [[item.text]]
+                    </label>
+                  </comfort-radio>
+                </template>
+              </template>
+              <template is="dom-if" if="{{ isOpenEnded( question.type ) }}">
+                <textarea
+                  id$="question[[questionIndex]]-[[index]]"
+                  name$="question[[questionIndex]]"
+                ></textarea>
               </template>
             </comfort-radiogroup>
           </li>
@@ -94,6 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 // 1
                 {
                   "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
+                  "type": "multiple-choice",
                   "answers": [
                     {
                       "text": "True",
@@ -108,6 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 // 2
                 {
                   "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
+                  "type": "multiple-choice",
                   "answers": [
                     {
                       "text": "Do not get involved let them work it out amongst themselves because family matters are not your business as a health care provider.",
@@ -130,6 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 // 3
                 {
                   "question": "A family is considered a system because:",
+                  "type": "multiple-choice",
                   "answers": [
                     {
                       "text": "Members are born into relationships with one another.",
@@ -152,6 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 // 4
                 {
                   "question": "You are caring for a family led by a carrier family member.  What will you do be most helpful to the carrier family member?",
+                  "type": "multiple-choice",
                   "answers": [
                     {
                       "text": "Avoid communication with the carrier family member unless approached by them with a specific question regarding the patient.",
@@ -172,26 +175,142 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   ]
                 },
                 // 5
-                // {
-                //   "question": "",
-                //   "answers": [
-                //     {
-                //       "text": "",
-                //       "correct": false
-                //     }
-                //   ]
-                // },
+                {
+                  "question": "According to the family member typology, which of the following is true regarding the loner family member?",
+                  "type": "multiple-choice",
+                  "answers": [
+                    {
+                      "text": "The loner family member is considered the top of the family hierarchy.",
+                      "correct": false
+                    },
+                    {
+                      "text": "The loner family member is in the least need of clinician intervention.",
+                      "correct": false
+                    },
+                    {
+                      "text": "The loner family member has been surrounded by other family members in terms of support and communication.",
+                      "correct": false
+                    },
+                    {
+                      "text": "The loner family member likely suffers from increased stress and burden due to minimal social support and likely holds anger and resentment towards other members of the family.",
+                      "correct": true
+                    }
+                  ]
+                },
                 // 6
-                // {},
+                {
+                  "question": "In order to facilitate effective communication for a patient and family, you must first:",
+                  "type": "multiple-choice",
+                  "answers": [
+                    {
+                      "text": "Assess the family system and family dynamics.",
+                      "correct": false
+                    },
+                    {
+                      "text": "Identify specific communication gaps in family dynamics.",
+                      "correct": false
+                    },
+                    {
+                      "text": "Examine the context, background, and communication preferences of the family.",
+                      "correct": false
+                    },
+                    {
+                      "text": "All of the above",
+                      "correct": true
+                    }
+                  ]
+                },
                 // 7
-                // {},
+                {
+                  "question": "According to Family Communication Patterns Theory, family communication is composed of:",
+                  "type": "multiple-choice",
+                  "answers": [
+                    {
+                      "text": "Conversation and conflict patterns",
+                      "correct": false
+                    },
+                    {
+                      "text": "Conformity and caring patterns",
+                      "correct": false
+                    },
+                    {
+                      "text": "Conversation and conformity patterns",
+                      "correct": true
+                    },
+                    {
+                      "text": "Conversation and caring patterns",
+                      "correct": false
+                    }
+                  ]
+                },
                 // 8
+                {
+                  "question": "When working with a “Manager” caregiver, family conflict is likely to occur because:",
+                  "type": "multiple-choice",
+                  "answers": [
+                    {
+                      "text": "The caregiver is estranged from the rest of the family",
+                      "correct": false
+                    },
+                    {
+                      "text": "The caregiver is passive",
+                      "correct": false
+                    },
+                    {
+                      "text": "The caregiver is controlling information flow",
+                      "correct": true
+                    },
+                    {
+                      "text": "The caregiver suffers low health literacy",
+                      "correct": false
+                    }
+                  ]
+                },
                 // 9
+                {
+                  "question": "When working with a “Loner” caregiver, health professional communication should focus on:",
+                  "type": "multiple-choice",
+                  "answers": [
+                    {
+                      "text": "Physical and emotional support",
+                      "correct": false
+                    },
+                    {
+                      "text": "Provision of care services",
+                      "correct": false
+                    },
+                    {
+                      "text": "Access to educational resources",
+                      "correct": false
+                    },
+                    {
+                      "text": "All of the above",
+                      "correct": true
+                    }
+                  ]
+                },
                 // 10
+                // Pre-test:
+                {
+                  "question": "What do you believe will be the most useful communication skill to learn from this module and why?",
+                  "type": "open-ended"
+                }
               ];
             }
           }
         };
+      }
+
+      constructor() {
+        super();
+      }
+
+      isMultipleChoice( questionType ) {
+        return questionType === 'multiple-choice';
+      }
+
+      isOpenEnded( questionType ) {
+        return questionType === 'open-ended';
       }
     }
 

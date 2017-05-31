@@ -35,14 +35,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
+      /* Move this? */
       [type="radio"] {
         opacity: 0;
-        width: 13px;
-        height: 13px;
+        width: 14px;
+        height: 14px;
         cursor: pointer;
 
-        margin-bottom: -1px;
-        margin-left: -19px;
+        /*margin-bottom: -1px;*/
+        /*margin-left: -19px;*/
         margin-right: 2px;
       }
 
@@ -71,20 +72,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <h1 class="comfort-section-title">Pre-test</h1>
       </header>
       <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
-      <ol>
+      <ol id="questions">
         <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
           <li>
-            <p id$="question[[questionIndex]]">[[question.question]]</p>
+            <p id$="question[[increment(questionIndex)]]">[[question.question]]</p>
             <template is="dom-if" if="{{isMultipleChoice(question.type)}}">
               <comfort-radiogroup class="answers" role="radiogroup" aria-labelledby$="question[[questionIndex]]">
                 <template is="dom-repeat" items="{{question.answers}}">
                   <comfort-radio class="answer">
                     <label slot="label">
                       <input
-                        id$="question[[questionIndex]]-[[index]]"
+                        id$="question[[increment(questionIndex)]]-[[increment(index)]]"
                         type="radio"
-                        name$="question[[questionIndex]]"
-                        value="[[index]]"
+                        name$="[[increment(questionIndex)]]"
+                        value="[[increment(index)]]"
                       /> [[item.text]]
                     </label>
                   </comfort-radio>
@@ -93,10 +94,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template><!--/dom-if-->
             <template is="dom-if" if="{{isOpenEnded(question.type)}}">
               <textarea
-                id$="question[[questionIndex]]-[[index]]"
+                id$="question[[increment(questionIndex)]]-[[increment(index)]]"
                 class="open-ended"
-                name$="question[[questionIndex]]"
-                aria-labelledby$="question[[questionIndex]]"
+                name$="[[increment(questionIndex)]]"
+                aria-labelledby$="question[[increment(questionIndex)]]"
               ></textarea>
             </template>
           </li>
@@ -115,11 +116,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() { return 'comfort-pretest'; }
       static get properties() {
         return {
+          "snapshot": {
+            "type": Object
+          },
           "questions": {
             "type": Object,
             value() {
               return [
-                // 1
+                // 0
                 {
                   "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
                   "type": "multiple-choice",
@@ -134,7 +138,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 2
+                // 1
                 {
                   "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
                   "type": "multiple-choice",
@@ -157,7 +161,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 3
+                // 2
                 {
                   "question": "A family is considered a system because:",
                   "type": "multiple-choice",
@@ -180,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 4
+                // 3
                 {
                   "question": "You are caring for a family led by a carrier family member.  What will you do be most helpful to the carrier family member?",
                   "type": "multiple-choice",
@@ -203,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 5
+                // 4
                 {
                   "question": "According to the family member typology, which of the following is true regarding the loner family member?",
                   "type": "multiple-choice",
@@ -226,7 +230,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 6
+                // 5
                 {
                   "question": "In order to facilitate effective communication for a patient and family, you must first:",
                   "type": "multiple-choice",
@@ -249,7 +253,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 7
+                // 6
                 {
                   "question": "According to Family Communication Patterns Theory, family communication is composed of:",
                   "type": "multiple-choice",
@@ -272,7 +276,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 8
+                // 7
                 {
                   "question": "When working with a “Manager” caregiver, family conflict is likely to occur because:",
                   "type": "multiple-choice",
@@ -295,7 +299,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 9
+                // 8
                 {
                   "question": "When working with a “Loner” caregiver, health professional communication should focus on:",
                   "type": "multiple-choice",
@@ -318,7 +322,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                   ]
                 },
-                // 10
+                // 9
                 // Pre-test:
                 {
                   "question": "What do you believe will be the most useful communication skill to learn from this module and why?",
@@ -332,6 +336,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       constructor() {
         super();
+
+        Defiant.getSnapshot( this.questions, snapshot => {
+          // Caching for performance. May be unnecessary since dataset is not that big.
+          this.snapshot = snapshot;
+
+          console.log( this.snapshot );
+        } );
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        const $questions = this.shadowRoot.querySelector( '#questions' );
+
+        $questions.addEventListener( 'change', event => {
+          var input = event.target;
+          var questionNumber = input.name;
+          var answerNumber = input.value;
+
+          // The question in question: //d:item[1]
+          var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
+
+          // Correct answer: //d:item[1]/answers[correct="true"]
+          var correct = JSON.search( this.snapshot, questionXPath + '/answers[correct="true"]' );
+
+          // console.log( 'correct', correct );
+
+          // Incorrect answer: //d:item[1]/answers[correct="false"]
+          var incorrect = JSON.search( this.snapshot, questionXPath + '/answers[correct="false"]' );
+
+          // console.log( 'incorrect', incorrect );
+          
+          /* Selected answer: //d:item[1]/answers[1] */
+          var selected = JSON.search( this.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
+
+          var radio = input;
+
+          while( radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
+            radio = radio.parentNode;
+          }
+
+          if ( selected.correct === true ) {
+            // alert( 'Correct!' );
+            radio.setAttribute( 'correct', '' );
+          } else {
+            // alert( 'Incorrect.' );
+            radio.setAttribute( 'incorrect', '' );
+          }
+        } );
+      }
+
+      increment( integer ) {
+        return ++integer;
       }
 
       isMultipleChoice( questionType ) {

@@ -59,15 +59,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: -1px;
       }
 
+      :host([incorrect]) .radio__circle,
       .radio__circle--incorrect {
         fill: #FF1D25;
       }
 
+      :host([correct]) .radio__circle,
       .radio__circle--correct {
         fill: #7ac943;
       }
     </style>
-    <!-- <a id="radio" href="javascript:void(0)"> -->
     <svg
       id="radio"
       class="radio"
@@ -77,16 +78,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       viewBox="0 0 13 13"
     >
       <g>
-        <circle id="unchecked" class="radio__circle" cx="6.5" cy="6.5" r="6" />
-        <!-- <circle id="checked" class="radio__circle radio__circle--checked" cx="6.5" cy="6.5" r="6" /> -->
-        <!-- <circle id="correct" class="radio__circle radio__circle--correct" cx="6.5" cy="6.5" r="6" /> -->
-        <!-- <circle id="incorrect" class="radio__circle radio__circle--incorrect" cx="6.5" cy="6.5" r="6" /> -->
+        <circle class="radio__circle" cx="6.5" cy="6.5" r="6" />
       </g>
     </svg>
-    <!-- </a> -->
-    <!-- <slot id="input" name="input"></slot> -->
     <slot id="label" name="label"></slot>
-    <!-- <slot id="input" name="input"></slot> -->
   </template>
 
   <script>
@@ -98,7 +93,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           "checked": {
             "type": Boolean
+          },
+          "correct": {
+            "type": Boolean
+          },
+          "incorrect": {
+            "type": Boolean
           }
+          /* value, name */
         };
       }
 
@@ -121,12 +123,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // }
 
         this.setAttribute( 'value', input.value );
+        this.setAttribute( 'name', input.name );
 
         // radio.addEventListener( 'click', radioOnClickTap );
         // radio.addEventListener( 'touchstart', radioOnClickTap );
 
         input.style.opacity = 0;
-        input.style.marginLeft = "-15px";
+        input.style.marginLeft = "-18px";
       }
     }
 

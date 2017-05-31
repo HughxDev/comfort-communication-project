@@ -42,8 +42,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         /*@apply --sr-only;*/
       }
 
+      :host ::slotted(label) {
+        transition: color 0.25s ease-out;
+      }
+
+      .radio__circle {
+        transition: fill 0.25s ease-out;
+      }
+
+
       :host ::slotted(label), .radio {
         cursor: pointer;
+      }
+
+      :host([incorrect]) ::slotted(label) {
+        color: #FF1D25;
+      }
+
+      :host([correct]) ::slotted(label) {
+        color: #7ac943;
       }
 
       .radio, :host ::slotted([type="radio"]) {

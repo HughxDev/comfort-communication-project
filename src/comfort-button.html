@@ -30,6 +30,15 @@
         top: 2px;
         box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
       }
+
+      :host {
+        margin: 84px;
+      }
+
+      :host([large]) a,
+      :host([large]) button {
+        width: 317px;
+      }
     </style>
     <a href$="[[href]]"><slot></slot></a>
   </template>
@@ -53,6 +62,15 @@
             "value": "javascript:void(0);"
           }
         };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        // see if button needs to be wider
+        if ( this.textContent.length >= 19 ) {
+          this.setAttribute( 'large', '' );
+        }
       }
     }
 

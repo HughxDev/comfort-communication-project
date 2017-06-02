@@ -30,6 +30,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           clip-path: inset(50%);
           border: 0;
         }
+
+        --breathe: {
+          margin: 40px auto;
+        }
+
+        --line-length: {
+          max-width: 39rem;
+        }
       }
 
       h1, .h1,
@@ -41,7 +49,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-family: 'Open Sans', sans-serif;
         font-weight: 300;
         text-align: center;
-        margin: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      @media only screen and (min-width: 720px) {
+        h1, .h1 {
+          width: 50vw;
+        }
       }
 
       h1, .h1 {
@@ -75,24 +90,107 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      section {
-        width: 90%;
-        margin: 41px auto;
-        max-width: 39em;
+      ol {
+        padding: 0;
       }
 
-      .comfort-kitchen-sink__heading {
+      .flush {
+        padding: 0;
+        padding-left: 15px;
+      }
+
+      .flush > li {
+        padding-left: 27px;
+      }
+
+      p,
+      ol,
+      ul,
+      dl,
+      blockquote,
+      aside,
+      h1, .h1,
+      h2, .h2,
+      h3, .h3,
+      h4, .h4,
+      h5, .h5,
+      h6, .h6 {
+        @apply --line-length;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      header {
+        margin-bottom: 54px;
+      }
+
+      section {
+        @apply --breathe;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+
+      textarea {
+        height: 148px;
+        width: 100%;
+        border: 1px solid #666;
+        padding: .5rem;
+        font-size: 1em;
+        font-family: inherit;
+      }
+
+      hr {
+        width: 238px;
+        border: none;
+        border-top: 1px solid #666;
+        height: 0;
+        margin-top: 80px;
+        margin-bottom: 61px;
+      }
+
+      [type="radio"] {
+        opacity: 0;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+
+        /*margin-bottom: -1px;*/
+        /*margin-left: -19px;*/
+        margin-right: 2px;
+      }
+
+      .align-left {
+        float: left;
+        margin: 0 8px 8px 0;
+      }
+
+      .answers {
+        /*margin: 28px 0;*/
+        margin-top: -20px;
+      }
+
+      .answer {
+        margin: 9px 0;
+      }
+
+      .kitchen-sink__heading {
         margin: 0;
         text-align: center;
       }
 
-      .comfort-section-subtitle {
+      .section-subtitle {
         text-transform: uppercase;
-        margin-bottom: -12.5px;
+        /*margin-bottom: -12.5px;*/
       }
 
-      .comfort-section-title {
+      .section-title {
         margin-bottom: 25.5px;
+        line-height: 1;
+      }
+
+      .scenario {
+        font-weight: bold;
+        font-style: italic;
       }
       /* p, ul, ol, dl {} */
     </style>

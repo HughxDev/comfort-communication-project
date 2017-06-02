@@ -1,0 +1,53 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-jumbotron.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-video.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-introduction-2">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 2</p>
+        <h1 class="section-title">Introduction and Learning Outcomes</h1>
+      </header>
+
+      <p>What challenges do family caregivers face and how can you help them as a healthcare provider?  Perhaps you mentioned wondering how to help them access resources, how to address their emotional pain, or how to manage this balancing this new role along with their other work and family obligations, or how to help them learn to ask for help.</p>
+      <p>As a health care professional, you play a critical role in facilitating communication among the patient, family members, and family caregivers. </p>
+      <p>This module is one of several that is designed to provide you with the tools for supporting family caregivers.  In it, we equip you with tools and strategies for communicating successfully with patients, family members, and family caregivers during these times of distress and uncertainty.</p>
+      <p>After completing the module, you will be able to:</p>
+      <ol class="flush">
+        <li>Describe family communication patterns for caregivers.</li>
+        <li>Identify and define each caregiver type (Manager, Carrier, Partner, Lone).</li>
+        <li>Respond appropriately when communicating with caregivers and their families.</li>
+      </ol>
+      <comfort-button href="/introduction/3">Continue</comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortIntroduction2 extends Polymer.Element {
+      static get is() { return 'comfort-introduction-2'; }
+    }
+
+    window.customElements.define( ComfortIntroduction2.is, ComfortIntroduction2 );
+  </script>
+</dom-module>

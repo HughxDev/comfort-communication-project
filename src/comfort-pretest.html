@@ -21,58 +21,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
-      .answers {
-        margin: 28px 0;
-      }
-
-      .answer {
-        margin: 9px 0;
-      }
-
       .lets-begin {
         width: 549px;
         margin-bottom: 40px;
         text-align: center;
       }
 
-      /* Move this? */
-      [type="radio"] {
-        opacity: 0;
-        width: 14px;
-        height: 14px;
-        cursor: pointer;
-
-        /*margin-bottom: -1px;*/
-        /*margin-left: -19px;*/
-        margin-right: 2px;
-      }
-
-      textarea {
-        height: 148px;
-        width: 100%;
-        border: 1px solid #666;
-        padding: .5rem;
-        font-size: 1em;
-        font-family: inherit;
-      }
-
-      hr {
-        width: 238px;
-        border: none;
-        border-top: 1px solid #666;
-        height: 0;
-        margin-top: 80px;
-        margin-bottom: 61px;
+      p {
+        @apply --breathe;
       }
     </style>
 
     <section>
       <header>
-        <p class="h3 comfort-section-subtitle">Section 1</p>
-        <h1 class="comfort-section-title">Pre-test</h1>
+        <p class="h3 section-subtitle">Section 1</p>
+        <h1 class="section-title">Pre-test</h1>
       </header>
       <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
-      <ol id="questions">
+      <ol id="questions" class="questions">
         <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
           <li>
             <p id$="question[[increment(questionIndex)]]">[[question.question]]</p>
@@ -105,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </ol>
       <hr />
       <p class="lets-begin">Now that you have finished the pretest, let’s begin. This module will take about 30 minutes to complete.  Once finished, you will take a post-test to assess your learning.  If you are not satisfied with the results, feel free to go through the module again.  You can do so as many times as you’d like to—until you are satisfied with your post-test results.</p>
-      <comfort-button>Start course</comfort-button>
+      <comfort-button href="/introduction">Start course</comfort-button>
     </section>
   </template>
 

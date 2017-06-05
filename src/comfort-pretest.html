@@ -314,54 +314,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         const $questions = this.shadowRoot.querySelector( '#questions' );
 
-        $questions.addEventListener( 'change', event => {
-          var input = event.target;
-          var questionNumber = input.name;
-          var answerNumber = input.value;
+        // $questions.addEventListener( 'change', event => {
+        //   var input = event.target;
+        //   var questionNumber = input.name;
+        //   var answerNumber = input.value;
 
-          // The question in question: //d:item[1]
-          var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
+        //   // The question in question: //d:item[1]
+        //   var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
 
-          // Correct answer: //d:item[1]/answers[correct="true"]
-          var correct = JSON.search( this.snapshot, questionXPath + '/answers[correct="true"]' )[0];
+        //   // Correct answer: //d:item[1]/answers[correct="true"]
+        //   var correct = JSON.search( this.snapshot, questionXPath + '/answers[correct="true"]' )[0];
 
-          // Incorrect answer: //d:item[1]/answers[correct="false"]
-          var incorrect = JSON.search( this.snapshot, questionXPath + '/answers[correct="false"]' )[0];
+        //   // Incorrect answer: //d:item[1]/answers[correct="false"]
+        //   var incorrect = JSON.search( this.snapshot, questionXPath + '/answers[correct="false"]' )[0];
           
-          /* Selected answer: //d:item[1]/answers[1] */
-          var selected = JSON.search( this.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
+        //   /* Selected answer: //d:item[1]/answers[1] */
+        //   var selected = JSON.search( this.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
 
-          var radio = input;
+        //   var radio = input;
 
-          while( radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
-            radio = radio.parentNode;
-          }
+        //   while( radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
+        //     radio = radio.parentNode;
+        //   }
 
-          var highlightCorrect = false;
+        //   var highlightCorrect = false;
 
-          if ( selected.correct === true ) {
-            // alert( 'Correct!' );
-            radio.setAttribute( 'correct', '' );
-          } else {
-            // alert( 'Incorrect.' );
-            radio.setAttribute( 'incorrect', '' );
-            highlightCorrect = true;
-          }
+        //   if ( selected.correct === true ) {
+        //     // alert( 'Correct!' );
+        //     radio.setAttribute( 'correct', '' );
+        //   } else {
+        //     // alert( 'Incorrect.' );
+        //     radio.setAttribute( 'incorrect', '' );
+        //     highlightCorrect = true;
+        //   }
 
-          var comfortRadioLabels =  Array.prototype.slice.call( this.shadowRoot.querySelectorAll( 'comfort-radio[name="' + questionNumber + '"] > label' ) );
+        //   var comfortRadioLabels =  Array.prototype.slice.call( this.shadowRoot.querySelectorAll( 'comfort-radio[name="' + questionNumber + '"] > label' ) );
              
-          for ( var i = 0; i < comfortRadioLabels.length; i++ ) {
-            // 0 = text, 1 = input, 2 = text
-            comfortRadioLabels[i].childNodes[1].disabled = true;
+        //   for ( var i = 0; i < comfortRadioLabels.length; i++ ) {
+        //     // 0 = text, 1 = input, 2 = text
+        //     comfortRadioLabels[i].childNodes[1].disabled = true;
 
-            if ( highlightCorrect && ( comfortRadioLabels[i].textContent.trim() === correct.text ) ) {
-              setTimeout( function ( i ) { 
-                comfortRadioLabels[i].parentNode.setAttribute( 'correct', '' );
-              }.bind( this, i ), 250 );
-              // break;
-            }
-          }
-        } );
+        //     if ( highlightCorrect && ( comfortRadioLabels[i].textContent.trim() === correct.text ) ) {
+        //       setTimeout( function ( i ) { 
+        //         comfortRadioLabels[i].parentNode.setAttribute( 'correct', '' );
+        //       }.bind( this, i ), 250 );
+        //       // break;
+        //     }
+        //   }
+        // } );
       }
 
       increment( integer ) {

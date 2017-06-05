@@ -60,7 +60,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       h1, .h1 {
-        font-size: 56px;
+        font-size: 48px;
+      }
+
+      @media only screen and (min-width: 480px) {
+        h1, .h1 {
+          font-size: 56px;
+        }
       }
 
       h2, .h2,
@@ -94,6 +100,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0;
       }
 
+      ol[type="a"] > li {
+        margin-left: 53px;
+        margin-bottom: 1rem;
+      }
+
       .flush {
         padding: 0;
         padding-left: 15px;
@@ -115,9 +126,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       h4, .h4,
       h5, .h5,
       h6, .h6 {
-        @apply --line-length;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      p,
+      ol,
+      ul,
+      dl,
+      blockquote,
+      aside {
+        @apply --line-length;
+      }
+
+      dfn {
+        font-style: normal;
+        font-weight: bold;
       }
 
       header {
@@ -157,6 +181,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         /*margin-bottom: -1px;*/
         /*margin-left: -19px;*/
         margin-right: 2px;
+      }
+
+      .advice {
+        font-weight: bold;
+        text-align: center;
+        line-height: 1;
+        @apply --breathe;
+      }
+
+      .advice > :first-child {
+        margin-bottom: 0.5rem;
+      }
+
+      .advice > :last-child {
+        margin-top: 0.5rem;
       }
 
       .align-left {

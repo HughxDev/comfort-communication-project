@@ -1,0 +1,64 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-family-communication-patterns-1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 3</p>
+        <h1 class="section-title">Family Communication Patterns</h1>
+      </header>
+
+      <p>Every family develops its own communication pattern for dealing with the functions of family life.  These patterns govern what they do (and don’t) talk about and the way they interact with one another.  As a healthcare professional working with families during times of distress and uncertainty, we can be more effective in navigating discussion and achieving the outcomes we desire when we adapt our approach to their unique communication pattern.   Family communication patterns can be organized around two themes:</p>
+
+      <p><dfn>Family Talk</dfn> has to do with (a) what topics a family finds appropriate (and inappropriate), (b) how much time the family spends communicating, and (c) whether or not the family engages in communal or individual decision-making.</p>
+
+      <ol type="a">
+        <li>Families that have very few restrictions on topic or time are described as high family talk families.</li>
+        <li>Families that don’t spend much time talking with one another and consider very few topics to be appropriate for discussion are described as low family          talk families.</li>
+      </ol>
+
+      <p><dfn>Family Obligation</dfn> (a.k.a. Conformity) has to do with (a) how much time a family spends together, (b) how they share (or don’t share resources), and (c) the degree to which they share the same beliefs.</p>
+
+      <ol type="a">
+        <li>High obligation families encourage harmony, avoid conflict, are interdepen dent, and share the same beliefs and values.</li>
+        <li>Low obligation families honor heterogeneous attitudes, individuality, uniqueness, and independence.</li>
+      </ol>
+
+      <p><b>To gain a better understanding of family communications patterns theory, watch this short Prezi prepared and posted by Aaron Strange, Pauline Zamora, Angelina Guo, and Jason Williams:</b></p>
+
+      <comfort-video>
+        <iframe frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" width="853" height="480" src="https://prezi.com/embed/oiiu-o6g9c5d/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;landing_data=bHVZZmNaNDBIWnNjdEVENDRhZDFNZGNIUE43MHdLNWpsdFJLb2ZHanI5L2p1RHY1TEwyRkRhQXEyNU9uZ09BNkFnPT0&amp;landing_sign=kLroTQjhUz8E9YOByZ3djFDNJgZeZeY3PIasiGAOQSY"></iframe>
+      </comfort-video>
+      
+      <comfort-button href="/family-communication-patterns/2">I’ve watched the video</comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortFamilyCommunicationPatterns1 extends Polymer.Element {
+      static get is() { return 'comfort-family-communication-patterns-1'; }
+    }
+
+    window.customElements.define( ComfortFamilyCommunicationPatterns1.is, ComfortFamilyCommunicationPatterns1 );
+  </script>
+</dom-module>

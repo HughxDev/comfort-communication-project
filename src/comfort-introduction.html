@@ -9,10 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="comfort-button.html">
-<link rel="import" href="comfort-video.html">
 <link rel="import" href="shared-styles.html">
 
+<link rel="import" href="comfort-introduction-1.html">
 <link rel="import" href="comfort-introduction-2.html">
 <link rel="import" href="comfort-introduction-3.html">
 
@@ -33,20 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <!-- fallback-selection="introduction" -->
     <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1">
-      <section name="1" class="view">
-        <header>
-          <p class="h3 section-subtitle">Section 2</p>
-          <h1 class="section-title">Introduction and Learning Outcomes</h1>
-        </header>
-
-        <p>Family caregivers can experience a great deal of anger, stress, denial, and burnout when caring for their loved ones.  Watch this short video to hear some real stories family caregivers regarding their experiences.  As you watch, jot down thoughts that come to your mind about what challenges family caregivers face in providing care and what you might want to say and do to help them address those challenges.</p>
-        
-        <comfort-video>
-          <iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/XaonoH1XqNI" frameborder="0" allowfullscreen></iframe>
-        </comfort-video>
-        
-        <comfort-button href="/introduction/2">I’ve watched the video</comfort-button>
-      </section>
+      <comfort-introduction-1 name="1" class="view"></comfort-introduction-1>
       <comfort-introduction-2 name="2" class="view"></comfort-introduction-2>
       <comfort-introduction-3 name="3" class="view"></comfort-introduction-3>
     </iron-pages>

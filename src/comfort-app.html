@@ -131,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location route="{{route}}"></app-location>
     <app-route
       route="{{route}}"
-      pattern="[[rootPattern]]:page"
+      pattern="[[rootPattern]]:page/:number"
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
 
@@ -184,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get observers() {
         return [
-          '_routePageChanged(routeData.page)',
+          '_routePageChanged(routeData)',
         ];
       }
 
@@ -262,10 +262,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //   console.log( mainTitle.textContent.length );
       // }
 
-      _routePageChanged( page ) {
+      _routePageChanged( routeData ) {
+        var page = routeData.page;
+
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
-        if (page === undefined) {
+        if ( page === undefined ) {
           return;
         }
 
@@ -281,16 +283,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // console.log( 'activateHasScrolled' );
         }
 
+        function getPageId() {
+          // console.log( 'routeData', routeData );
+
+          if ( routeData.hasOwnProperty( 'number' ) ) {
+            return routeData.page + '-' + routeData.number;
+          }
+
+          if ( 'number' in routeData ) {
+            return routeData.page + '-' + routeData.number;
+          }
+
+          return routeData.page;
+        }
+
         function storeScrollPosition() {
           // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
-          Comfort.scrollPositions[page] = Comfort.scrollY();
+          Comfort.scrollPositions[pageId] = Comfort.scrollY();
 
           // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
         }
 
         function restoreScrollPosition() {
           // document.documentElement.scrollTop = Comfort.scrollPositions[page];
-          Comfort.scrollY( Comfort.scrollPositions[page] );
+          Comfort.scrollY( Comfort.scrollPositions[pageId] );
 
           // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions );
         }
@@ -303,12 +319,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
 
+        var pageId = getPageId();
+
         setInterval( storeScrollPositionIfHasScrolled, 100 );
         // Debounced OnScroll End
 
         // Haven't visited this page before
-        if ( Comfort.visited.indexOf( page ) === -1 ) {
-          Comfort.visited.push( page );
+        if ( Comfort.visited.indexOf( pageId ) === -1 ) {
+          Comfort.visited.push( pageId );
 
           storeScrollPosition();
         // Has visited page before

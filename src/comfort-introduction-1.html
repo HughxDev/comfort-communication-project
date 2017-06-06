@@ -1,0 +1,50 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-video.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-introduction-1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <section>
+      <!-- @todo: comfort-introduction-header -->
+      <header>
+        <p class="h3 section-subtitle">Section 2</p>
+        <h1 class="section-title">Introduction and Learning Outcomes</h1>
+      </header>
+
+      <p>Family caregivers can experience a great deal of anger, stress, denial, and burnout when caring for their loved ones.  Watch this short video to hear some real stories family caregivers regarding their experiences.  As you watch, jot down thoughts that come to your mind about what challenges family caregivers face in providing care and what you might want to say and do to help them address those challenges.</p>
+      
+      <comfort-video>
+        <iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/XaonoH1XqNI" frameborder="0" allowfullscreen></iframe>
+      </comfort-video>
+      
+      <comfort-button href="/introduction/2">I’ve watched the video</comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortIntroduction1 extends Polymer.Element {
+      static get is() { return 'comfort-introduction-1'; }
+    }
+
+    window.customElements.define( ComfortIntroduction1.is, ComfortIntroduction1 );
+  </script>
+</dom-module>

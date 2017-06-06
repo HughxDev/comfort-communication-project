@@ -135,33 +135,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed force-narrow>
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+    <!-- Main content -->
+    <app-header-layout fullbleed>
 
-        <!-- <comfort-header slot="header"></comfort-header> -->
-        <app-header slot="header" condenses reveals effects="waterfall">
-          <app-toolbar>
-            <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
-            <span main-title>
-              <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
-            </span>
-          </app-toolbar>
-        </app-header>
+      <!-- <comfort-header slot="header"></comfort-header> -->
+      <app-header slot="header" condenses reveals effects="waterfall">
+        <app-toolbar>
+          <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
+          <span main-title>
+            <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
+          </span>
+        </app-toolbar>
+      </app-header>
 
-        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <!-- <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink> -->
-          <comfort-welcome name="welcome" class="view"></comfort-welcome>
-          <comfort-pretest name="pretest" class="view"></comfort-pretest>
-          <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
-          <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
-          <comfort-view404 name="view404" class="view"></comfort-view404>
-        </iron-pages>
-
-      </app-header-layout>
-
+      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+        <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
+        <comfort-welcome name="welcome" class="view"></comfort-welcome>
+        <comfort-pretest name="pretest" class="view"></comfort-pretest>
+        <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
+        <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
+        <comfort-view404 name="view404" class="view"></comfort-view404>
+      </iron-pages>
+      
       <comfort-footer></comfort-footer>
-    </app-drawer-layout>
+
+    </app-header-layout>
   </template>
 
   <script>
@@ -197,7 +195,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
         this.rootPattern = ( new URL( this.rootPath ) ).pathname;
 
+        // maybe change to class?
         window.Comfort = window.Comfort || {};
+
+        Comfort.visited = Comfort.visited || [];
+
+        Comfort.supports = {
+          "pageOffset": function () {
+            return ( window.pageXOffset !== undefined );
+          }
+        };
+
+        Comfort.supportsPageOffset = Comfort.supports.pageOffset();
+
+        Comfort.is = {
+          "CSS1Compat": function () {
+            return ( ( document.compatMode || "" ) === "CSS1Compat" );
+          }
+        };
+
+        Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
+
+        Comfort.scrollX = function ( position ) {
+          if ( position ) {
+            if ( 'scroll' in window ) {
+              return window.scroll( position, 0 );
+            }
+
+            if ( 'scrollTo' in window ) {
+              return window.scrollTo( position, 0 );
+            }
+          }
+
+          return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
+        };
+
+        Comfort.scrollY = function ( position ) {
+          if ( position ) {
+            if ( 'scroll' in window ) {
+              return window.scroll( 0, position );
+            }
+
+            if ( 'scrollTo' in window ) {
+              return window.scrollTo( 0, position );
+            }
+          }
+
+          return ( Comfort.supportsPageOffset ? window.pageYOffset : Comfort.isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop );
+        };
+
+        /*
+          {
+            "page-name": 0 // scroll position
+          },
+          …
+        */
+        Comfort.scrollPositions = Comfort.scrollPositions || {};
       }
 
       // connectedCallback() {
@@ -220,59 +273,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Deault to 'welcome' in that case.
         this.page = page || 'welcome';
 
-        // Comfort.visited = Comfort.visited || [];
+        // Debounced OnScroll Start
+        var hasScrolled = false;
 
-        // /*
-        //   {
-        //     "page-name": 0 // scroll position
-        //   },
-        //   …
-        // */
-        // Comfort.scrollPositions = Comfort.scrollPositions || {};
+        window.onscroll = function activateHasScrolled() {
+          hasScrolled = true;
+          // console.log( 'activateHasScrolled' );
+        }
 
-        // // Debounced OnScroll Start
-        // var hasScrolled = false;
+        function storeScrollPosition() {
+          // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
+          Comfort.scrollPositions[page] = Comfort.scrollY();
 
-        // window.onscroll = function activateHasScrolled() {
-        //   hasScrolled = true;
+          // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
+        }
 
-        //   console.log( 'activateHasScrolled' );
-        // }
+        function restoreScrollPosition() {
+          // document.documentElement.scrollTop = Comfort.scrollPositions[page];
+          Comfort.scrollY( Comfort.scrollPositions[page] );
 
-        // function storeScrollPosition() {
-        //   // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
-        //   Comfort.scrollPositions[page] = window.scrollY
+          // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions );
+        }
 
-        //   console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
-        // }
+        function storeScrollPositionIfHasScrolled() {
+          if ( hasScrolled ) {
+            hasScrolled = false;
 
-        // function restoreScrollPosition() {
-        //   // document.documentElement.scrollTop = Comfort.scrollPositions[page];
-        //   window.scrollY = Comfort.scrollPositions[page];
+            storeScrollPosition();
+          }
+        }
 
-        //   console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions );
-        // }
+        setInterval( storeScrollPositionIfHasScrolled, 100 );
+        // Debounced OnScroll End
 
-        // function storeScrollPositionIfHasScrolled() {
-        //   if ( hasScrolled ) {
-        //     hasScrolled = false;
+        // Haven't visited this page before
+        if ( Comfort.visited.indexOf( page ) === -1 ) {
+          Comfort.visited.push( page );
 
-        //     storeScrollPosition();
-        //   }
-        // }
-
-        // setInterval( storeScrollPositionIfHasScrolled, 100 );
-        // // Debounced OnScroll End
-
-        // // Haven't visited this page before
-        // if ( Comfort.visited.indexOf( page ) === -1 ) {
-        //   Comfort.visited.push( page );
-
-        //   storeScrollPosition();
-        // // Has visited page before
-        // } else {
-        //   restoreScrollPosition();
-        // }
+          storeScrollPosition();
+        // Has visited page before
+        } else {
+          restoreScrollPosition();
+        }
 
         // console.log( 'Comfort.visited', Comfort.visited );
         // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );

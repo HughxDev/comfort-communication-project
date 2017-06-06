@@ -4,6 +4,7 @@
   <template>
     <style>
       :host {
+        display: block;
         height: 21px;
         background-color: #4D4D4D;
         color: white;
@@ -12,12 +13,18 @@
         font-size: 10px;
         font-weight: 300;
         line-height: 1;
+      }
+
+      .aligner {
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 100%;
       }
     </style>
-    <p>Copyright © 2017 The Comfort Communication Project</p>
+    <div class="aligner">
+      <p>Copyright © 2017 The Comfort Communication Project</p>
+    </div>
   </template>
 
   <script>

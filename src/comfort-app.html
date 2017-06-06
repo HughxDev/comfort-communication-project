@@ -198,6 +198,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // maybe change to class?
         window.Comfort = window.Comfort || {};
 
+        Comfort.User = {};
+
+        Comfort.User.answers = {};
+
         Comfort.visited = Comfort.visited || [];
 
         Comfort.supports = {
@@ -260,14 +264,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //   const mainTitle = this.shadowRoot.querySelector( '[main-title]' );
 
       //   console.log( mainTitle.textContent.length );
-        console.log( this.routeData );
+        // console.log( this.routeData );
       }
 
       _routePageChanged( routeData ) {
         var page = routeData.page;
         var subroute = this.subroute;
 
-        console.log( 'subroute', subroute );
+        // console.log( 'subroute', subroute );
 
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
@@ -356,7 +360,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl( 'comfort-' + page + '.html' );
 
-        console.log( 'resolvedPageUrl', resolvedPageUrl );
+        // console.log( 'resolvedPageUrl', resolvedPageUrl );
 
         Polymer.RenderStatus.afterNextRender( this, function () {
           Polymer.importHref(

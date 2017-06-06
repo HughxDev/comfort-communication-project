@@ -131,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location route="{{route}}"></app-location>
     <app-route
       route="{{route}}"
-      pattern="[[rootPattern]]:page/:number"
+      pattern="[[rootPattern]]:page"
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
 
@@ -216,22 +216,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
 
-        Comfort.scrollX = function ( position ) {
-          if ( position ) {
-            if ( 'scroll' in window ) {
-              return window.scroll( position, 0 );
-            }
+        // Comfort.scrollX = function ( position ) {
+        //   if ( position !== undefined ) {
+        //     if ( 'scroll' in window ) {
+        //       return window.scroll( position, 0 );
+        //     }
 
-            if ( 'scrollTo' in window ) {
-              return window.scrollTo( position, 0 );
-            }
-          }
+        //     if ( 'scrollTo' in window ) {
+        //       return window.scrollTo( position, 0 );
+        //     }
+        //   }
 
-          return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
-        };
+        //   return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
+        // };
 
         Comfort.scrollY = function ( position ) {
-          if ( position ) {
+          if ( position !== undefined ) {
             if ( 'scroll' in window ) {
               return window.scroll( 0, position );
             }
@@ -253,17 +253,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Comfort.scrollPositions = Comfort.scrollPositions || {};
       }
 
-      // connectedCallback() {
-      //   super.connectedCallback();
+      connectedCallback() {
+        super.connectedCallback();
 
       //   // const titleText = this.shadowRoot.querySelector( '#main-title-text' );
       //   const mainTitle = this.shadowRoot.querySelector( '[main-title]' );
 
       //   console.log( mainTitle.textContent.length );
-      // }
+        console.log( this.routeData );
+      }
 
       _routePageChanged( routeData ) {
         var page = routeData.page;
+        var subroute = this.subroute;
+
+        console.log( 'subroute', subroute );
 
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
@@ -285,21 +289,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         function getPageId() {
           // console.log( 'routeData', routeData );
-
-          if ( routeData.hasOwnProperty( 'number' ) ) {
-            return routeData.page + '-' + routeData.number;
-          }
-
-          if ( 'number' in routeData ) {
-            return routeData.page + '-' + routeData.number;
+          if ( subroute.path.length ) {
+            return routeData.page + '-' + subroute.path.replace( '/', '' );
           }
 
           return routeData.page;
         }
 
-        function storeScrollPosition() {
+        function storeScrollPosition( value ) {
           // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
-          Comfort.scrollPositions[pageId] = Comfort.scrollY();
+          if ( value !== undefined ) {
+            Comfort.scrollPositions[pageId] = value;
+          } else {
+            Comfort.scrollPositions[pageId] = Comfort.scrollY();
+          }
 
           // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
         }
@@ -308,7 +311,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // document.documentElement.scrollTop = Comfort.scrollPositions[page];
           Comfort.scrollY( Comfort.scrollPositions[pageId] );
 
-          // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions );
+          // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions[pageId] );
         }
 
         function storeScrollPositionIfHasScrolled() {
@@ -319,16 +322,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
 
+        function storeScrollPositionSetInterval() {
+          storeScrollPositionInterval = setInterval( storeScrollPositionIfHasScrolled, 100 );
+        }
+
         var pageId = getPageId();
 
-        setInterval( storeScrollPositionIfHasScrolled, 100 );
+        var storeScrollPositionInterval;
+
+        storeScrollPositionSetInterval();
         // Debounced OnScroll End
 
         // Haven't visited this page before
         if ( Comfort.visited.indexOf( pageId ) === -1 ) {
           Comfort.visited.push( pageId );
 
-          storeScrollPosition();
+          // clearInterval( storeScrollPositionInterval );
+
+          storeScrollPosition( 0 );
+          restoreScrollPosition();
+
+          // storeScrollPositionSetInterval();
         // Has visited page before
         } else {
           restoreScrollPosition();
@@ -338,16 +352,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );
       }
 
-      _pageChanged(page) {
+      _pageChanged( page ) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('comfort-' + page + '.html');
-        Polymer.RenderStatus.afterNextRender(this, function () {
+        var resolvedPageUrl = this.resolveUrl( 'comfort-' + page + '.html' );
+
+        console.log( 'resolvedPageUrl', resolvedPageUrl );
+
+        Polymer.RenderStatus.afterNextRender( this, function () {
           Polymer.importHref(
             resolvedPageUrl,
             null,
-            this._showPage404.bind(this),
-            true);
-        }.bind(this));
+            this._showPage404.bind( this ),
+            true
+          );
+        }.bind( this ) );
       }
 
       _showPage404() {

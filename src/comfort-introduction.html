@@ -45,11 +45,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class ComfortIntroduction extends Polymer.Element {
       static get is() { return 'comfort-introduction'; }
 
+      static get observers() {
+        return [
+          '_routePageChanged(routeData)',
+        ];
+      }
+
+      // constructor() {
+      //   super();
+      // }
+
       connectedCallback() {
         super.connectedCallback();
 
         console.log( this.routeData );
-        // console.log( this.subroute );
+        console.log( this.subroute );
+
+        // console.log( 'this.routeData', this.routeData );
+
+        // var properties = Object.keys( this.routeData );
+
+        // console.log( 'properties', properties );
+
+        // if ( !properties.length ) {
+        //   this.routeData.page = 'introduction';
+        //   this.routeData.number = '1';
+        //   this.subroute.path = '/1';
+        // }
+      }
+
+      _routePageChanged( routeData ) {
+        // console.log( 'routeData', routeData );
       }
     }
 

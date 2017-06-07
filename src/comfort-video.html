@@ -22,7 +22,8 @@
       .responsive ::slotted(object),
       .responsive ::slotted(embed),
       .responsive ::slotted(img),
-      .responsive ::slotted(svg) {
+      .responsive ::slotted(svg),
+      .fallback {
         position: absolute;
         top: 0;
         left: 0;
@@ -31,7 +32,9 @@
       }
     </style>
     <div class="responsive">
-      <slot></slot>
+      <slot>
+        <img class="fallback" src="https://via.placeholder.com/853x480?text=Missing+video" width="853" height="480" alt="Missing video" />
+      </slot>
     </div>
   </template>
 

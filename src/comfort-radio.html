@@ -78,12 +78,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       :host([incorrect]) .radio__circle,
       .radio__circle--incorrect {
-        fill: #FF1D25;
+        /*fill: #FF1D25;*/
+        fill: var( --color-incorrect );
       }
 
       :host([correct]) .radio__circle,
       .radio__circle--correct {
-        fill: #7ac943;
+        /*fill: #7ac943;*/
+        fill: var( --color-correct );
       }
     </style>
     <svg

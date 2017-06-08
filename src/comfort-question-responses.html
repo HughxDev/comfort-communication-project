@@ -18,6 +18,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .response {
+        transition: height 1s ease-out, margin 1s ease-out, color 1s linear;
+      }
+
+      :host(:not([revealed])) .response {
+        height: 0;
+        margin: 0;
+        color: transparent;
+      }
+
+      :host([revealed]) .response {
+        /*height: initial;*/
+        color: var( --color-correct );
+      }
     </style>
     
     <ol id="questions" class="questions" type$="[[numbering]]">
@@ -46,9 +61,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           "numbering": {
             "type": String,
             "value": "a"
+          },
+          "revealed": {
+            "type": Boolean,
+            "value": false,
+            // "observer": "_revealedChanged",
           }
         };
       } // properties
+
+      // _revealedChanged( newValue, oldValue ) {
+
+      // }
     }
 
     window.customElements.define( ComfortQuestionResponses.is, ComfortQuestionResponses );

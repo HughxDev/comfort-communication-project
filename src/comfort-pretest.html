@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="comfort-radiogroup.html">
 <link rel="import" href="comfort-button.html">
 
+<link rel="import" href="comfort-mixins.html">
+
 <dom-module id="comfort-pretest">
   <template>
     <style include="shared-styles">
@@ -82,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
 
-    class ComfortPretest extends Polymer.GestureEventListeners( Polymer.Element ) {
+    class ComfortPretest extends Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) {
       static get is() { return 'comfort-pretest'; }
       static get properties() {
         return {
@@ -308,7 +310,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super();
 
         Defiant.getSnapshot( this.questions, snapshot => {
-          // Caching for performance. May be unnecessary since dataset is not that big.          this.snapshot = snapshot;
+          // Caching for performance. May be unnecessary since dataset is not that big.
+          this.snapshot = snapshot;
         } );
       }
 
@@ -387,56 +390,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return questionType === 'open-ended';
       }
 
-      _storeAnswers( event ) {
-        function formatResponse( question, questionNumber, selected, selectedNumber ) {
-          var response = {};
-
-          response.question = question.question;
-          response.number = questionNumber;
-          response.type = question.type;
-          response.answer = selected;
-          response.answer.number = selectedNumber;
-
-          return response;
-        }
-
-        const $form = this.shadowRoot.querySelector( '#pretest-form' );
-
-        // var values = {};
-        var responses = [];
-
-        // console.log( '$form.elements', $form.elements );
-        var $element, question, selected, questionXPath;
-
-        for ( var i = 0; i < $form.elements.length; i++ ) {
-          $element = $form.elements[i];
-
-          questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
-
-          question = JSON.search( this.snapshot, questionXPath )[0];
-
-          switch ( $element.type ) {
-            case 'radio':
-            case 'checkbox':
-              if ( $element.checked ) {
-                selected = JSON.search( this.snapshot, questionXPath + '/answers[' + $element.value + ']' )[0];
-                
-                responses.push( formatResponse( question, $element.name, selected, $element.value ) );
-              } 
-            break;
-
-            default:
-              responses.push( formatResponse( question, $element.name, { "text": $element.value, "correct": null }, '1' ) );
-          }
-        }
-
-        // console.log( 'responses', responses );
-        Comfort.User.answers.pretest = responses;
-
-        // console.log( 'Comfort.User', Comfort.User );
-
-        // event.preventDefault();
-      }
+      // _storeAnswers (moved to mixin class)
     }
 
     window.customElements.define( ComfortPretest.is, ComfortPretest );

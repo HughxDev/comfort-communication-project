@@ -57,7 +57,29 @@
     }
   };
 
-  // @todo
+  // @todo: subsume into PseudoForm?
+  Comfort.InstructorResponses = (superclass) => class extends superclass {
+    _revealResponses( event ) {
+      const $button = event.target;
+
+      Comfort.scrollY( 0 );
+
+      window.onscroll = () => {
+        this.$questions.setAttribute( 'revealed', '' );
+
+        var href = $button.getAttribute( 'data-href' );
+
+        $button.textContent = $button.getAttribute( 'data-after-text' );
+
+        // this.unlisten( $button );
+        Polymer.Gestures.removeListener( $button, 'tap' );
+      }
+
+      event.preventDefault();
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
   Comfort.CorrectIncorrect = (superclass) => class extends superclass {
     _markCorrectIncorrectOnInputChange() {
       const $questions = this.shadowRoot.querySelector( '#questions' );

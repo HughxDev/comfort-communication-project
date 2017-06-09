@@ -13,11 +13,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="comfort-video.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="comfort-manager-caregiver-1.html">
-<link rel="import" href="comfort-manager-caregiver-2.html">
-<link rel="import" href="comfort-manager-caregiver-3.html">
+<link rel="import" href="comfort-carrier-caregiver-1.html">
+<link rel="import" href="comfort-carrier-caregiver-2.html">
+<!-- <link rel="import" href="comfort-carrier-caregiver-3.html"> -->
 
-<dom-module id="comfort-manager-caregiver">
+<dom-module id="comfort-carrier-caregiver">
   <template>
     <style include="shared-styles">
       :host {
@@ -33,19 +33,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       tail="{{subroute}}"></app-route>
 
     <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1">
-      <comfort-manager-caregiver-1 name="1" class="view"></comfort-manager-caregiver-1>
-      <comfort-manager-caregiver-2 name="2" class="view"></comfort-manager-caregiver-2>
-      <comfort-manager-caregiver-3 name="3" class="view"></comfort-manager-caregiver-3>
+      <comfort-carrier-caregiver-1 name="1" class="view"></comfort-carrier-caregiver-1>
+      <comfort-carrier-caregiver-2 name="2" class="view"></comfort-carrier-caregiver-2>
+      <!-- <comfort-carrier-caregiver-3 name="3" class="view"></comfort-carrier-caregiver-3> -->
     </iron-pages>
   </template>
 
   <script>
     "use strict";
     
-    class ComfortManagerCaregiver extends Polymer.Element {
-      static get is() { return 'comfort-manager-caregiver'; }
+    class ComfortCarrierCaregiver extends Polymer.Element {
+      static get is() { return 'comfort-carrier-caregiver'; }
     }
 
-    window.customElements.define( ComfortManagerCaregiver.is, ComfortManagerCaregiver );
+    window.customElements.define( ComfortCarrierCaregiver.is, ComfortCarrierCaregiver );
   </script>
 </dom-module>

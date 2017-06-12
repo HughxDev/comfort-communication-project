@@ -110,7 +110,7 @@
 
         var highlightCorrect = false;
 
-        if ( selected.correct === true ) {
+        if ( selected && selected.correct === true ) {
           // alert( 'Correct!' );
           radio.setAttribute( 'correct', '' );
         } else {

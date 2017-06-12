@@ -1,0 +1,51 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-video.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="comfort-lone-caregiver-1.html">
+<link rel="import" href="comfort-lone-caregiver-2.html">
+<link rel="import" href="comfort-lone-caregiver-3.html">
+
+<dom-module id="comfort-lone-caregiver">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="/:page/:number"
+      data="{{routeData}}"
+      tail="{{subroute}}"></app-route>
+
+    <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1">
+      <comfort-lone-caregiver-1 name="1" class="view"></comfort-lone-caregiver-1>
+      <comfort-lone-caregiver-2 name="2" class="view"></comfort-lone-caregiver-2>
+      <comfort-lone-caregiver-3 name="3" class="view"></comfort-lone-caregiver-3>
+    </iron-pages>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortLoneCaregiver extends Polymer.Element {
+      static get is() { return 'comfort-lone-caregiver'; }
+    }
+
+    window.customElements.define( ComfortLoneCaregiver.is, ComfortLoneCaregiver );
+  </script>
+</dom-module>

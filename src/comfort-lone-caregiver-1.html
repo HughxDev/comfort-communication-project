@@ -1,0 +1,53 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-video.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-lone-caregiver-1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 4D</p>
+        <h1 class="section-title">The Lone Caregiver</h1>
+      </header>
+
+      <p><dfn>Lone caregivers</dfn> are just that, alone in the task of caregiving, and recognize that they are. They have little or no support from family members for decision-making or caregiving. They come from low-talk and low-obligation families. They have limited communication and weak relationships with other family members and feel high stress, burden, anger, and resentment as a result. They also may be leery and even defensive. For example, this lone caregiver is the adult daughter with five brothers:</p>
+
+      <p><q>That’s the part that hurts me the most is because my brothers… my mom has been living with me for six months. One of my brothers, that lives in [X], he’s been out here five times… my mom wanted to invite them all [my five brothers] for lunch on a Saturday so we did that and he [another brother] stopped by for 15 minutes and then had to go to [X]. And my other brother, who lives in [X], not that far away, he’s been here like 3 times in 6 months. So I have a lot of anger against them.</q></p>
+
+      <p>Lone caregivers also tend to fixate on one aspect of care (e.g., hydration, diet, and upcoming procedure) related to the patient’s immediate physical needs. They don’t tend to selfdisclose about anything other than the immediate caregiving tasks at hand. They also have a difficult time accepting the overall disease process or prognosis.</p>
+
+      <p><b>How to spot a lone caregiver:</b> As a coping mechanism, lone caregivers often appear detached. There is little or no observable family interaction or evidence of shared caregiver burden. They are heavily invested in short-term biomedical solutions and fixate on the patient’s immediate physical needs. They avoid discussing death, dying, the disease, process and prognosis, caregiving plans, or quality of life issues. They may even become defensive when these subjects arise.</p>
+
+      <p><b>Communication Strategies:</b> Engage in one-on-one interactions rather than large team meetings, which may make the lone caregiver feel defensive. Use simple words and pictures to address low health literacy. Because this caregiver type is the most challenging, multiple interventions are needed. However, interactions need to come from one member of the healthcare team who develops a relationship with the caregiver. This healthcare professional should serve as a liaison between the caregiver and the healthcare team.</p>
+
+      <comfort-button href="/lone-caregiver/2"></comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortLoneCaregiver1 extends Polymer.Element {
+      static get is() { return 'comfort-lone-caregiver-1'; }
+    }
+
+    window.customElements.define( ComfortLoneCaregiver1.is, ComfortLoneCaregiver1 );
+  </script>
+</dom-module>

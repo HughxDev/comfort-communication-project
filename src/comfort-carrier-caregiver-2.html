@@ -11,8 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="comfort-mixins.html">
 <link rel="import" href="comfort-button.html">
-<link rel="import" href="comfort-video.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="comfort-question-responses.html">
 
 <dom-module id="comfort-carrier-caregiver-2">
   <template>
@@ -30,50 +30,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <comfort-question-responses id="questions" numbering="1"></comfort-question-responses>
 
-      <comfort-button on-tap="_revealResponses" href="/partner-caregiver/" data-after-text="Contine">Instructor Responses</comfort-button>
+      <comfort-button on-tap="_revealResponses" href="/partner-caregiver/" data-after-text="Continue to Section 4C">Instructor Responses</comfort-button>
     </section>
   </template>
 
   <script>
     "use strict";
     
-    class ComfortCarrierCaregiver2 extends Comfort.InstructorResponses( Polymer.Element ) {
+    class ComfortCarrierCaregiver2 extends Comfort.InstructorResponses( Polymer.GestureEventListeners( Polymer.Element ) ) {
       static get is() { return 'comfort-carrier-caregiver-2'; }
 
       connectedCallback() {
         super.connectedCallback();
 
-        /*
-          1. How would you describe the family patterns (high or low talk; high or low obligation) for
-          this caregiver and why?
-          2. What carrier caregiver characteristics does she display?
-          3. What might you say and do if you were on the healthcare team for this caregiver?
-          [Instructor response after student completes video and responds to the questions.]
-          1. How would you describe the family patterns (high or low talk; high or low obligation) for
-          this caregiver and why?
-          Joyce has a low family talk, high obligation family pattern with her sister and parents. Family
-          talk is low as no one in the family discusses what support Joyce may need as she helps her
-          parents. Only her brother-in-law recognizes the enormity of her role, and even then, he
-          focuses only on how they must keep her in this role! Family obligation is high as the family
-          reinforces Joyce's role as family caregiver and are happy to have Joyce managing the care.
-          2. What carrier caregiver characteristics does she display?
-          Joyce comfortably self-identifies as a caregiver ("I like being a caregiver") and is proud to be
-          able to take on this role ("I have the luxury of the time"). Although she describes that her role
-          as family caregiver "just fell to me" within her own family, she has prior family caregiving
-          experience as she took care of her husband's mother at the end of her life. She also reveals
-          that she is not able to talk about the stress of caregiving with family, so she worked with a
-          therapist. Her experience with her husband's family ("His sister said that they would help, and
-          that didn't work out"), as well as her own, suggests that Joyce has a hard time asking for help
-          or allowing others to help.
-          3. What might you say and do if you were on the healthcare team for this caregiver?
-          9
-          It is important to tell Joyce that she is doing an excellent job as a caregiver. As a carrier
-          caregiver, she works very hard to make sure she provides quality care. Provide emotional
-          support and encouragement for the work she is doing and stress the importance of self-care.
-          Encourage her to share her feelings about caregiving and how caregiving has impacted her
-          life. Remind Joyce to do something for herself everyday, even something as small as a 15
-          minute walk outside.
-        */
+        this.$questions = this.shadowRoot.querySelector( '#questions' );
+
+        this.$questions.questions = [
+          {
+            "text": "How would you describe the family patterns (high or low talk; high or low obligation) for this caregiver and why?",
+            "response": "Joyce has a low family talk, high obligation family pattern with her sister and parents. Family talk is low as no one in the family discusses what support Joyce may need as she helps her parents. Only her brother-in-law recognizes the enormity of her role, and even then, he focuses only on how they must keep her in this role! Family obligation is high as the family reinforces Joyce's role as family caregiver and are happy to have Joyce managing the care."
+          },
+          {
+            "text": "What carrier caregiver characteristics does she display?",
+            "response": "Joyce comfortably self-identifies as a caregiver (“I like being a caregiver”) and is proud to be able to take on this role (“I have the luxury of the time”). Although she describes that her role as family caregiver “just fell to me” within her own family, she has prior family caregiving experience as she took care of her husband's mother at the end of her life. She also reveals that she is not able to talk about the stress of caregiving with family, so she worked with a therapist. Her experience with her husband's family (“His sister said that they would help, and that didn’t work out”), as well as her own, suggests that Joyce has a hard time asking for help or allowing others to help."
+          },
+          {
+            "text": "What might you say and do if you were on the healthcare team for this caregiver?",
+            "response": "It is important to tell Joyce that she is doing an excellent job as a caregiver. As a carrier caregiver, she works very hard to make sure she provides quality care. Provide emotional support and encouragement for the work she is doing and stress the importance of self-care. Encourage her to share her feelings about caregiving and how caregiving has impacted her life. Remind Joyce to do something for herself everyday, even something as small as a 15 minute walk outside."
+          }
+        ];
+
+        console.log( 'this.$questions.questions', this.$questions.questions );
       }
     }
 

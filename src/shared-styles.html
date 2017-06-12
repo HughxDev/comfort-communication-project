@@ -40,6 +40,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
+      a:hover,
+      a:focus {
+        text-decoration: none;
+      }
+
       h1, .h1,
       h2, .h2,
       h3, .h3,
@@ -155,6 +160,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
       }
 
+      figure {
+        @apply --line-length;
+        @apply --breathe;
+      }
+
+      figcaption {
+        font-style: italic;
+        font-size: 1.1em;
+        margin: .5em 0;
+        color: #666;
+      }
+
+      figcaption a {
+        color: inherit;
+      }
+
       header {
         margin-bottom: 54px;
       }
@@ -222,6 +243,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .answer {
         margin: 9px 0;
+      }
+
+      .figure-item {
+        margin-bottom: 0;
       }
 
       .kitchen-sink__heading {

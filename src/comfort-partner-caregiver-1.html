@@ -1,0 +1,55 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-video.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="comfort-partner-caregiver-1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 4C</p>
+        <h1 class="section-title">The Partner Caregiver</h1>
+      </header>
+
+      <p><dfn>Partner caregivers</dfn> are aware of and focus on caring for the whole patient. They benefit from a high talk family communication pattern where decisions about care have been discussed and determined in advance. The entire family (including the patient) is involved in discussing and decision-making about patient care. Partner caregivers emphasize education about the disease, placement option, and additional information that contributes to making an educated decision on behalf of the patient. Partner caregivers engage in open discussion with providers (rather than mere questions and answers), as well as with the family about death and dying. They delegate tasks, accept assistance, and discuss burden freely with the patient and other family members. The partner caregiver desires a partnership not only with care providers but also with family members as a team and support network. For example:
+
+      <p><q>My brother and I had another little mini meeting today and said we are going to have to give dad [patient] the message that we understand he’s bored, he wants his own food and he still thinks he can still try to go to the bathroom and he’s fighting that whole thing and he wants us to take care of him. Certainly we will bring him home during the day, all we have to do is put him in a wheelchair and walk around the corner, so I don’t know. I’m trying to be honest with him and it’s just weird. I heard mom say to dad [patient] yesterday when my brother and I were out of the room when we took her for a visit, I heard her say <q>the kids are in charge now honey and they are doing the best they can for us</q>.</q></p>
+
+      <hr />
+
+      <p><b>How to spot a partner caregiver:</b> You will notice that different family members will be present at different times. Partner caregivers will offer to help the provider team and accept assistance from others. They will share the burden with various family members by engaging in open dialogue about death and dying, which may give rise to conflict. However, conflict results in productive outcomes.</p>
+
+      <p><b>Communication Strategies:</b> In addition to providing information, be sure to include the caregiver in care planning and decision-making. Facilitate family meetings to discuss caregiving and support. Ask questions like “What do you need from the team?” and “How are you all holding up?”</p>
+
+      <comfort-video></comfort-video>
+
+      <comfort-button href="/partner-caregiver/2"></comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    class ComfortPartnerCaregiver1 extends Polymer.Element {
+      static get is() { return 'comfort-partner-caregiver-1'; }
+    }
+
+    window.customElements.define( ComfortPartnerCaregiver1.is, ComfortPartnerCaregiver1 );
+  </script>
+</dom-module>

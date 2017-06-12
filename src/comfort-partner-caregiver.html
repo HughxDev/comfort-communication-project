@@ -13,11 +13,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="comfort-video.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="comfort-carrier-caregiver-1.html">
-<link rel="import" href="comfort-carrier-caregiver-2.html">
-<!-- <link rel="import" href="comfort-carrier-caregiver-3.html"> -->
+<link rel="import" href="comfort-partner-caregiver-1.html">
+<link rel="import" href="comfort-partner-caregiver-2.html">
 
-<dom-module id="comfort-carrier-caregiver">
+<dom-module id="comfort-partner-caregiver">
   <template>
     <style include="shared-styles">
       :host {
@@ -33,18 +32,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       tail="{{subroute}}"></app-route>
 
     <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1">
-      <comfort-carrier-caregiver-1 name="1" class="view"></comfort-carrier-caregiver-1>
-      <comfort-carrier-caregiver-2 name="2" class="view"></comfort-carrier-caregiver-2>
+      <comfort-partner-caregiver-1 name="1" class="view"></comfort-partner-caregiver-1>
+      <comfort-partner-caregiver-2 name="2" class="view"></comfort-partner-caregiver-2>
     </iron-pages>
   </template>
 
   <script>
     "use strict";
     
-    class ComfortCarrierCaregiver extends Polymer.Element {
-      static get is() { return 'comfort-carrier-caregiver'; }
+    class ComfortPartnerCaregiver extends Polymer.Element {
+      static get is() { return 'comfort-partner-caregiver'; }
     }
 
-    window.customElements.define( ComfortCarrierCaregiver.is, ComfortCarrierCaregiver );
+    window.customElements.define( ComfortPartnerCaregiver.is, ComfortPartnerCaregiver );
   </script>
 </dom-module>

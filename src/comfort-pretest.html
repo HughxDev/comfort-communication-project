@@ -1,20 +1,7 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="comfort-radio.html">
-<link rel="import" href="comfort-radiogroup.html">
 <link rel="import" href="comfort-button.html">
-
-<link rel="import" href="comfort-mixins.html">
+<link rel="import" href="comfort-test.html">
 
 <dom-module id="comfort-pretest">
   <template>
@@ -39,44 +26,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p class="h3 section-subtitle">Section 1</p>
         <h1 class="section-title">Pre-test</h1>
       </header>
+      
       <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
 
-      <form id="pretest-form">
-        <ol id="questions" class="questions">
-          <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
-            <li>
-              <p id$="question[[increment(questionIndex)]]">[[question.question]]</p>
-              <template is="dom-if" if="{{isMultipleChoice(question.type)}}">
-                <comfort-radiogroup class="answers" role="radiogroup" aria-labelledby$="question[[questionIndex]]">
-                  <template is="dom-repeat" items="{{question.answers}}">
-                    <comfort-radio class="answer">
-                      <label slot="label">
-                        <input
-                          id$="question[[increment(questionIndex)]]-[[increment(index)]]"
-                          type="radio"
-                          name$="[[increment(questionIndex)]]"
-                          value="[[increment(index)]]"
-                        /> [[item.text]]
-                      </label>
-                    </comfort-radio>
-                  </template>
-                </comfort-radiogroup>
-              </template><!--/dom-if-->
-              <template is="dom-if" if="{{isOpenEnded(question.type)}}">
-                <textarea
-                  id$="question[[increment(questionIndex)]]-1"
-                  class="open-ended"
-                  name$="[[increment(questionIndex)]]"
-                  aria-labelledby$="question[[increment(questionIndex)]]"
-                ></textarea>
-              </template>
-            </li>
-          </template>
-        </ol>
-      </form>
+      <comfort-test id="pretest"></comfort-test>
 
       <hr />
+
       <p class="lets-begin">Now that you have finished the pretest, let’s begin. This module will take about 30 minutes to complete. Once finished, you will take a post-test to assess your learning. If you are not satisfied with the results, feel free to go through the module again. You can do so as many times as you’d like to—until you are satisfied with your post-test results.</p>
+
       <comfort-button id="next" on-tap="_storeAnswers" href="/introduction/">Start course</comfort-button>
     </section>
   </template>
@@ -86,254 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     class ComfortPretest extends Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) {
       static get is() { return 'comfort-pretest'; }
-      static get properties() {
-        return {
-          "snapshot": {
-            "type": Object
-          },
-          "questions": {
-            "type": Object,
-            value() {
-              return [
-                // 0
-                {
-                  "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "True",
-                      "correct": false
-                    },
-                    {
-                      "text": "False",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 1
-                {
-                  "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Do not get involved let them work it out amongst themselves because family matters are not your business as a health care provider.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Ask the patient and present family members questions about their family dynamics.",
-                      "correct": true
-                    },
-                    {
-                      "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 2
-                {
-                  "question": "A family is considered a system because:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Members are born into relationships with one another.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Family boundaries are agreed upon among members.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The family environment may be supportive or unsupportive.",
-                      "correct": false
-                    },
-                    {
-                      "text": "These interdependent members influence one another.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 3
-                {
-                  "question": "You are caring for a family led by a carrier family member. What will you do be most helpful to the carrier family member?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Avoid communication with the carrier family member unless approached by them with a specific question regarding the patient.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Avoid discussions about death and dying.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Discuss patient care directions privately with the carrier family member.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Plan an immediate intervention to help carrier family member facilitate patient requests.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 4
-                {
-                  "question": "According to the family member typology, which of the following is true regarding the loner family member?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "The loner family member is considered the top of the family hierarchy.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The loner family member is in the least need of clinician intervention.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The loner family member has been surrounded by other family members in terms of support and communication.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The loner family member likely suffers from increased stress and burden due to minimal social support and likely holds anger and resentment towards other members of the family.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 5
-                {
-                  "question": "In order to facilitate effective communication for a patient and family, you must first:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Assess the family system and family dynamics.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Identify specific communication gaps in family dynamics.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Examine the context, background, and communication preferences of the family.",
-                      "correct": false
-                    },
-                    {
-                      "text": "All of the above",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 6
-                {
-                  "question": "According to Family Communication Patterns Theory, family communication is composed of:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Conversation and conflict patterns",
-                      "correct": false
-                    },
-                    {
-                      "text": "Conformity and caring patterns",
-                      "correct": false
-                    },
-                    {
-                      "text": "Conversation and conformity patterns",
-                      "correct": true
-                    },
-                    {
-                      "text": "Conversation and caring patterns",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 7
-                {
-                  "question": "When working with a “Manager” caregiver, family conflict is likely to occur because:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "The caregiver is estranged from the rest of the family",
-                      "correct": false
-                    },
-                    {
-                      "text": "The caregiver is passive",
-                      "correct": false
-                    },
-                    {
-                      "text": "The caregiver is controlling information flow",
-                      "correct": true
-                    },
-                    {
-                      "text": "The caregiver suffers low health literacy",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 8
-                {
-                  "question": "When working with a “Loner” caregiver, health professional communication should focus on:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Physical and emotional support",
-                      "correct": false
-                    },
-                    {
-                      "text": "Provision of care services",
-                      "correct": false
-                    },
-                    {
-                      "text": "Access to educational resources",
-                      "correct": false
-                    },
-                    {
-                      "text": "All of the above",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 9
-                // Pre-test:
-                {
-                  "question": "What do you believe will be the most useful communication skill to learn from this module and why?",
-                  "type": "open-ended"
-                }
-              ];
-            }
-          }
-        };
+
+      _storeAnswers() {
+        const $pretest = this.shadowRoot.querySelector( '#pretest' );
+
+        $pretest._storeAnswers();
       }
-
-      constructor() {
-        super();
-
-        Defiant.getSnapshot( this.questions, snapshot => {
-          // Caching for performance. May be unnecessary since dataset is not that big.
-          this.snapshot = snapshot;
-        } );
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
-
-        // this._markCorrectIncorrectOnInputChange();
-      }
-
-      increment( integer ) {
-        return ++integer;
-      }
-
-      isMultipleChoice( questionType ) {
-        return questionType === 'multiple-choice';
-      }
-
-      isOpenEnded( questionType ) {
-        return questionType === 'open-ended';
-      }
-
-      // _storeAnswers (moved to mixin class)
     }
 
     window.customElements.define( ComfortPretest.is, ComfortPretest );

@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="comfort-button.html">
+<link rel="import" href="comfort-test.html">
+
+<dom-module id="comfort-posttest">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 5</p>
+        <h1 class="section-title">Post-test</h1>
+      </header>
+      
+      <p>Congratulations! You have now completed Module F (Family Caregivers) and are ready to assess your understanding by taking the post-test.</p>
+
+      <comfort-test id="posttest"></comfort-test>
+
+      <comfort-button id="next" on-tap="_storeAnswers" data-href="/done/">Finish course</comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+
+    class ComfortPosttest extends Polymer.GestureEventListeners( Polymer.Element ) {
+      static get is() { return 'comfort-posttest'; }
+
+      _storeAnswers() {
+        const $posttest = this.shadowRoot.querySelector( '#posttest' );
+
+        $posttest._storeAnswers();
+      }
+
+      ready() {
+        super.ready();
+
+        const $posttest = this.shadowRoot.querySelector( '#posttest' );
+      
+        $posttest._markCorrectIncorrectOnInputChange();
+      }
+    }
+
+    window.customElements.define( ComfortPosttest.is, ComfortPosttest );
+  </script>
+</dom-module>

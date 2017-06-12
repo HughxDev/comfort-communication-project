@@ -18,7 +18,8 @@
         return response;
       }
 
-      const $form = this.shadowRoot.querySelector( '#pretest-form' );
+      // const $form = this.shadowRoot.querySelector( '#pretest-form' );
+      const $form = this.shadowRoot.querySelector( 'form' );
 
       // var values = {};
       var responses = [];
@@ -49,7 +50,7 @@
       }
 
       // console.log( 'responses', responses );
-      Comfort.User.answers.pretest = responses;
+      Comfort.User.answers[ document.querySelector( 'comfort-app' ).getAttribute( 'page' ) ] = responses;
 
       console.log( 'Comfort.User', Comfort.User );
 
@@ -103,7 +104,7 @@
 
         var radio = input;
 
-        while( radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
+        while( radio && radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
           radio = radio.parentNode;
         }
 

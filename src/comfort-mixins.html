@@ -63,17 +63,24 @@
     _revealResponses( event ) {
       const $button = event.target;
 
-      Comfort.scrollY( 0 );
+      const noScroll = $button.hasAttribute( 'no-scroll' );
 
-      window.onscroll = () => {
+      const reveal = () => {
         this.$questions.setAttribute( 'revealed', '' );
 
         var href = $button.getAttribute( 'data-href' );
 
-        $button.textContent = $button.getAttribute( 'data-after-text' );
+        $button.textContent = $button.getAttribute( 'after-tap-text' );
 
         // this.unlisten( $button );
         Polymer.Gestures.removeListener( $button, 'tap' );
+      };
+
+      if ( noScroll ) {
+        reveal();
+      } else {
+        Comfort.scrollY( 0 );
+        window.onscroll = reveal;
       }
 
       event.preventDefault();

@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-mixins.html">
 <link rel="import" href="comfort-button.html">
 <link rel="import" href="shared-styles.html">
 
@@ -47,17 +48,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host([revealed]) ::slotted(comfort-video) {
         display: block;
       }
+
+      :host([highlight-required]) .answer {
+        border: 1px solid var( --color-incorrect );
+      }
+
+      :host([highlight-required]) .answer--answered {
+        border-color: var( --textarea-border-color );
+      }
     </style>
     
-    <ol id="questions" class="questions" type$="[[numbering]]">
+    <!-- <form> -->
+    <ol on-change="clearRequiredHighlightIfApplicable" id="questions" class="questions" type$="[[numbering]]">
       <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
         <li>
           <p><label for="answer-[[questionIndex]]">[[question.text]]</label></p>
-          <textarea id="answer-[[questionIndex]]"></textarea>
+          <textarea class="answer" id="answer-[[questionIndex]]" required></textarea>
           <p class="response">[[question.response]]</p>
         </li>
       </template>
     </ol>
+    <!-- </form> -->
     <div class="response response--epilog">
       <slot></slot>
     </div>
@@ -66,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortQuestionResponses extends Polymer.Element {
+    class ComfortQuestionResponses extends Comfort.CheckValidity( Polymer.Element ) {
       static get is() { return 'comfort-question-responses'; }
 
       static get properties() {
@@ -83,6 +94,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             "type": Boolean,
             "value": false,
             // "observer": "_revealedChanged",
+          },
+          "highlightRequired": {
+            "type": Boolean,
+            "value": false
           }
         };
       } // properties
@@ -90,6 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // _revealedChanged( newValue, oldValue ) {
 
       // }
+
+      // checkForAnswers
     }
 
     window.customElements.define( ComfortQuestionResponses.is, ComfortQuestionResponses );

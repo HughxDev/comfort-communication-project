@@ -1,4 +1,3 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="comfort-button.html">
 <link rel="import" href="comfort-test.html">
@@ -29,27 +28,30 @@
       
       <p>Before you begin this module on family caregivers, complete this short pretest to assess your baseline knowledge:</p>
 
-      <comfort-test id="pretest"></comfort-test>
+      <comfort-test id="test"></comfort-test>
 
       <hr />
 
       <p class="lets-begin">Now that you have finished the pretest, let’s begin. This module will take about 30 minutes to complete. Once finished, you will take a post-test to assess your learning. If you are not satisfied with the results, feel free to go through the module again. You can do so as many times as you’d like to—until you are satisfied with your post-test results.</p>
 
-      <comfort-button id="next" on-tap="_storeAnswers" href="/introduction/">Start course</comfort-button>
+      <comfort-button id="next" on-tap="alertIfUnansweredQuestionsRemain" href="/introduction/">Start course</comfort-button>
     </section>
   </template>
 
   <script>
     "use strict";
 
-    class ComfortPretest extends Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) {
+    class ComfortPretest extends Comfort.CheckValidity( Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) ) {
       static get is() { return 'comfort-pretest'; }
 
-      _storeAnswers() {
-        const $pretest = this.shadowRoot.querySelector( '#pretest' );
+      // checkForAnswers( event ) { 
+      // }
 
-        $pretest._storeAnswers();
-      }
+      // _storeAnswers() {
+      //   const $pretest = this.shadowRoot.querySelector( '#pretest' );
+
+      //   $pretest._storeAnswers();
+      // }
     }
 
     window.customElements.define( ComfortPretest.is, ComfortPretest );

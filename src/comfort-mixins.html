@@ -59,28 +59,111 @@
   };
 
   // @todo: subsume into PseudoForm?
+  Comfort.CheckValidity = (superclass) => class extends superclass {
+    checkForAnswers() {
+      const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
+
+      var hasUnansweredQuestions = false;
+
+      for ( var $requiredTextarea of $requiredTextareas ) {
+        if ( !$requiredTextarea.value || $requiredTextarea.value.trim() === "" ) {
+          $requiredTextarea.classList.remove( 'answer--answered' );
+
+          // return false;
+          hasUnansweredQuestions = true;
+        }
+      }
+
+      const $requiredRadiogroups = this.shadowRoot.querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
+
+      for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+        if ( !$requiredRadiogroup.querySelector( 'comfort-radio[checked]' ) ) {
+          // return false;
+          $requiredRadiogroup.classList.remove( 'answers--answered' );
+
+          hasUnansweredQuestions = true;
+        }
+      }
+
+      return !hasUnansweredQuestions;
+    } // checkForAnswers
+
+    clearRequiredHighlightIfApplicable( event ) {
+      const $requiredField = event.target;
+
+      if ( ( $requiredField.nodeName.toLowerCase() === 'input' ) ) {
+        $requiredField.classList.add( 'answer--answered' );
+
+        var $ancestor = $requiredField.parentNode;
+
+        while ( $ancestor.nodeName.toLowerCase() !== 'comfort-radiogroup' ) {
+          $ancestor = $ancestor.parentNode;
+        }
+
+        $ancestor.classList.add( 'answers--answered' );
+      } else if ( $requiredField.value && $requiredField.value.trim() !== "" ) {
+        $requiredField.classList.add( 'answer--answered' );
+      }
+    }
+
+    alertIfUnansweredQuestionsRemain() {
+      const $test = this.shadowRoot.querySelector( '#test' );
+
+      const $missingAnswers = document.querySelector( '#missing-answers' );
+
+      var answered = $test.checkForAnswers();
+
+      if ( answered ) {
+        // this._storeAnswers
+        // $test.removeAttribute( 'highlight-required', '' );
+
+        $test._storeAnswers();
+      } else {
+        event.preventDefault();
+
+        $test.setAttribute( 'highlight-required', '' );
+
+        $missingAnswers.open();
+      }
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
   Comfort.InstructorResponses = (superclass) => class extends superclass {
     _revealResponses( event ) {
-      const $button = event.target;
+      var answered = this.$questions.checkForAnswers();
 
-      const noScroll = $button.hasAttribute( 'no-scroll' );
+      if ( answered ) {
+        this.$questions.removeAttribute( 'highlight-required' );
+        
+        const $button = event.target;
 
-      const reveal = () => {
-        this.$questions.setAttribute( 'revealed', '' );
+        const noScroll = $button.hasAttribute( 'no-scroll' );
 
-        var href = $button.getAttribute( 'data-href' );
+        const reveal = () => {
+          this.$questions.setAttribute( 'revealed', '' );
 
-        $button.textContent = $button.getAttribute( 'after-tap-text' );
+          var href = $button.getAttribute( 'data-href' );
 
-        // this.unlisten( $button );
-        Polymer.Gestures.removeListener( $button, 'tap' );
-      };
+          $button.textContent = $button.getAttribute( 'after-tap-text' );
 
-      if ( noScroll ) {
-        reveal();
-      } else {
-        Comfort.scrollY( 0 );
-        window.onscroll = reveal;
+          // this.unlisten( $button );
+          Polymer.Gestures.removeListener( $button, 'tap' );
+        };
+
+        if ( noScroll ) {
+          reveal();
+        } else {
+          Comfort.scrollY( 0 );
+          window.onscroll = reveal;
+        }
+      } // if answered
+      else {
+        const $missingAnswers = document.querySelector( '#missing-answers' );
+
+        $missingAnswers.open();
+
+        this.$questions.setAttribute( 'highlight-required', '' );
       }
 
       event.preventDefault();

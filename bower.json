@@ -15,7 +15,8 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#2.0-preview",
     "polymer": "Polymer/polymer#^2.0.0-rc.3",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.7",
-    "paper-toolbar": "PolymerElements/paper-toolbar#^2.0.0"
+    "paper-toolbar": "PolymerElements/paper-toolbar#^2.0.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.3"

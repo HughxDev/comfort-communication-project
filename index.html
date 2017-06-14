@@ -80,6 +80,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../node_modules/defiant/dist/defiant.js" defer></script>
 
     <!-- Load your application shell -->
+    <link rel="import" href="../bower_components/polymer/polymer-element.html">
+    <link rel="import" href="../bower_components/neon-animation/web-animations.html">
+    <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+    <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+    <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
     <link rel="import" href="src/comfort-app.html">
 
     <!-- Add any global styles for body, document, etc. -->
@@ -112,5 +117,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
+    <paper-dialog
+      id="missing-answers"
+      entry-animation="scale-up-animation"
+      exit-animation="fade-out-animation"
+      with-backdrop
+      always-on-top
+    >
+      <h2 style="margin-top: inherit;">Missing required field(s)</h2>
+      <div>Please go back and make sure you’ve answered every question.</div>
+    </paper-dialog>
   </body>
 </html>

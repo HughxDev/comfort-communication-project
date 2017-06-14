@@ -61,24 +61,69 @@
   // @todo: subsume into PseudoForm?
   Comfort.CheckValidity = (superclass) => class extends superclass {
     checkForAnswers() {
-      const $requiredFields = this.shadowRoot.querySelectorAll( '[required]' );
+      const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
 
-      for ( var $requiredField of $requiredFields ) {
-        if ( $requiredField.value.trim() === "" ) {
-          $requiredField.classList.remove( 'answer--answered' );
+      var hasUnansweredQuestions = false;
 
-          return false;
+      for ( var $requiredTextarea of $requiredTextareas ) {
+        if ( !$requiredTextarea.value || $requiredTextarea.value.trim() === "" ) {
+          $requiredTextarea.classList.remove( 'answer--answered' );
+
+          // return false;
+          hasUnansweredQuestions = true;
         }
       }
 
-      return true;
+      const $requiredRadiogroups = this.shadowRoot.querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
+
+      for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+        if ( !$requiredRadiogroup.querySelector( 'comfort-radio[checked]' ) ) {
+          // return false;
+          $requiredRadiogroup.classList.remove( 'answers--answered' );
+
+          hasUnansweredQuestions = true;
+        }
+      }
+
+      return !hasUnansweredQuestions;
     } // checkForAnswers
 
     clearRequiredHighlightIfApplicable( event ) {
       const $requiredField = event.target;
 
-      if ( $requiredField.value.trim() !== "" ) {
+      if ( ( $requiredField.nodeName.toLowerCase() === 'input' ) ) {
         $requiredField.classList.add( 'answer--answered' );
+
+        var $ancestor = $requiredField.parentNode;
+
+        while ( $ancestor.nodeName.toLowerCase() !== 'comfort-radiogroup' ) {
+          $ancestor = $ancestor.parentNode;
+        }
+
+        $ancestor.classList.add( 'answers--answered' );
+      } else if ( $requiredField.value && $requiredField.value.trim() !== "" ) {
+        $requiredField.classList.add( 'answer--answered' );
+      }
+    }
+
+    alertIfUnansweredQuestionsRemain() {
+      const $test = this.shadowRoot.querySelector( '#test' );
+
+      const $missingAnswers = document.querySelector( '#missing-answers' );
+
+      var answered = $test.checkForAnswers();
+
+      if ( answered ) {
+        // this._storeAnswers
+        // $test.removeAttribute( 'highlight-required', '' );
+
+        $test._storeAnswers();
+      } else {
+        event.preventDefault();
+
+        $test.setAttribute( 'highlight-required', '' );
+
+        $missingAnswers.open();
       }
     }
   };
@@ -114,6 +159,10 @@
         }
       } // if answered
       else {
+        const $missingAnswers = document.querySelector( '#missing-answers' );
+
+        $missingAnswers.open();
+
         this.$questions.setAttribute( 'highlight-required', '' );
       }
 

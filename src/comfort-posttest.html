@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="comfort-mixins.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="comfort-button.html">
 <link rel="import" href="comfort-test.html">
@@ -19,28 +20,34 @@
       
       <p>Congratulations! You have now completed Module F (Family Caregivers) and are ready to assess your understanding by taking the post-test.</p>
 
-      <comfort-test id="posttest"></comfort-test>
+      <comfort-test id="test"></comfort-test>
 
-      <comfort-button id="next" on-tap="_storeAnswers" data-href="/done/">Finish course</comfort-button>
+      <comfort-button id="next" on-tap="alertIfUnansweredQuestionsRemain" href="/done/">Finish course</comfort-button>
     </section>
   </template>
 
   <script>
     "use strict";
 
-    class ComfortPosttest extends Polymer.GestureEventListeners( Polymer.Element ) {
+    class ComfortPosttest extends Comfort.CheckValidity( Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) ) {
       static get is() { return 'comfort-posttest'; }
 
-      _storeAnswers() {
-        const $posttest = this.shadowRoot.querySelector( '#posttest' );
+      // _storeAnswers() {
+      //   const $posttest = this.shadowRoot.querySelector( '#test' );
 
-        $posttest._storeAnswers();
-      }
+      //   $posttest._storeAnswers();
+      // }
 
-      ready() {
-        super.ready();
+      // test( event ) {
+        
 
-        const $posttest = this.shadowRoot.querySelector( '#posttest' );
+      //   event.preventDefault();
+      // }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        const $posttest = this.shadowRoot.querySelector( '#test' );
       
         $posttest._markCorrectIncorrectOnInputChange();
       }

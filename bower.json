@@ -25,6 +25,8 @@
     "iron-meta": "1 - 2",
     "iron-selector": "1 - 2",
     "iron-a11y-keys-behavior": "1 - 2"
+    "iron-flex-layout": "1 - 2",
+    "paper-styles": "1 - 2"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7"

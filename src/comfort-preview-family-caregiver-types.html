@@ -18,6 +18,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .full-bleed {
+        overflow: hidden;
+        height: 50vh;
+        margin-left: -5vw;
+        width: 100vw;
+        position: relative;
+      }
+
+      .full-bleed > img {
+        width: 100%;
+        position: absolute;
+        top: -5vh;
+      }
+
+      @media only screen and (min-width: 480px) {
+        .full-bleed > img {
+          top: -10vh;
+        }
+      }
+
+       @media only screen and (min-width: 640px) {
+        .full-bleed > img {
+          top: -20vh;
+        }
+      }
+
+      @media only screen and (min-width: 720px) {
+        .full-bleed > img {
+          top: -30vh;
+        }
+      }
+
+      @media only screen and (min-width: 1080px) {
+        .full-bleed {
+          height: 75vh;
+        }
+      }
+
+      /* --- */
+
+      .cropped {
+        margin: 0 auto;
+        display: block;
+        max-width: 100%;
+        max-height: 75vh;
+      }
     </style>
 
     <section>
@@ -25,6 +72,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p class="h3 section-subtitle">Section 4</p>
         <h1 class="section-title">Preview of the Four Family Caregiver Types</h1>
       </header>
+
+      <div on-tap="_toggleDesign">
+        <div class="design-option" data-sibling="next">
+          <div class="full-bleed">
+            <img src="/images/red-poppies-painting.jpg" alt="Painting of a tree in a field of red poppies during the day">
+          </div>
+        </div>
+        <div class="design-option" data-sibling="previous" hidden>
+          <img class="cropped" src="/images/red-poppies-painting-cropped.jpg" />
+        </div>
+      </div>
 
       <p>One’s family communication pattern is shaped by collective family history. Based on these patterns, our research has revealed four prominent family caregiver types. These specific caregiver types are:  manager, carrier, partner, and lone. Each of these caregiver types depicts unique communication characteristics. To be most effective, communication interventions and healthcare provider communication should be tailored to the needs and preferences of each caregiver type. Let’s look at each one more closely.</p>
     
@@ -35,8 +93,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortPreviewFamilyCaregiverTypes extends Polymer.Element {
+    class ComfortPreviewFamilyCaregiverTypes extends Polymer.GestureEventListeners( Polymer.Element ) {
       static get is() { return 'comfort-preview-family-caregiver-types'; }
+
+      _toggleDesign() {
+        const $hidden = this.shadowRoot.querySelector( '.design-option[data-sibling][hidden]' );
+
+        var whichSibling = $hidden.getAttribute( 'data-sibling' );
+
+        var siblingProperty = whichSibling + 'ElementSibling';
+
+        $hidden.hidden = false;
+
+        $hidden[siblingProperty].hidden = true;
+      }
     }
 
     window.customElements.define( ComfortPreviewFamilyCaregiverTypes.is, ComfortPreviewFamilyCaregiverTypes );

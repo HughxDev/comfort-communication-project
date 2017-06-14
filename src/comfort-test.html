@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <form id="pretest-form">
+    <form id="form">
       <ol id="questions" class="questions">
         <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
           <li>
@@ -43,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type="radio"
                         name$="[[increment(questionIndex)]]"
                         value="[[increment(index)]]"
+                        required
                       /> [[item.text]]
                     </label>
                   </comfort-radio>
@@ -55,6 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 class="open-ended"
                 name$="[[increment(questionIndex)]]"
                 aria-labelledby$="question[[increment(questionIndex)]]"
+                required
               ></textarea>
             </template>
           </li>
@@ -66,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
 
-    class ComfortTest extends Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) {
+    class ComfortTest extends Comfort.CheckValidity( Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) ) {
       static get is() { return 'comfort-test'; }
       static get properties() {
         return {

@@ -45,6 +45,19 @@
     class ComfortPretest extends Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) {
       static get is() { return 'comfort-pretest'; }
 
+      checkForAnswers( event ) {
+        const $pretest = this.shadowRoot.querySelector( '#pretest' );
+
+        var answered = $pretest.checkForAnswers();
+
+        if ( answered ) {
+          // this._storeAnswers
+          $pretest._storeAnswers();
+        } else {
+          event.preventDefault();
+        }
+      }
+
       _storeAnswers() {
         const $pretest = this.shadowRoot.querySelector( '#pretest' );
 

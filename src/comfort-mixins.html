@@ -59,28 +59,62 @@
   };
 
   // @todo: subsume into PseudoForm?
+  Comfort.CheckValidity = (superclass) => class extends superclass {
+    checkForAnswers() {
+      const $requiredFields = this.shadowRoot.querySelectorAll( '[required]' );
+
+      for ( var $requiredField of $requiredFields ) {
+        if ( $requiredField.value.trim() === "" ) {
+          $requiredField.classList.remove( 'answer--answered' );
+
+          return false;
+        }
+      }
+
+      return true;
+    } // checkForAnswers
+
+    clearRequiredHighlightIfApplicable( event ) {
+      const $requiredField = event.target;
+
+      if ( $requiredField.value.trim() !== "" ) {
+        $requiredField.classList.add( 'answer--answered' );
+      }
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
   Comfort.InstructorResponses = (superclass) => class extends superclass {
     _revealResponses( event ) {
-      const $button = event.target;
+      var answered = this.$questions.checkForAnswers();
 
-      const noScroll = $button.hasAttribute( 'no-scroll' );
+      if ( answered ) {
+        this.$questions.removeAttribute( 'highlight-required' );
+        
+        const $button = event.target;
 
-      const reveal = () => {
-        this.$questions.setAttribute( 'revealed', '' );
+        const noScroll = $button.hasAttribute( 'no-scroll' );
 
-        var href = $button.getAttribute( 'data-href' );
+        const reveal = () => {
+          this.$questions.setAttribute( 'revealed', '' );
 
-        $button.textContent = $button.getAttribute( 'after-tap-text' );
+          var href = $button.getAttribute( 'data-href' );
 
-        // this.unlisten( $button );
-        Polymer.Gestures.removeListener( $button, 'tap' );
-      };
+          $button.textContent = $button.getAttribute( 'after-tap-text' );
 
-      if ( noScroll ) {
-        reveal();
-      } else {
-        Comfort.scrollY( 0 );
-        window.onscroll = reveal;
+          // this.unlisten( $button );
+          Polymer.Gestures.removeListener( $button, 'tap' );
+        };
+
+        if ( noScroll ) {
+          reveal();
+        } else {
+          Comfort.scrollY( 0 );
+          window.onscroll = reveal;
+        }
+      } // if answered
+      else {
+        this.$questions.setAttribute( 'highlight-required', '' );
       }
 
       event.preventDefault();

@@ -36,6 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 
+<!-- Mixins -->
+<!-- <link rel="import" href="../lazy-imports-mixin.html"> -->
+
 <!-- Icons -->
 <link rel="import" href="comfort-icons.html">
 
@@ -45,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- Views -->
 <link rel="lazy-import" href="comfort-kitchen-sink.html">
 <link rel="lazy-import" href="comfort-welcome.html">
-<link rel="lazy-import" href="comfort-pretest.html">
+<link rel="lazy-import" group="section-1" href="section-1/comfort-pretest.html">
 <link rel="lazy-import" href="comfort-introduction.html">
 <link rel="lazy-import" href="comfort-family-communication-patterns.html">
 <link rel="lazy-import" href="comfort-manager-caregiver.html">
@@ -186,14 +189,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          page: {
-            type: String,
-            reflectToAttribute: true,
-            observer: '_pageChanged',
+          "page": {
+            "type": String,
+            "reflectToAttribute": true,
+            "observer": '_pageChanged',
           },
-          rootPattern: String,
-          routeData: Object,
-          subroute: String,
+          "rootPattern": String,
+          "routeData": Object,
+          "subroute": String,
+          "viewSections": {
+            "type": Object,
+            "value": {
+              "pretest": "1",
+              "introduction": "2",
+              "family-communication-patterns": "3",
+              "preview-family-caregiver-types": "4",
+              "manager-caregiver": "4/a",
+              "carrier-caregiver": "4/b",
+              "partner-caregiver": "4/c",
+              "lone-caregiver": "4/d"
+            }
+          }
         };
       }
 
@@ -373,9 +389,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _pageChanged( page ) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl( 'comfort-' + page + '.html' );
+        var uri = 'comfort-' + page + '.html';
 
-        // console.log( 'resolvedPageUrl', resolvedPageUrl );
+        if ( this.viewSections.hasOwnProperty( page ) ) {
+          uri = 'section-' + this.viewSections[page] + '/' + uri;
+        }
+
+        var resolvedPageUrl = this.resolveUrl( uri );
+
+        console.log( 'resolvedPageUrl', resolvedPageUrl );
 
         Polymer.RenderStatus.afterNextRender( this, function () {
           Polymer.importHref(

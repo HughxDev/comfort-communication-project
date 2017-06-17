@@ -2,14 +2,14 @@
   "entrypoint": "index.html",
   "shell": "src/comfort-app.html",
   "fragments": [
-    "src/comfort-kitchen-sink.html",
-    "src/comfort-view2.html",
-    "src/comfort-view3.html",
+    "src/section-1/comfort-pretest.html",
     "src/comfort-view404.html"
   ],
   "sources": [
     "src/**/*",
     "images/**/*",
+    "bower_components/**/*",
+    "node_modules/**/*",
     "bower.json"
   ],
   "extraDependencies": [
@@ -18,5 +18,19 @@
   ],
   "lint": {
     "rules": ["polymer-2"]
-  }
+  },
+  "builds": [
+    {
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "addServiceWorker": true
+    }
+  ]
 }

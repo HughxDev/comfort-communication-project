@@ -64,6 +64,27 @@ gulp.task( 'split', [ 'copy:app' ], () => {
 gulp.task( 'babel', [ 'split' ], () => {
   // del( [ 'build' ] );
 
+  gulp.src( 'build/bower_components/**/*.js' )
+    .pipe( babel( {
+      presets: [ 'es2015' ]
+    } ) )
+    .pipe( gulp.dest( 'build/bower_components/' ) );
+  ;
+
+  gulp.src( 'build/node_modules/x10.js/**/*.js' )
+    .pipe( babel( {
+      presets: [ 'es2015' ]
+    } ) )
+    .pipe( gulp.dest( 'build/node_modules/x10.js/' ) );
+  ;
+
+  gulp.src( 'build/node_modules/defiant/dist/**/*.js' )
+    .pipe( babel( {
+      presets: [ 'es2015' ]
+    } ) )
+    .pipe( gulp.dest( 'build/node_modules/defiant/dist/' ) );
+  ;
+
   return gulp.src( 'build/src/**/*.js' )
     .pipe( babel( {
       presets: [ 'es2015' ]

@@ -8,8 +8,6 @@
   "sources": [
     "src/**/*",
     "images/**/*",
-    "bower_components/**/*",
-    "node_modules/**/*",
     "bower.json"
   ],
   "extraDependencies": [
@@ -21,16 +19,8 @@
   },
   "builds": [
     {
-      "js": {
-        "minify": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
-      "addServiceWorker": true
+      "name": "default",
+      "preset": "es5-bundled"
     }
   ]
 }

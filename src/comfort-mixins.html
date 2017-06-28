@@ -4,6 +4,10 @@
 
   window.Comfort = window.Comfort || {};
 
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
   Comfort.PseudoForm = (superclass) => class extends superclass {
     _storeAnswers( event ) {
       function formatResponse( question, questionNumber, selected, selectedNumber ) {
@@ -59,6 +63,10 @@
   };
 
   // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
   Comfort.CheckValidity = (superclass) => class extends superclass {
     checkForAnswers() {
       const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
@@ -129,6 +137,10 @@
   };
 
   // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
   Comfort.InstructorResponses = (superclass) => class extends superclass {
     _revealResponses( event ) {
       var answered = this.$questions.checkForAnswers();
@@ -171,6 +183,10 @@
   };
 
   // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
   Comfort.CorrectIncorrect = (superclass) => class extends superclass {
     _markCorrectIncorrectOnInputChange() {
       const $questions = this.shadowRoot.querySelector( '#questions' );

@@ -33,12 +33,13 @@ gulp.task( 'split', () => {
 } );
 
 gulp.task( 'babel', [ 'split' ], () => {
+  // del( [ 'build' ] );
 
   return gulp.src( 'split/**/*.js' )
     .pipe( babel( {
       presets: [ 'es2015' ]
     } ) )
-    .pipe( gulp.dest( 'build' ) );
+    .pipe( gulp.dest( 'split' ) );
   ;
 } );
 

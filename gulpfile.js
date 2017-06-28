@@ -15,7 +15,7 @@ gulp.task('default', () => {
 */
 
 gulp.task( 'split', () => {
-  del( [ 'dest' ] );
+  del( [ 'split' ] );
 
   return gulp.src( 'src/**/*.html' )
     // .pipe( vulcanize( {
@@ -28,17 +28,17 @@ gulp.task( 'split', () => {
       scriptInHead: true, // true is default 
       onlySplit: false
     } ) )
-    .pipe( gulp.dest( 'dest' ) )
+    .pipe( gulp.dest( 'split' ) )
   ;
 } );
 
 gulp.task( 'babel', [ 'split' ], () => {
 
-  return gulp.src( 'dest/**/*.js' )
-    .pipe(  babel( {
+  return gulp.src( 'split/**/*.js' )
+    .pipe( babel( {
       presets: [ 'es2015' ]
     } ) )
-    .pipe( gulp.dest( 'dest' ) );
+    .pipe( gulp.dest( 'build' ) );
   ;
 } );
 

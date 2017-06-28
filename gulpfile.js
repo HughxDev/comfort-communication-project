@@ -14,7 +14,7 @@ gulp.task('default', () => {
 });
 */
 
-gulp.task( 'default', function () {
+gulp.task( 'split', () => {
   del( [ 'dest' ] );
 
   return gulp.src( 'src/**/*.html' )
@@ -31,3 +31,15 @@ gulp.task( 'default', function () {
     .pipe( gulp.dest( 'dest' ) )
   ;
 } );
+
+gulp.task( 'babel', [ 'split' ], () => {
+
+  return gulp.src( 'dest/**/*.js' )
+    .pipe(  babel( {
+      presets: [ 'es2015' ]
+    } ) )
+    .pipe( gulp.dest( 'dest' ) );
+  ;
+} );
+
+gulp.task( 'default', [ 'babel' ] );

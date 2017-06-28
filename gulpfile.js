@@ -24,24 +24,24 @@ gulp.task( 'copy:server', [ 'clean' ], () => {
 });
 
 gulp.task( 'copy:dependencies', [ 'copy:server' ], () => {
-  gulp.src( 'bower_components/**' )
-    .pipe( gulp.dest( 'build/' ) )
+  gulp.src( 'bower_components/**/*' )
+    .pipe( gulp.dest( 'build/bower_components/' ) )
   ;
 
-  gulp.src( 'node_modules/**' )
-    .pipe( gulp.dest( 'build/' ) )
+  gulp.src( 'node_modules/**/*' )
+    .pipe( gulp.dest( 'build/node_modules/' ) )
   ;
 
   return;
 } );
 
 gulp.task( 'copy:app', [ 'copy:dependencies' ], () => {
-  gulp.src( 'src/**' )
-    .pipe( gulp.dest( 'build/' ) )
+  gulp.src( 'src/**/*' )
+    .pipe( gulp.dest( 'build/src/' ) )
   ;
 
-  gulp.src( 'images/**' )
-    .pipe( gulp.dest( 'build/' ) )
+  gulp.src( 'images/**/*' )
+    .pipe( gulp.dest( 'build/images/' ) )
   ;
 
   return;

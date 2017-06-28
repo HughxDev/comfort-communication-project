@@ -18,10 +18,27 @@ gulp.task( 'clean', () => {
   return del( [' build' ] );
 } );
 
-gulp.task( 'split', [ 'clean' ], () => {
+gulp.task( 'copy:server', [ 'clean' ], () => {
+  return gulp.src( [ '.htaccess', 'favicon.*', 'apple-touch-*', 'index.html', 'CNAME' ] )
+    .pipe( gulp.dest( 'build/' ) );
+});
+
+gulp.task( 'copy:dependencies', [ 'copy:server' ], () => {
+  return gulp.src( [ 'bower_components/', 'node_modules/' ] )
+    .pipe( gulp.dest( 'build/' ) )
+  ;
+} );
+
+gulp.task( 'copy:app', [ 'copy:dependencies' ], () => {
+  return gulp.src( [ 'src/', 'images/' ] )
+    .pipe( gulp.dest( 'build/' ) )
+  ;
+} );
+
+gulp.task( 'split', [ 'copy:app' ], () => {
   // del( [ 'split' ] );
 
-  return gulp.src( 'src/**/*.html' )
+  return gulp.src( 'build/src/**/*.html' )
     // .pipe( vulcanize( {
     //   abspath: '',
     //   excludes: [],
@@ -32,18 +49,18 @@ gulp.task( 'split', [ 'clean' ], () => {
       scriptInHead: true, // true is default 
       onlySplit: false
     } ) )
-    .pipe( gulp.dest( 'build' ) )
+    .pipe( gulp.dest( 'build/src/' ) )
   ;
 } );
 
 gulp.task( 'babel', [ 'split' ], () => {
   // del( [ 'build' ] );
 
-  return gulp.src( 'build/**/*.js' )
+  return gulp.src( 'build/src/**/*.js' )
     .pipe( babel( {
       presets: [ 'es2015' ]
     } ) )
-    .pipe( gulp.dest( 'build' ) );
+    .pipe( gulp.dest( 'build/src/' ) );
   ;
 } );
 

@@ -24,13 +24,13 @@ gulp.task( 'copy:server', [ 'clean' ], () => {
 });
 
 gulp.task( 'copy:dependencies', [ 'copy:server' ], () => {
-  return gulp.src( [ 'bower_components/', 'node_modules/' ] )
+  return gulp.src( [ 'bower_components/**', 'node_modules/**' ] )
     .pipe( gulp.dest( 'build/' ) )
   ;
 } );
 
 gulp.task( 'copy:app', [ 'copy:dependencies' ], () => {
-  return gulp.src( [ 'src/', 'images/' ] )
+  return gulp.src( [ 'src/**', 'images/**' ] )
     .pipe( gulp.dest( 'build/' ) )
   ;
 } );

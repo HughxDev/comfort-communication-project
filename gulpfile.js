@@ -24,15 +24,27 @@ gulp.task( 'copy:server', [ 'clean' ], () => {
 });
 
 gulp.task( 'copy:dependencies', [ 'copy:server' ], () => {
-  return gulp.src( [ 'bower_components/**', 'node_modules/**' ] )
+  gulp.src( 'bower_components/**' )
     .pipe( gulp.dest( 'build/' ) )
   ;
+
+  gulp.src( 'node_modules/**' )
+    .pipe( gulp.dest( 'build/' ) )
+  ;
+
+  return;
 } );
 
 gulp.task( 'copy:app', [ 'copy:dependencies' ], () => {
-  return gulp.src( [ 'src/**', 'images/**' ] )
+  gulp.src( 'src/**' )
     .pipe( gulp.dest( 'build/' ) )
   ;
+
+  gulp.src( 'images/**' )
+    .pipe( gulp.dest( 'build/' ) )
+  ;
+
+  return;
 } );
 
 gulp.task( 'split', [ 'copy:app' ], () => {

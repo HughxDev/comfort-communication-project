@@ -3,6 +3,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
+    "del": "^3.0.0",
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.0",
     "eslint-plugin-html": "^2.0.0",

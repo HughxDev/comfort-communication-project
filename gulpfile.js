@@ -14,8 +14,12 @@ gulp.task('default', () => {
 });
 */
 
-gulp.task( 'split', () => {
-  del( [ 'split' ] );
+gulp.task( 'clean', () => {
+  return del( [' build' ] );
+} );
+
+gulp.task( 'split', [ 'clean' ], () => {
+  // del( [ 'split' ] );
 
   return gulp.src( 'src/**/*.html' )
     // .pipe( vulcanize( {
@@ -28,18 +32,18 @@ gulp.task( 'split', () => {
       scriptInHead: true, // true is default 
       onlySplit: false
     } ) )
-    .pipe( gulp.dest( 'split' ) )
+    .pipe( gulp.dest( 'build' ) )
   ;
 } );
 
 gulp.task( 'babel', [ 'split' ], () => {
   // del( [ 'build' ] );
 
-  return gulp.src( 'split/**/*.js' )
+  return gulp.src( 'build/**/*.js' )
     .pipe( babel( {
       presets: [ 'es2015' ]
     } ) )
-    .pipe( gulp.dest( 'split' ) );
+    .pipe( gulp.dest( 'build' ) );
   ;
 } );
 

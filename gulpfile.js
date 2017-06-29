@@ -73,21 +73,21 @@ gulp.task( 'babel', [ 'split' ], () => {
 
   gulp.src( 'build/node_modules/x10.js/**/*.js' )
     .pipe( babel( {
-      presets: [ 'es2015' ]
+      presets: [ 'es2015-nostrict' ]
     } ) )
     .pipe( gulp.dest( 'build/node_modules/x10.js/' ) );
   ;
 
   gulp.src( 'build/node_modules/defiant/dist/**/*.js' )
     .pipe( babel( {
-      presets: [ 'es2015' ]
+      presets: [ 'es2015-nostrict' ]
     } ) )
     .pipe( gulp.dest( 'build/node_modules/defiant/dist/' ) );
   ;
 
   return gulp.src( 'build/src/**/*.js' )
     .pipe( babel( {
-      presets: [ 'es2015' ]
+      presets: [ 'es2015-nostrict' ]
     } ) )
     .pipe( gulp.dest( 'build/src/' ) );
   ;

@@ -118,7 +118,13 @@ gulp.task( 'babel:src', [ 'split:src' ], () => {
 gulp.task( 'babel:bower', [ 'split:bower' ], () => {
   // del( [ 'build' ] );
 
-  return gulp.src( [ 'bower_components/**/*.js', '!bower_components/web-component-tester/**/*.js' ] )
+  return gulp.src(
+      [
+        'bower_components/**/*.js',
+        '!bower_components/web-component-tester/**/*.js',
+        '!bower_components/webcomponentsjs/custom-elements-es5-adapter.js'
+      ]
+    )
     .pipe( babel( {
       presets: [ 'es2015-nostrict' ]
     } ) )

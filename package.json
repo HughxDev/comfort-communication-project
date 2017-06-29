@@ -19,6 +19,7 @@
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "defiant": "^1.4.2"
   }
 }

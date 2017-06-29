@@ -66,7 +66,7 @@ gulp.task( 'babel', [ 'split' ], () => {
 
   gulp.src( 'build/bower_components/**/*.js' )
     .pipe( babel( {
-      presets: [ 'es2015', { "modules": false } ]
+      presets: [ 'es2015-nostrict' ]
     } ) )
     .pipe( gulp.dest( 'build/bower_components/' ) );
   ;

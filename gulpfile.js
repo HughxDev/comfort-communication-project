@@ -62,14 +62,14 @@ gulp.task( 'split:src', [ 'copy' ], () => {
 gulp.task( 'split:bower', [ 'split:src' ], () => {
   // del( [ 'split' ] );
 
-  return gulp.src( 'bower_components/**/*.html' )
+  return gulp.src( 'build/bower_components/**/*.html' )
     // .pipe( vulcanize( {} ) )
     // .pipe( debug( { "title": "split:bower" } ) )
     .pipe( crisper( {
       scriptInHead: true, // true is default 
       onlySplit: false
     } ) )
-    .pipe( gulp.dest( 'bower_components/' ) )
+    .pipe( gulp.dest( 'build/bower_components/' ) )
   ;
 } );
 

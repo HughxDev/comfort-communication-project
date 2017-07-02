@@ -23,6 +23,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "defiant": "^1.4.2",
+    "es6-shim": "^0.35.3",
     "x10.js": "git://github.com/hbi99/x10.js.git#5389ae6dd914527e53c83c1b1f7f77c8b5f82ca6"
   }
 }

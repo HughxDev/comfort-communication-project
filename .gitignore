@@ -77,3 +77,4 @@ logs/*
 .bash*
 .screenrc
 sftp-config.json
+package-lock.json

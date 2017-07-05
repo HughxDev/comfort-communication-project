@@ -271,19 +271,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .full-bleed {
         overflow: hidden;
-        height: 50vh;
+        /*height: 50vh;*/
         margin-left: -5vw;
         width: 100vw;
         position: relative;
+        padding-bottom: calc( 9 / 16 * 100% );
       }
 
       .full-bleed > img {
-        width: 100%;
         position: absolute;
-        top: -5vh;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
 
-      @media only screen and (min-width: 480px) {
+      /*@media only screen and (min-width: 480px) {
         .full-bleed > img {
           top: -10vh;
         }
@@ -305,7 +308,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .full-bleed {
           height: 75vh;
         }
-      }
+      }*/
       /* p, ul, ol, dl {} */
     </style>
   </template>

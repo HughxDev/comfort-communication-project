@@ -3,7 +3,8 @@ const vulcanize = require( 'gulp-vulcanize' );
 const babel = require( 'gulp-babel' );
 const crisper = require( 'gulp-crisper' );
 const del = require( 'del' );
-const debug = require('gulp-debug');
+const debug = require( 'gulp-debug' );
+const inline = require( 'gulp-inline' );
 
 gulp.task( 'clean', () => {
   return del( [' build' ] );
@@ -52,7 +53,7 @@ gulp.task( 'split:src', [ 'copy' ], () => {
     // .pipe( vulcanize( {} ) )
     // .pipe( debug( { "title": "split" } ) )
     .pipe( crisper( {
-      scriptInHead: true, // true is default 
+      scriptInHead: false, // true is default 
       onlySplit: false
     } ) )
     .pipe( gulp.dest( 'build/src/' ) )
@@ -66,7 +67,7 @@ gulp.task( 'split:bower', [ 'split:src' ], () => {
     // .pipe( vulcanize( {} ) )
     // .pipe( debug( { "title": "split:bower" } ) )
     .pipe( crisper( {
-      scriptInHead: true, // true is default 
+      scriptInHead: false, // true is default 
       onlySplit: false
     } ) )
     .pipe( gulp.dest( 'build/bower_components/' ) )
@@ -109,7 +110,8 @@ gulp.task( 'babel:src', [ 'split:src' ], () => {
 
   return gulp.src( 'build/src/**/*.js' )
     .pipe( babel( {
-      presets: [ 'es2015-nostrict' ]
+      // presets: [ 'es2015-nostrict' ]
+      presets: [ 'es2015-node5' ]
     } ) )
     .pipe( gulp.dest( 'build/src/' ) );
   ;
@@ -126,7 +128,8 @@ gulp.task( 'babel:bower', [ 'split:bower' ], () => {
       ]
     )
     .pipe( babel( {
-      presets: [ 'es2015-nostrict' ]
+      // presets: [ 'es2015-nostrict' ]
+      presets: [ 'es2015-node5' ]
     } ) )
     .pipe( gulp.dest( 'bower_components/' ) );
   ;
@@ -134,4 +137,51 @@ gulp.task( 'babel:bower', [ 'split:bower' ], () => {
 
 gulp.task( 'babel', [ 'babel:src', 'babel:bower' ] );
 
+/* -- Experimental --*/
+// gulp.task( 'vulcanize:src', [ 'babel' ], () => {
+//   return gulp.src( 'build/src/**/*.html' )
+//     .pipe( vulcanize( {
+//       "inlineScripts": true,
+//       "inlineCss": true
+//     } ) )
+//     .pipe( gulp.dest( 'build/src/' ) )
+//   ;
+// } );
+
+// gulp.task( 'vulcanize:bower', [ 'vulcanize:src' ], () => {
+//   return gulp.src( 'build/bower_components/**/*.html' )
+//     .pipe( vulcanize( {
+//       "inlineScripts": true,
+//       "inlineCss": true
+//     } ) )
+//     .pipe( gulp.dest( 'build/bower_components/' ) )
+//   ;
+// } );
+
+// gulp.task( 'vulcanize', [ 'vulcanize:src', 'vulcanize:bower' ] );
+
+gulp.task( 'inline:src', [ 'babel' ], () => {
+  return gulp.src( 'build/src/**/*.html' )
+    .pipe( inline( {
+      "base": "build/src/",
+      "disabledTypes": [ 'svg', 'img', 'css' ]
+    } ) )
+    .pipe( gulp.dest( 'build/src/' ) )
+  ;
+} );
+
+gulp.task( 'inline:bower', [ 'inline:src' ], () => {
+  return gulp.src( 'build/bower_components/**/*.html' )
+    .pipe( inline( {
+      "base": "build/bower_components/",
+      "disabledTypes": [ 'svg', 'img', 'css' ]
+    } ) )
+    .pipe( gulp.dest( 'build/bower_components/' ) )
+  ;
+} );
+
+gulp.task( 'inline', [ 'inline:src', 'inline:bower' ] );
+/* -- /Experimental --*/
+
 gulp.task( 'default', [ 'babel' ] );
+// gulp.task( 'default', [ 'inline' ] );

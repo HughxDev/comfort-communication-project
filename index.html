@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>Comfort Communication Project</title>
+    <title>My App</title>
     <meta name="description" content="My App description">
 
     <!--
@@ -53,6 +53,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="msapplication-TileColor" content="#3f51b5">
     <meta name="msapplication-tap-highlight" content="no">
 
+    <script src="node_modules/es5-shim/es5-shim.js"></script>
+    <script src="node_modules/es5-shim/es5-sham.js"></script>
+    <script src="node_modules/es6-shim/es6-shim.js"></script>
+    <script src="node_modules/es6-shim/es6-sham.js"></script>
+    <script src="node_modules/babel-polyfill/dist/polyfill.js"></script>
+
     <script>
       // Register the base URL
       const baseUrl = document.querySelector('base').href;
@@ -65,80 +71,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </script>
 
-    <!-- <script>
-      window.customElements = window.customElements || {};
-      window.customElements.forcePolyfill = true;
-      window.ShadyDOM = {force: true};
-    </script> -->
-
-    <!-- ES5 -->
-    <script src="../node_modules/es5-shim/es5-shim.js"></script>
-    <script src="../node_modules/es5-shim/es5-sham.js"></script>
-
-    <!-- ES6 -->
-    <script src="../node_modules/es6-shim/es6-shim.js"></script>
-    <script src="../node_modules/es6-shim/es6-sham.js"></script>
-
-    <!-- <script src="../node_modules/babel-polyfill/dist/polyfill.js"></script> -->
-    <!-- <script src="../bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
-
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,700i" rel="stylesheet">
-
-    <script src="../node_modules/x10.js/lib/x10.js" defer></script>
-    <script src="../node_modules/defiant/dist/defiant.js" defer></script>
-
     <!-- Load your application shell -->
-    <link rel="import" href="../bower_components/polymer/polymer-element.html">
-    <link rel="import" href="../bower_components/neon-animation/web-animations.html">
-    <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
-    <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
-    <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
-    <link rel="import" href="src/comfort-app.html">
+    <link rel="import" href="src/my-app.html">
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
       body {
-        --font-family: 'Open Sans', sans-serif;
-        --color-correct: #7AC943;
-        --color-incorrect: #FF1D25;
-        --textarea-border-color: #666;
-
         margin: 0;
-        /*font-family: 'Roboto', 'Noto', sans-serif;*/
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Roboto', 'Noto', sans-serif;
         line-height: 1.5;
         min-height: 100vh;
-        background-color: #fff;
-        
-        /*--color-text: #666;*/ /* gray */
-        --color-text: #4D4D4D;
-
-        color: var( --color-text );
-
-        font-family: var( --font-family );
-        font-size: 14px;
+        background-color: #eeeeee;
       }
     </style>
   </head>
   <body>
-    <comfort-app></comfort-app>
+    <my-app></my-app>
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
-    <paper-dialog
-      id="missing-answers"
-      entry-animation="scale-up-animation"
-      exit-animation="fade-out-animation"
-      with-backdrop
-      always-on-top
-      style="outline: none; display: none;"
-    >
-      <h2 style="margin-top: inherit;">Missing required field(s)</h2>
-      <div>Please go back and make sure you’ve answered every question.</div>
-    </paper-dialog>
+    <!-- Built with love using Polymer Starter Kit -->
   </body>
 </html>

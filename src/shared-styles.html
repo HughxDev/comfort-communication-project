@@ -268,6 +268,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
         font-style: italic;
       }
+
+      .full-bleed {
+        overflow: hidden;
+        height: 50vh;
+        margin-left: -5vw;
+        width: 100vw;
+        position: relative;
+      }
+
+      .full-bleed > img {
+        width: 100%;
+        position: absolute;
+        top: -5vh;
+      }
+
+      @media only screen and (min-width: 480px) {
+        .full-bleed > img {
+          top: -10vh;
+        }
+      }
+
+       @media only screen and (min-width: 640px) {
+        .full-bleed > img {
+          top: -20vh;
+        }
+      }
+
+      @media only screen and (min-width: 720px) {
+        .full-bleed > img {
+          top: -30vh;
+        }
+      }
+
+      @media only screen and (min-width: 1080px) {
+        .full-bleed {
+          height: 75vh;
+        }
+      }
       /* p, ul, ol, dl {} */
     </style>
   </template>

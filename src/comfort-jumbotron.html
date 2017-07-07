@@ -3,11 +3,16 @@
 <dom-module id="comfort-jumbotron">
   <template>
     <style>
+      /* IE11 fix */
       :host {
-        display: block;
+        display: flex;
+        flex-direction: column;
+      }
 
+      .flex-container {
         min-height: 253px;
 
+        display: block;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -18,7 +23,9 @@
         /* -100px top, -28px bottom */
       }
     </style>
-    <h1><slot></slot></h1>
+    <div class="flex-container">
+      <h1><slot></slot></h1>
+    </div>
   </template>
 
   <script>

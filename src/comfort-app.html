@@ -32,9 +32,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
+<!-- Neon (required by Paper Dialog) -->
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+
 <!-- Paper -->
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 
 <!-- Mixins -->
 <!-- <link rel="import" href="../lazy-imports-mixin.html"> -->
@@ -199,7 +205,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               "reflectToAttribute": true,
               "observer": '_pageChanged',
             },
-            "rootPattern": String,
+            // "rootPattern": String,
+            "rootPattern": {
+              "type": String,
+              "computed": "computeRootPattern(rootPath)",
+            },
             "routeData": Object,
             "subroute": String,
             "viewSections": {
@@ -226,12 +236,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ];
         }
 
+        computeRootPattern(rootPath) {
+          // Get root pattern for app-route, for more info about `rootPath` see:
+          // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+
+          // If URL API isn't supported (IE11), use a regex for the URL pathname.
+          if (!(URL.prototype && 'pathname' in URL.prototype)) {
+            return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
+          }
+
+          return (new URL(rootPath)).pathname;
+        }
+
         constructor() {
           super();
 
           // Get root pattern for app-route, for more info about `rootPath` see:
           // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-          this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+          // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
 
           // maybe change to class?
           window.Comfort = window.Comfort || {};

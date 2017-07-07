@@ -140,14 +140,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      app-header-layout {
+      /* IE11 attempted fix */
+      .flex-wrapper {
         display: flex;
-        min-height: 100vh;
+        flex-direction: column;
+        height: 120vh;
+      }
+
+      app-header-layout {
+        display: block;
+        display: flex;
+        min-height: 120vh;
+        height: 120vh;
         flex-direction: column;
       }
 
       [role="main"] {
-        flex: 1;
+        flex: 1 1 0%;
       }
     </style>
 
@@ -159,35 +168,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       tail="{{subroute}}"></app-route>
 
     <!-- Main content -->
-    <app-header-layout fullbleed>
-      <app-header slot="header" condenses reveals effects="waterfall">
-        <app-toolbar>
-          <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
-          <span main-title>
-            <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
-          </span>
-        </app-toolbar>
-      </app-header>
+    <div class="flex-wrapper">
+      <app-header-layout fullbleed>
+        <app-header slot="header" condenses reveals effects="waterfall">
+          <app-toolbar>
+            <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
+            <span main-title>
+              <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
+            </span>
+          </app-toolbar>
+        </app-header>
 
-      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-        <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
-        <comfort-welcome name="welcome" class="view"></comfort-welcome>
-        <comfort-pretest name="pretest" class="view"></comfort-pretest>
-        <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
-        <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
-        <comfort-preview-family-caregiver-types name="preview-family-caregiver-types" class="view"></comfort-preview-family-caregiver-types>
-        <comfort-family-caregiver-types-summary name="family-caregiver-types-summary" class="view"></comfort-family-caregiver-types-summary>
-        <comfort-manager-caregiver name="manager-caregiver" class="view"></comfort-manager-caregiver>
-        <comfort-carrier-caregiver name="carrier-caregiver" class="view"></comfort-carrier-caregiver>
-        <comfort-partner-caregiver name="partner-caregiver" class="view"></comfort-partner-caregiver>
-        <comfort-lone-caregiver name="lone-caregiver" class="view"></comfort-lone-caregiver>
-        <comfort-posttest name="posttest" class="view"></comfort-posttest>
-        <comfort-done name="done" class="view"></comfort-done>
-        <comfort-view404 name="view404" class="view"></comfort-view404>
-      </iron-pages>
-      
-      <comfort-footer></comfort-footer>
-    </app-header-layout>
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+          <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
+          <comfort-welcome name="welcome" class="view"></comfort-welcome>
+          <comfort-pretest name="pretest" class="view"></comfort-pretest>
+          <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
+          <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
+          <comfort-preview-family-caregiver-types name="preview-family-caregiver-types" class="view"></comfort-preview-family-caregiver-types>
+          <comfort-family-caregiver-types-summary name="family-caregiver-types-summary" class="view"></comfort-family-caregiver-types-summary>
+          <comfort-manager-caregiver name="manager-caregiver" class="view"></comfort-manager-caregiver>
+          <comfort-carrier-caregiver name="carrier-caregiver" class="view"></comfort-carrier-caregiver>
+          <comfort-partner-caregiver name="partner-caregiver" class="view"></comfort-partner-caregiver>
+          <comfort-lone-caregiver name="lone-caregiver" class="view"></comfort-lone-caregiver>
+          <comfort-posttest name="posttest" class="view"></comfort-posttest>
+          <comfort-done name="done" class="view"></comfort-done>
+          <comfort-view404 name="view404" class="view"></comfort-view404>
+        </iron-pages>
+        
+        <comfort-footer></comfort-footer>
+      </app-header-layout>
+    </div>
   </template>
 
   <script>

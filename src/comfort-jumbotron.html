@@ -38,18 +38,11 @@
      * @polymer
      * @demo demo/index.html
      */
-    class ComfortJumbotron extends Polymer.Element {
-      static get is() { return 'comfort-jumbotron'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'comfort-jumbotron'
-          }
-        };
-      }
-    }
+    Polymer({
+      "is": "comfort-jumbotron"
+      // "properties": {}
+    });
 
-    window.customElements.define(ComfortJumbotron.is, ComfortJumbotron);
+    // window.customElements.define(ComfortJumbotron.is, ComfortJumbotron);
   </script>
 </dom-module>

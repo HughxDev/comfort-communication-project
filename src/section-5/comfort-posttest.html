@@ -29,30 +29,24 @@
   <script>
     "use strict";
 
-    class ComfortPosttest extends Comfort.CheckValidity( Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) ) {
-      static get is() { return 'comfort-posttest'; }
+    Polymer({
+      "is": "comfort-posttest",
 
-      // _storeAnswers() {
-      //   const $posttest = this.shadowRoot.querySelector( '#test' );
+      "behaviors": [
+        Comfort.CheckValidity,
+        Comfort.CorrectIncorrect,
+        Comfort.PseudoForm
+      ],
 
-      //   $posttest._storeAnswers();
-      // }
+      "attached": function () {
+        // super.connectedCallback();
 
-      // test( event ) {
-        
-
-      //   event.preventDefault();
-      // }
-
-      connectedCallback() {
-        super.connectedCallback();
-
-        const $posttest = this.shadowRoot.querySelector( '#test' );
+        var $posttest = Polymer.dom( this.root ).querySelector( '#test' );
       
         $posttest._markCorrectIncorrectOnInputChange();
       }
-    }
+    });
 
-    window.customElements.define( ComfortPosttest.is, ComfortPosttest );
+    // window.customElements.define( ComfortPosttest.is, ComfortPosttest );
   </script>
 </dom-module>

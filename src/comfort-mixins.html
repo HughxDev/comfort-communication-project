@@ -8,8 +8,8 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.PseudoForm = (superclass) => class extends superclass {
-    _storeAnswers( event ) {
+  Comfort.PseudoForm = {
+    "_storeAnswers": function ( event ) {
       function formatResponse( question, questionNumber, selected, selectedNumber ) {
         var response = {};
 
@@ -22,8 +22,7 @@
         return response;
       }
 
-      // const $form = this.shadowRoot.querySelector( '#pretest-form' );
-      const $form = this.shadowRoot.querySelector( 'form' );
+      var $form = Polymer.dom( this.root ).querySelector( 'form' );
 
       // var values = {};
       var responses = [];
@@ -67,9 +66,9 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.CheckValidity = (superclass) => class extends superclass {
-    checkForAnswers() {
-      const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
+  Comfort.CheckValidity = {
+    "checkForAnswers": function () {
+      var $requiredTextareas = Polymer.dom( this.root ).querySelectorAll( 'textarea[required]' );
 
       var hasUnansweredQuestions = false;
       var $requiredTextarea;
@@ -88,7 +87,7 @@
         }
       }
 
-      const $requiredRadiogroups = this.shadowRoot.querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
+      var $requiredRadiogroups = Polymer.dom( this.root ).querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
 
       // for ( var $requiredRadiogroup of $requiredRadiogroups ) {
       for ( i = 0; i < $requiredRadiogroups.length; ++i ) {
@@ -103,10 +102,10 @@
       }
 
       return !hasUnansweredQuestions;
-    } // checkForAnswers
+    }, // checkForAnswers
 
-    clearRequiredHighlightIfApplicable( event ) {
-      const $requiredField = event.target;
+    "clearRequiredHighlightIfApplicable": function ( event ) {
+      var $requiredField = event.target;
 
       if ( ( $requiredField.nodeName.toLowerCase() === 'input' ) ) {
         $requiredField.classList.add( 'answer--answered' );
@@ -121,12 +120,12 @@
       } else if ( $requiredField.value && $requiredField.value.trim() !== "" ) {
         $requiredField.classList.add( 'answer--answered' );
       }
-    }
+    },
 
-    alertIfUnansweredQuestionsRemain() {
-      const $test = this.shadowRoot.querySelector( '#test' );
+    "alertIfUnansweredQuestionsRemain": function ( event ) {
+      var $test = Polymer.dom( this.root ).querySelector( '#test' );
 
-      const $missingAnswers = document.querySelector( '#missing-answers' );
+      var $missingAnswers = document.querySelector( '#missing-answers' );
 
       var answered = $test.checkForAnswers();
 
@@ -150,8 +149,8 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.InstructorResponses = (superclass) => class extends superclass {
-    _revealResponses( event ) {
+  Comfort.InstructorResponses = {
+    "_revealResponses": function ( event ) {
       var element = this;
 
       var answered = this.$questions.checkForAnswers();
@@ -159,22 +158,22 @@
       if ( answered ) {
         this.$questions.removeAttribute( 'highlight-required' );
         
-        const $button = event.target;
+        var $button = event.target;
 
-        const noScroll = $button.hasAttribute( 'no-scroll' );
+        var noScroll = $button.hasAttribute( 'no-scroll' );
 
-        const reveal = function () {
+        var reveal = function () {
           element.$questions.setAttribute( 'revealed', '' );
 
           var href = $button.getAttribute( 'data-href' );
 
           $button.textContent = $button.getAttribute( 'after-tap-text' );
 
-          // this.unlisten( $button, 'tap', '_revealResponses' );
-          Polymer.Gestures.removeListener( $button, 'tap', '_revealResponses' );
+          element.unlisten( $button, 'tap', '_revealResponses' );
+          // Polymer.Gestures.removeListener( $button, 'tap' );
 
-          // $button.removeAttribute( 'on-tap' );
-          Polymer.Gestures.addListener( $button, 'tap', function ( event ) {
+          // Polymer.Gestures.addListener( $button, 'tap', function ( event ) {
+          element.listen( $button, 'tap', function ( event ) {
             window.location.href = element.getAttribute( 'href' );
           } );
         };
@@ -187,7 +186,7 @@
         }
       } // if answered
       else {
-        const $missingAnswers = document.querySelector( '#missing-answers' );
+        var $missingAnswers = document.querySelector( '#missing-answers' );
 
         $missingAnswers.open();
 
@@ -203,9 +202,11 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.CorrectIncorrect = (superclass) => class extends superclass {
-    _markCorrectIncorrectOnInputChange() {
-      const $questions = this.shadowRoot.querySelector( '#questions' );
+  Comfort.CorrectIncorrect = {
+    "_markCorrectIncorrectOnInputChange": function () {
+      var element = this;
+
+      var $questions = Polymer.dom( this.root ).querySelector( '#questions' );
     
       $questions.addEventListener( 'change', function ( event ) {
         var input = event.target;
@@ -216,13 +217,13 @@
         var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
 
         // Correct answer: //d:item[1]/answers[correct="true"]
-        var correct = JSON.search( this.snapshot, questionXPath + '/answers[correct="true"]' )[0];
+        var correct = JSON.search( element.snapshot, questionXPath + '/answers[correct="true"]' )[0];
 
         // Incorrect answer: //d:item[1]/answers[correct="false"]
-        var incorrect = JSON.search( this.snapshot, questionXPath + '/answers[correct="false"]' )[0];
+        var incorrect = JSON.search( element.snapshot, questionXPath + '/answers[correct="false"]' )[0];
         
         /* Selected answer: //d:item[1]/answers[1] */
-        var selected = JSON.search( this.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
+        var selected = JSON.search( element.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
 
         var radio = input;
 
@@ -241,7 +242,11 @@
           highlightCorrect = true;
         }
 
-        var comfortRadioLabels =  Array.prototype.slice.call( this.shadowRoot.querySelectorAll( 'comfort-radio[name="' + questionNumber + '"] > label' ) );
+        var comfortRadioLabels = Array.prototype.slice.call(
+          Polymer.dom( element.root ).querySelectorAll(
+            'comfort-radio[name="' + questionNumber + '"] > label'
+          )
+        );
            
         for ( var i = 0; i < comfortRadioLabels.length; i++ ) {
           // 0 = text, 1 = input, 2 = text
@@ -250,7 +255,7 @@
           if ( highlightCorrect && ( comfortRadioLabels[i].textContent.trim() === correct.text ) ) {
             setTimeout( function ( i ) { 
               comfortRadioLabels[i].parentNode.setAttribute( 'correct', '' );
-            }.bind( this, i ), 250 );
+            }.bind( element, i ), 250 );
             // break;
           }
         }

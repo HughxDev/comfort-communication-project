@@ -308,9 +308,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       constructor() {
         super();
 
-        Defiant.getSnapshot( this.questions, snapshot => {
+        var element = this;
+
+        Defiant.getSnapshot( this.questions, function ( snapshot ) {
           // Caching for performance. May be unnecessary since dataset is not that big.
-          this.snapshot = snapshot;
+          element.snapshot = snapshot;
         } );
       }
 

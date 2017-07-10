@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         const slot = this.shadowRoot.querySelector( '#slot' );
 
-        this.addEventListener( 'change', event => {
+        this.addEventListener( 'change', function ( event ) {
           // console.log( event.target.value );
 
           /*var radios = */
@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .filter( function ( element ) {
               return element.nodeName.toLowerCase() === 'comfort-radio';
             } )
-            .forEach( element => {
+            .forEach( function( element ) {
               /* double-equals intentional */
               if ( element.getAttribute( 'value' ) == event.target.value ) {
                 element.setAttribute( 'checked', '' );

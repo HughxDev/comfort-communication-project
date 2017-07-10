@@ -72,8 +72,14 @@
       const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
 
       var hasUnansweredQuestions = false;
+      var $requiredTextarea;
+      var $requiredRadiogroup;
+      var i;
 
-      for ( var $requiredTextarea of $requiredTextareas ) {
+      // for ( var $requiredTextarea of $requiredTextareas ) {
+      for ( i = 0; i < $requiredTextareas.length; ++i ) {
+        $requiredTextarea = $requiredTextareas[i];
+
         if ( !$requiredTextarea.value || $requiredTextarea.value.trim() === "" ) {
           $requiredTextarea.classList.remove( 'answer--answered' );
 
@@ -84,7 +90,10 @@
 
       const $requiredRadiogroups = this.shadowRoot.querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
 
-      for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+      // for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+      for ( i = 0; i < $requiredRadiogroups.length; ++i ) {
+        $requiredRadiogroup = $requiredRadiogroups[i];
+
         if ( !$requiredRadiogroup.querySelector( 'comfort-radio[checked]' ) ) {
           // return false;
           $requiredRadiogroup.classList.remove( 'answers--answered' );
@@ -143,6 +152,8 @@
    */
   Comfort.InstructorResponses = (superclass) => class extends superclass {
     _revealResponses( event ) {
+      var element = this;
+
       var answered = this.$questions.checkForAnswers();
 
       if ( answered ) {
@@ -152,15 +163,20 @@
 
         const noScroll = $button.hasAttribute( 'no-scroll' );
 
-        const reveal = () => {
-          this.$questions.setAttribute( 'revealed', '' );
+        const reveal = function () {
+          element.$questions.setAttribute( 'revealed', '' );
 
           var href = $button.getAttribute( 'data-href' );
 
           $button.textContent = $button.getAttribute( 'after-tap-text' );
 
-          // this.unlisten( $button );
-          Polymer.Gestures.removeListener( $button, 'tap' );
+          // this.unlisten( $button, 'tap', '_revealResponses' );
+          Polymer.Gestures.removeListener( $button, 'tap', '_revealResponses' );
+
+          // $button.removeAttribute( 'on-tap' );
+          Polymer.Gestures.addListener( $button, 'tap', function ( event ) {
+            window.location.href = element.getAttribute( 'href' );
+          } );
         };
 
         if ( noScroll ) {
@@ -191,7 +207,7 @@
     _markCorrectIncorrectOnInputChange() {
       const $questions = this.shadowRoot.querySelector( '#questions' );
     
-      $questions.addEventListener( 'change', event => {
+      $questions.addEventListener( 'change', function ( event ) {
         var input = event.target;
         var questionNumber = input.name;
         var answerNumber = input.value;
@@ -240,7 +256,7 @@
         }
       } );
 
-      // $next.addEventListener( 'click', event => {
+      // $next.addEventListener( 'click', function ( event ) {
       //   console.log( 'document.forms', document.forms );
       // } );
     }

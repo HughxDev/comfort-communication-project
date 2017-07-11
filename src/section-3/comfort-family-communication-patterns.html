@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../comfort-button.html">
 <link rel="import" href="../comfort-video.html">
 <link rel="import" href="../shared-styles.html">
@@ -15,10 +15,10 @@
       }
     </style>
     
-    <app-location route="{{route}}"></app-location>
+    <app-location route="[[route]]"></app-location>
     <app-route
       route="{{route}}"
-      pattern="/:page/:number"
+      pattern="/:number"
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
 
@@ -32,10 +32,14 @@
   <script>
     "use strict";
     
-    class ComfortFamilyCommunicationPatterns extends Polymer.Element {
-      static get is() { return 'comfort-family-communication-patterns'; }
-    }
+    Polymer({
+      "is": "comfort-family-communication-patterns",
 
-    window.customElements.define( ComfortFamilyCommunicationPatterns.is, ComfortFamilyCommunicationPatterns );
+      "attached": function () {
+        console.log( 'this.route', this.route );
+        console.log( 'this.routeData', this.routeData );
+        console.log( 'this.subroute', this.subroute );
+      }
+    });
   </script>
 </dom-module>

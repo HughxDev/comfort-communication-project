@@ -1,4 +1,4 @@
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../comfort-button.html">
 <link rel="import" href="../../comfort-video.html">
 <link rel="import" href="../../shared-styles.html">
@@ -31,10 +31,8 @@
   <script>
     "use strict";
     
-    class ComfortCarrierCaregiver extends Polymer.Element {
-      static get is() { return 'comfort-carrier-caregiver'; }
-    }
-
-    window.customElements.define( ComfortCarrierCaregiver.is, ComfortCarrierCaregiver );
+    Polymer({
+      "is": "comfort-carrier-caregiver"
+    });
   </script>
 </dom-module>

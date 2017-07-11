@@ -1,13 +1,18 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 
 <dom-module id="comfort-jumbotron">
   <template>
     <style>
+      /* IE11 fix */
       :host {
-        display: block;
+        display: flex;
+        flex-direction: column;
+      }
 
+      .flex-container {
         min-height: 253px;
 
+        display: block;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -18,7 +23,9 @@
         /* -100px top, -28px bottom */
       }
     </style>
-    <h1><slot></slot></h1>
+    <div class="flex-container">
+      <h1><slot></slot></h1>
+    </div>
   </template>
 
   <script>
@@ -31,18 +38,11 @@
      * @polymer
      * @demo demo/index.html
      */
-    class ComfortJumbotron extends Polymer.Element {
-      static get is() { return 'comfort-jumbotron'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'comfort-jumbotron'
-          }
-        };
-      }
-    }
+    Polymer({
+      "is": "comfort-jumbotron"
+      // "properties": {}
+    });
 
-    window.customElements.define(ComfortJumbotron.is, ComfortJumbotron);
+    // window.customElements.define(ComfortJumbotron.is, ComfortJumbotron);
   </script>
 </dom-module>

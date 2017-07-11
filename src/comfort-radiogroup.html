@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="comfort-radiogroup">
@@ -24,25 +24,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortRadiogroup extends Polymer.Element {
-      static get is() { return 'comfort-radiogroup'; }
-      static get properties() {}
+    Polymer({
+      "is": "comfort-radiogroup",
 
-      connectedCallback() {
-        super.connectedCallback();
+      // "properties": {},
 
-        const slot = this.shadowRoot.querySelector( '#slot' );
+      "attached": function () {
+        // super.connectedCallback();
 
-        this.addEventListener( 'change', event => {
+        var slot = Polymer.dom( this.root ).querySelector( '#slot' );
+
+        this.addEventListener( 'change', function ( event ) {
           // console.log( event.target.value );
 
           /*var radios = */
-          slot
-            .assignedNodes()
+          // slot
+          this
+            // .assignedNodes()
+            .getContentChildNodes()
             .filter( function ( element ) {
               return element.nodeName.toLowerCase() === 'comfort-radio';
             } )
-            .forEach( element => {
+            .forEach( function ( element ) {
               /* double-equals intentional */
               if ( element.getAttribute( 'value' ) == event.target.value ) {
                 element.setAttribute( 'checked', '' );
@@ -53,8 +56,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ; // slot
         } );
       }
-    }
+    });
 
-    window.customElements.define( ComfortRadiogroup.is, ComfortRadiogroup );
+    // window.customElements.define( ComfortRadiogroup.is, ComfortRadiogroup );
   </script>
 </dom-module>

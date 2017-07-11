@@ -1,4 +1,4 @@
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../comfort-mixins.html">
 <link rel="import" href="../../comfort-question-responses.html">
 <link rel="import" href="../../comfort-button.html">
@@ -27,13 +27,17 @@
   <script>
     "use strict";
     
-    class ComfortLoneCaregiver3 extends Comfort.InstructorResponses( Polymer.GestureEventListeners( Polymer.Element ) ) {
-      static get is() { return 'comfort-lone-caregiver-3'; }
+    Polymer({
+      "is": "comfort-lone-caregiver-3",
 
-      connectedCallback() {
-        super.connectedCallback();
+      "behaviors": [
+        Comfort.InstructorResponses
+      ],
 
-        this.$questions = this.shadowRoot.querySelector( '#questions' );
+      "attached": function () {
+        // super.connectedCallback();
+
+        this.$questions = Polymer.dom( this.root ).querySelector( '#questions' );
 
         this.$questions.questions = [
           {
@@ -50,8 +54,6 @@
           }
         ];
       }
-    }
-
-    window.customElements.define( ComfortLoneCaregiver3.is, ComfortLoneCaregiver3 );
+    });
   </script>
 </dom-module>

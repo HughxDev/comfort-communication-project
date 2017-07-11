@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../comfort-button.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -8,47 +8,6 @@
       :host {
         display: block;
       }
-
-      .full-bleed {
-        height: 50vh;
-      }
-
-      .full-bleed > img {
-        top: -5vh;
-      }
-
-      @media only screen and (min-width: 480px) {
-        .full-bleed > img {
-          top: -10vh;
-        }
-      }
-
-       @media only screen and (min-width: 640px) {
-        .full-bleed > img {
-          top: -20vh;
-        }
-      }
-
-      @media only screen and (min-width: 720px) {
-        .full-bleed > img {
-          top: -30vh;
-        }
-      }
-
-      @media only screen and (min-width: 1080px) {
-        .full-bleed {
-          height: 75vh;
-        }
-      }
-
-      /* --- */
-
-      .cropped {
-        margin: 0 auto;
-        display: block;
-        max-width: 100%;
-        max-height: 75vh;
-      }
     </style>
 
     <section>
@@ -57,15 +16,8 @@
         <h1 class="section-title">Preview of the Four Family Caregiver Types</h1>
       </header>
 
-      <div on-tap="_toggleDesign">
-        <div class="design-option" data-sibling="next">
-          <div class="full-bleed">
-            <img src="/images/red-poppies-painting.jpg" alt="Painting of a tree in a field of red poppies during the day">
-          </div>
-        </div>
-        <div class="design-option" data-sibling="previous" hidden>
-          <img class="cropped" src="/images/red-poppies-painting-cropped.jpg" />
-        </div>
+      <div class="full-bleed">
+        <img src="/images/red-poppies@0.5x.jpg" srcset="/images/red-poppies.jpg 1925w, /images/red-poppies@0.5x.jpg 963w, /images/red-poppies@0.25x.jpg 481w, /images/red-poppies@0.125x.jpg 241w," alt="Painting of a tree in a field of red poppies during the day">
       </div>
 
       <p>One’s family communication pattern is shaped by collective family history. Based on these patterns, our research has revealed four prominent family caregiver types. These specific caregiver types are:  manager, carrier, partner, and lone. Each of these caregiver types depicts unique communication characteristics. To be most effective, communication interventions and healthcare provider communication should be tailored to the needs and preferences of each caregiver type. Let’s look at each one more closely.</p>
@@ -77,22 +29,20 @@
   <script>
     "use strict";
     
-    class ComfortPreviewFamilyCaregiverTypes extends Polymer.GestureEventListeners( Polymer.Element ) {
-      static get is() { return 'comfort-preview-family-caregiver-types'; }
+    Polymer({
+      "is": "comfort-preview-family-caregiver-types",
 
-      _toggleDesign() {
-        const $hidden = this.shadowRoot.querySelector( '.design-option[data-sibling][hidden]' );
+      // "_toggleDesign": function () {
+      //   var $hidden = Polymer.dom( this.root ).querySelector( '.design-option[data-sibling][hidden]' );
 
-        var whichSibling = $hidden.getAttribute( 'data-sibling' );
+      //   var whichSibling = $hidden.getAttribute( 'data-sibling' );
 
-        var siblingProperty = whichSibling + 'ElementSibling';
+      //   var siblingProperty = whichSibling + 'ElementSibling';
 
-        $hidden.hidden = false;
+      //   $hidden.hidden = false;
 
-        $hidden[siblingProperty].hidden = true;
-      }
-    }
-
-    window.customElements.define( ComfortPreviewFamilyCaregiverTypes.is, ComfortPreviewFamilyCaregiverTypes );
+      //   $hidden[siblingProperty].hidden = true;
+      // }
+    });
   </script>
 </dom-module>

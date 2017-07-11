@@ -4,12 +4,17 @@
 
   window.Comfort = window.Comfort || {};
 
+  // https://stackoverflow.com/a/31479176/214325
+  Comfort.Browser = {
+    "isIE": ( function () { return /*@cc_on!@*/false || !!document.documentMode; } )()
+  };
+
   /**
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.PseudoForm = (superclass) => class extends superclass {
-    _storeAnswers( event ) {
+  Comfort.PseudoForm = {
+    "_storeAnswers": function ( event ) {
       function formatResponse( question, questionNumber, selected, selectedNumber ) {
         var response = {};
 
@@ -22,8 +27,7 @@
         return response;
       }
 
-      // const $form = this.shadowRoot.querySelector( '#pretest-form' );
-      const $form = this.shadowRoot.querySelector( 'form' );
+      var $form = Polymer.dom( this.root ).querySelector( 'form' );
 
       // var values = {};
       var responses = [];
@@ -34,6 +38,7 @@
       for ( var i = 0; i < $form.elements.length; i++ ) {
         $element = $form.elements[i];
 
+        // questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
         questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
 
         question = JSON.search( this.snapshot, questionXPath )[0];
@@ -67,13 +72,19 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.CheckValidity = (superclass) => class extends superclass {
-    checkForAnswers() {
-      const $requiredTextareas = this.shadowRoot.querySelectorAll( 'textarea[required]' );
+  Comfort.CheckValidity = {
+    "checkForAnswers": function () {
+      var $requiredTextareas = Polymer.dom( this.root ).querySelectorAll( 'textarea[required]' );
 
       var hasUnansweredQuestions = false;
+      var $requiredTextarea;
+      var $requiredRadiogroup;
+      var i;
 
-      for ( var $requiredTextarea of $requiredTextareas ) {
+      // for ( var $requiredTextarea of $requiredTextareas ) {
+      for ( i = 0; i < $requiredTextareas.length; ++i ) {
+        $requiredTextarea = $requiredTextareas[i];
+
         if ( !$requiredTextarea.value || $requiredTextarea.value.trim() === "" ) {
           $requiredTextarea.classList.remove( 'answer--answered' );
 
@@ -82,9 +93,12 @@
         }
       }
 
-      const $requiredRadiogroups = this.shadowRoot.querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
+      var $requiredRadiogroups = Polymer.dom( this.root ).querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
 
-      for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+      // for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+      for ( i = 0; i < $requiredRadiogroups.length; ++i ) {
+        $requiredRadiogroup = $requiredRadiogroups[i];
+
         if ( !$requiredRadiogroup.querySelector( 'comfort-radio[checked]' ) ) {
           // return false;
           $requiredRadiogroup.classList.remove( 'answers--answered' );
@@ -94,10 +108,10 @@
       }
 
       return !hasUnansweredQuestions;
-    } // checkForAnswers
+    }, // checkForAnswers
 
-    clearRequiredHighlightIfApplicable( event ) {
-      const $requiredField = event.target;
+    "clearRequiredHighlightIfApplicable": function ( event ) {
+      var $requiredField = event.target;
 
       if ( ( $requiredField.nodeName.toLowerCase() === 'input' ) ) {
         $requiredField.classList.add( 'answer--answered' );
@@ -112,12 +126,12 @@
       } else if ( $requiredField.value && $requiredField.value.trim() !== "" ) {
         $requiredField.classList.add( 'answer--answered' );
       }
-    }
+    },
 
-    alertIfUnansweredQuestionsRemain() {
-      const $test = this.shadowRoot.querySelector( '#test' );
+    "alertIfUnansweredQuestionsRemain": function ( event ) {
+      var $test = Polymer.dom( this.root ).querySelector( '#test' );
 
-      const $missingAnswers = document.querySelector( '#missing-answers' );
+      var $missingAnswers = document.querySelector( '#missing-answers' );
 
       var answered = $test.checkForAnswers();
 
@@ -141,26 +155,40 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.InstructorResponses = (superclass) => class extends superclass {
-    _revealResponses( event ) {
+  Comfort.InstructorResponses = {
+    // IE11 hack
+    "_restoreLinkBehavior": function ( event ) {
+      window.location.href = this.getAttribute( 'href' );
+    },
+
+    "revealed": false,
+
+    "_revealResponses": function ( event ) {
+      console.log( '_revealResponses' );
+
+      var element = this;
+
       var answered = this.$questions.checkForAnswers();
 
       if ( answered ) {
+        console.log( 'answered' );
+
         this.$questions.removeAttribute( 'highlight-required' );
         
-        const $button = event.target;
+        var $button = event.currentTarget;
 
-        const noScroll = $button.hasAttribute( 'no-scroll' );
+        var noScroll = $button.hasAttribute( 'no-scroll' );
 
-        const reveal = () => {
-          this.$questions.setAttribute( 'revealed', '' );
+        var reveal = function () {
+          element.revealed = true;
+
+          element.$questions.setAttribute( 'revealed', '' );
 
           var href = $button.getAttribute( 'data-href' );
 
-          $button.textContent = $button.getAttribute( 'after-tap-text' );
+          Polymer.dom( $button ).textContent = $button.getAttribute( 'after-tap-text' );
 
-          // this.unlisten( $button );
-          Polymer.Gestures.removeListener( $button, 'tap' );
+          element.unlisten( $button, 'tap', '_revealResponses' );
         };
 
         if ( noScroll ) {
@@ -171,7 +199,7 @@
         }
       } // if answered
       else {
-        const $missingAnswers = document.querySelector( '#missing-answers' );
+        var $missingAnswers = document.querySelector( '#missing-answers' );
 
         $missingAnswers.open();
 
@@ -187,26 +215,29 @@
    * @polymerElement
    * @memberof Polymer
    */
-  Comfort.CorrectIncorrect = (superclass) => class extends superclass {
-    _markCorrectIncorrectOnInputChange() {
-      const $questions = this.shadowRoot.querySelector( '#questions' );
+  Comfort.CorrectIncorrect = {
+    "_markCorrectIncorrectOnInputChange": function () {
+      var element = this;
+
+      var $questions = Polymer.dom( this.root ).querySelector( '#questions' );
     
-      $questions.addEventListener( 'change', event => {
+      $questions.addEventListener( 'change', function ( event ) {
         var input = event.target;
         var questionNumber = input.name;
         var answerNumber = input.value;
 
         // The question in question: //d:item[1]
+        // var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
         var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
 
         // Correct answer: //d:item[1]/answers[correct="true"]
-        var correct = JSON.search( this.snapshot, questionXPath + '/answers[correct="true"]' )[0];
+        var correct = JSON.search( element.snapshot, questionXPath + '/answers[correct="true"]' )[0];
 
         // Incorrect answer: //d:item[1]/answers[correct="false"]
-        var incorrect = JSON.search( this.snapshot, questionXPath + '/answers[correct="false"]' )[0];
+        var incorrect = JSON.search( element.snapshot, questionXPath + '/answers[correct="false"]' )[0];
         
         /* Selected answer: //d:item[1]/answers[1] */
-        var selected = JSON.search( this.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
+        var selected = JSON.search( element.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
 
         var radio = input;
 
@@ -225,7 +256,11 @@
           highlightCorrect = true;
         }
 
-        var comfortRadioLabels =  Array.prototype.slice.call( this.shadowRoot.querySelectorAll( 'comfort-radio[name="' + questionNumber + '"] > label' ) );
+        var comfortRadioLabels = Array.prototype.slice.call(
+          Polymer.dom( element.root ).querySelectorAll(
+            'comfort-radio[name="' + questionNumber + '"] > label'
+          )
+        );
            
         for ( var i = 0; i < comfortRadioLabels.length; i++ ) {
           // 0 = text, 1 = input, 2 = text
@@ -234,13 +269,13 @@
           if ( highlightCorrect && ( comfortRadioLabels[i].textContent.trim() === correct.text ) ) {
             setTimeout( function ( i ) { 
               comfortRadioLabels[i].parentNode.setAttribute( 'correct', '' );
-            }.bind( this, i ), 250 );
+            }.bind( element, i ), 250 );
             // break;
           }
         }
       } );
 
-      // $next.addEventListener( 'click', event => {
+      // $next.addEventListener( 'click', function ( event ) {
       //   console.log( 'document.forms', document.forms );
       // } );
     }

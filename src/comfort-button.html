@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 
 <dom-module id="comfort-button">
   <template>
@@ -47,46 +47,46 @@
     "use strict";
     /**
      * `comfort-button`
-     * Big introductory text with background
+     * Lorem ipsum
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class ComfortButton extends Polymer.Element {
-      static get is() { return 'comfort-button'; }
-      static get properties() {
-        return {
-          "href": {
-            "type": String,
-            "value": "javascript:void(0);"
-          },
-          "large": {
-            "type": Boolean,
-            "value": false,
-            "reflectToAttribute": true
-          },
-          "afterTapText": {
-            "type": String
-          },
-          "noScroll": {
-            "type": Boolean,
-            "value": false,
-            "reflectToAttribute": true
-          }
-        };
-      }
+    Polymer({
+      "is": "comfort-button",
 
-      connectedCallback() {
-        super.connectedCallback();
+      "properties": {
+        "href": {
+          "type": String,
+          "value": "javascript:void(0);"
+        },
+        "large": {
+          "type": Boolean,
+          "value": false,
+          "reflectToAttribute": true
+        },
+        "afterTapText": {
+          "type": String
+        },
+        "noScroll": {
+          "type": Boolean,
+          "value": false,
+          "reflectToAttribute": true
+        }
+      },
 
+      "attached": function () {
+        // super.connectedCallback();
+
+        // .trim() necessary for IE11
         // see if button needs to be wider
-        if ( this.textContent.length >= 19 ) {
+        if ( this.textContent.trim().length >= 19 ) {
           this.setAttribute( 'large', '' );
         }
       }
-    }
+    });
 
-    window.customElements.define( ComfortButton.is, ComfortButton );
+    // window.customElements.define( ComfortButton.is, ComfortButton );
   </script>
 </dom-module>

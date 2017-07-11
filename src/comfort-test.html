@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="comfort-radio.html">
 <link rel="import" href="comfort-radiogroup.html">
@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           type="radio"
                           name$="[[increment(questionIndex)]]"
                           value="[[increment(index)]]"
-                        /> [[item.text]]
+                       > [[item.text]]
                       </label>
                     </comfort-radio>
                   </template>
@@ -82,257 +82,263 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
 
-    class ComfortTest extends Comfort.CheckValidity( Comfort.CorrectIncorrect( Comfort.PseudoForm( Polymer.GestureEventListeners( Polymer.Element ) ) ) ) {
-      static get is() { return 'comfort-test'; }
-      static get properties() {
-        return {
-          "snapshot": {
-            "type": Object
-          },
-          "questions": {
-            "type": Object,
-            value() {
-              return [
-                // 0
-                {
-                  "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "True",
-                      "correct": false
-                    },
-                    {
-                      "text": "False",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 1
-                {
-                  "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Do not get involved. Let them work it out amongst themselves because family matters are not your business as a health care provider.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Ask the patient and present family members questions about their family dynamics.",
-                      "correct": true
-                    },
-                    {
-                      "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 2
-                {
-                  "question": "A family is considered a system because:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Members are born into relationships with one another.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Family boundaries are agreed upon among members.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The family environment may be supportive or unsupportive.",
-                      "correct": false
-                    },
-                    {
-                      "text": "These interdependent members influence one another.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 3
-                {
-                  "question": "You are caring for a family led by a “Carrier” caregiver. What will you do be most helpful to the “Carrier” caregiver?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Avoid communication with the “Carrier” caregiver unless approached by them with a specific question regarding the patient.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Avoid discussions about death and dying.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Discuss patient care directions privately with the “Carrier” caregiver.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Plan an immediate intervention to help the “Carrier” caregiver facilitate patient requests.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 4
-                {
-                  "question": "According to the family member typology, which of the following is true regarding the “Lone” caregiver?",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "The “Lone” caregiver is considered at the top of the family hierarchy.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The “Lone” caregiver is in the least need of clinician intervention.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The “Lone” caregiver has been surrounded by other family members in terms of support and communication.",
-                      "correct": false
-                    },
-                    {
-                      "text": "The “Lone” caregiver likely suffers from increased stress and burden due to minimal social support and likely holds anger and resentment towards other members of the family.",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 5
-                {
-                  "question": "In order to facilitate effective communication for a patient and family, you must first:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Assess the family system and family dynamics.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Identify specific communication gaps in family dynamics.",
-                      "correct": false
-                    },
-                    {
-                      "text": "Examine the context, background, and communication preferences of the family.",
-                      "correct": false
-                    },
-                    {
-                      "text": "All of the above",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 6
-                {
-                  "question": "According to Family Communication Patterns Theory, family communication is composed of:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Conversation and conflict patterns",
-                      "correct": false
-                    },
-                    {
-                      "text": "Conformity and caring patterns",
-                      "correct": false
-                    },
-                    {
-                      "text": "Conversation and conformity patterns",
-                      "correct": true
-                    },
-                    {
-                      "text": "Conversation and caring patterns",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 7
-                {
-                  "question": "When working with a “Manager” caregiver, family conflict is likely to occur because:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "The caregiver is estranged from the rest of the family",
-                      "correct": false
-                    },
-                    {
-                      "text": "The caregiver is passive",
-                      "correct": false
-                    },
-                    {
-                      "text": "The caregiver is controlling information flow",
-                      "correct": true
-                    },
-                    {
-                      "text": "The caregiver has low health literacy",
-                      "correct": false
-                    }
-                  ]
-                },
-                // 8
-                {
-                  "question": "When working with a “Lone” caregiver, health professional communication should focus on:",
-                  "type": "multiple-choice",
-                  "answers": [
-                    {
-                      "text": "Physical and emotional support",
-                      "correct": false
-                    },
-                    {
-                      "text": "Provision of care services",
-                      "correct": false
-                    },
-                    {
-                      "text": "Access to educational resources",
-                      "correct": false
-                    },
-                    {
-                      "text": "All of the above",
-                      "correct": true
-                    }
-                  ]
-                },
-                // 9
-                // Pre-test:
-                {
-                  "question": "What do you believe will be the most useful communication skill to learn from this module and why?",
-                  "type": "open-ended",
-                  "scope": "pretest"
-                }
-              ];
-            }
+    Polymer({
+      "is": "comfort-test",
+
+      "behaviors": [
+        Comfort.CheckValidity,
+        Comfort.CorrectIncorrect,
+        Comfort.PseudoForm
+      ],
+
+      "properties": {
+        "snapshot": {
+          "type": Object
+        },
+        "questions": {
+          "type": Object,
+          "value": function () {
+            return [
+              // 0
+              {
+                "question": "Healthcare providers play a critical role in family caregiver communication interactions.",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "True",
+                    "correct": false
+                  },
+                  {
+                    "text": "False",
+                    "correct": true
+                  }
+                ]
+              },
+              // 1
+              {
+                "question": "You have noticed conflicts emerge within the family you are caring for regarding treatment. Which course of action should you take to best help this patient/family?",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Do not get involved. Let them work it out amongst themselves because family matters are not your business as a health care provider.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Inform the family members of your observation, and suggest they talk amongst themselves to reach a solution.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Ask the patient and present family members questions about their family dynamics.",
+                    "correct": true
+                  },
+                  {
+                    "text": "Plan a family meeting and surprise the family members in order to avoid conflict prior to the meeting.",
+                    "correct": false
+                  }
+                ]
+              },
+              // 2
+              {
+                "question": "A family is considered a system because:",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Members are born into relationships with one another.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Family boundaries are agreed upon among members.",
+                    "correct": false
+                  },
+                  {
+                    "text": "The family environment may be supportive or unsupportive.",
+                    "correct": false
+                  },
+                  {
+                    "text": "These interdependent members influence one another.",
+                    "correct": true
+                  }
+                ]
+              },
+              // 3
+              {
+                "question": "You are caring for a family led by a “Carrier” caregiver. What will you do be most helpful to the “Carrier” caregiver?",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Avoid communication with the “Carrier” caregiver unless approached by them with a specific question regarding the patient.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Avoid discussions about death and dying.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Discuss patient care directions privately with the “Carrier” caregiver.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Plan an immediate intervention to help the “Carrier” caregiver facilitate patient requests.",
+                    "correct": true
+                  }
+                ]
+              },
+              // 4
+              {
+                "question": "According to the family member typology, which of the following is true regarding the “Lone” caregiver?",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "The “Lone” caregiver is considered at the top of the family hierarchy.",
+                    "correct": false
+                  },
+                  {
+                    "text": "The “Lone” caregiver is in the least need of clinician intervention.",
+                    "correct": false
+                  },
+                  {
+                    "text": "The “Lone” caregiver has been surrounded by other family members in terms of support and communication.",
+                    "correct": false
+                  },
+                  {
+                    "text": "The “Lone” caregiver likely suffers from increased stress and burden due to minimal social support and likely holds anger and resentment towards other members of the family.",
+                    "correct": true
+                  }
+                ]
+              },
+              // 5
+              {
+                "question": "In order to facilitate effective communication for a patient and family, you must first:",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Assess the family system and family dynamics.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Identify specific communication gaps in family dynamics.",
+                    "correct": false
+                  },
+                  {
+                    "text": "Examine the context, background, and communication preferences of the family.",
+                    "correct": false
+                  },
+                  {
+                    "text": "All of the above",
+                    "correct": true
+                  }
+                ]
+              },
+              // 6
+              {
+                "question": "According to Family Communication Patterns Theory, family communication is composed of:",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Conversation and conflict patterns",
+                    "correct": false
+                  },
+                  {
+                    "text": "Conformity and caring patterns",
+                    "correct": false
+                  },
+                  {
+                    "text": "Conversation and conformity patterns",
+                    "correct": true
+                  },
+                  {
+                    "text": "Conversation and caring patterns",
+                    "correct": false
+                  }
+                ]
+              },
+              // 7
+              {
+                "question": "When working with a “Manager” caregiver, family conflict is likely to occur because:",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "The caregiver is estranged from the rest of the family",
+                    "correct": false
+                  },
+                  {
+                    "text": "The caregiver is passive",
+                    "correct": false
+                  },
+                  {
+                    "text": "The caregiver is controlling information flow",
+                    "correct": true
+                  },
+                  {
+                    "text": "The caregiver has low health literacy",
+                    "correct": false
+                  }
+                ]
+              },
+              // 8
+              {
+                "question": "When working with a “Lone” caregiver, health professional communication should focus on:",
+                "type": "multiple-choice",
+                "answers": [
+                  {
+                    "text": "Physical and emotional support",
+                    "correct": false
+                  },
+                  {
+                    "text": "Provision of care services",
+                    "correct": false
+                  },
+                  {
+                    "text": "Access to educational resources",
+                    "correct": false
+                  },
+                  {
+                    "text": "All of the above",
+                    "correct": true
+                  }
+                ]
+              },
+              // 9
+              // Pre-test:
+              {
+                "question": "What do you believe will be the most useful communication skill to learn from this module and why?",
+                "type": "open-ended",
+                "scope": "pretest"
+              }
+            ];
           }
-        };
-      }
+        }
+      },
 
-      constructor() {
-        super();
+      "ready": function () {
+        // super();
+        var element = this;
 
-        Defiant.getSnapshot( this.questions, snapshot => {
+        Defiant.getSnapshot( this.questions, function ( snapshot ) {
           // Caching for performance. May be unnecessary since dataset is not that big.
-          this.snapshot = snapshot;
+          element.snapshot = snapshot;
         } );
-      }
+      },
 
-      connectedCallback() {
-        super.connectedCallback();
+      "attached": function () {
+        // super.connectedCallback();
 
         // this._markCorrectIncorrectOnInputChange();
-      }
+      },
 
-      increment( integer ) {
+      "increment": function( integer ) {
         return ++integer;
-      }
+      },
 
-      isMultipleChoice( questionType ) {
+      "isMultipleChoice": function( questionType ) {
         return questionType === 'multiple-choice';
-      }
+      },
 
-      isOpenEnded( questionType ) {
+      "isOpenEnded": function( questionType ) {
         return questionType === 'open-ended';
-      }
+      },
 
-      shouldDisplay( question ) {
+      "shouldDisplay": function( question ) {
         var currentPage = document.querySelector( 'comfort-app' ).getAttribute( 'page' );
 
         if ( question && question.hasOwnProperty( 'scope' ) && ( question.scope !== currentPage ) ) {
@@ -345,8 +351,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       // _storeAnswers (moved to mixin class)
-    }
+    });
 
-    window.customElements.define( ComfortTest.is, ComfortTest );
+    // window.customElements.define( ComfortTest.is, ComfortTest );
   </script>
 </dom-module>

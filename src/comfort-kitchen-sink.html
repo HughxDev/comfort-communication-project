@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="comfort-kitchen-sink">
@@ -46,10 +46,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
 
-    class ComfortKitchenSink extends Polymer.Element {
-      static get is() { return 'comfort-kitchen-sink'; }
-    }
+    // class ComfortKitchenSink extends Polymer.Element {
+    //   static get is() { return 'comfort-kitchen-sink'; }
+    // }
+    Polymer({
+      "is": "comfort-kitchen-sink"
+    })
 
-    window.customElements.define( ComfortKitchenSink.is, ComfortKitchenSink );
+    // window.customElements.define( ComfortKitchenSink.is, ComfortKitchenSink );
   </script>
 </dom-module>

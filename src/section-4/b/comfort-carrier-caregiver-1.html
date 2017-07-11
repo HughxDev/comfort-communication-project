@@ -1,4 +1,4 @@
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../comfort-button.html">
 <link rel="import" href="../../comfort-video.html">
 <link rel="import" href="../../shared-styles.html">
@@ -17,7 +17,7 @@
         <h1 class="section-title">The Carrier Caregiver</h1>
 
         <div class="full-bleed full-bleed--carrier-caregiver">
-          <img src="/images/carrier-caregiver.jpg" srcset="/images/carrier-caregiver.jpg 1855w, /images/carrier-caregiver@0.5x.jpg 928w, /images/carrier-caregiver@0.25x.jpg 464w" alt="Painting of a group of people comprising a human pyramid" />
+          <img src="/images/carrier-caregiver.jpg" srcset="/images/carrier-caregiver.jpg 1855w, /images/carrier-caregiver@0.5x.jpg 928w, /images/carrier-caregiver@0.25x.jpg 464w" alt="Painting of a group of people comprising a human pyramid">
         </div>
       </header>
 
@@ -27,7 +27,7 @@
 
       <p>Carrier caregivers tend to suffer from burnout and depression as they attempt to shoulder the burden of responsibility for caring for the patient, not feeling much of a support network in the family, and neglecting to care for themselves in the process of caring for the patient.</p>
 
-      <hr />
+      <hr>
 
       <p><b>How to spot a carrier caregiver:</b> You can spot a carrier caregiver because they will usually ask lots of questions and rarely challenge the answers. They trust the decisions and suggestions of the healthcare professionals. They will self-disclose to the clinical staff and seek affirmation from them. They do not discuss death and dying or their own burdens with family members.</p>
 
@@ -49,10 +49,8 @@
   <script>
     "use strict";
     
-    class ComfortCarrierCaregiver1 extends Polymer.Element {
-      static get is() { return 'comfort-carrier-caregiver-1'; }
-    }
-
-    window.customElements.define( ComfortCarrierCaregiver1.is, ComfortCarrierCaregiver1 );
+    Polymer({
+      "is": "comfort-carrier-caregiver-1"
+    });
   </script>
 </dom-module>

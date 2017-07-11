@@ -8,21 +8,21 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-
-<!-- App Header -->
-<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-
-<!-- App Toolbar -->
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
 
 <!-- App Drawer -->
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 
+<!-- App Header -->
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+
 <!-- App Scroll Effects -->
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+
+<!-- App Toolbar -->
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 
 <!-- App Location & Route -->
 <link rel="import" href="../bower_components/app-route/app-location.html">
@@ -33,39 +33,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
 <!-- Neon (required by Paper Dialog) -->
-<link rel="import" href="../bower_components/neon-animation/web-animations.html">
-<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<!-- <link rel="import" href="../bower_components/neon-animation/web-animations.html"> -->
+<!-- <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html"> -->
+<!-- <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html"> -->
 
 <!-- Paper -->
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<!-- <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html"> -->
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
-
-<!-- Mixins -->
-<!-- <link rel="import" href="../lazy-imports-mixin.html"> -->
-
-<!-- Icons -->
-<link rel="import" href="comfort-icons.html">
 
 <!-- UI -->
 <link rel="import" href="comfort-footer.html">
-
-<!-- Views -->
-<link rel="lazy-import" href="comfort-kitchen-sink.html">
-<link rel="lazy-import" href="comfort-welcome.html">
-<link rel="lazy-import" href="section-1/comfort-pretest.html">
-<link rel="lazy-import" href="section-2/comfort-introduction.html">
-<link rel="lazy-import" href="section-3/comfort-family-communication-patterns.html">
-<link rel="lazy-import" href="section-4/comfort-preview-family-caregiver-types.html">
-<link rel="lazy-import" href="section-4/a/comfort-manager-caregiver.html">
-<link rel="lazy-import" href="section-4/b/comfort-carrier-caregiver.html">
-<link rel="lazy-import" href="section-4/c/comfort-partner-caregiver.html">
-<link rel="lazy-import" href="section-4/d/comfort-lone-caregiver.html">
-<link rel="lazy-import" href="section-4/comfort-family-caregiver-types-summary.html">
-<link rel="lazy-import" href="section-5/comfort-posttest.html">
-<link rel="lazy-import" href="comfort-done.html">
-<link rel="lazy-import" href="comfort-view404.html">
+<link rel="import" href="comfort-icons.html">
 
 <dom-module id="comfort-app">
   <template>
@@ -74,6 +53,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-font-common-base: {
           font-family: var( --font-family );
         };
+
+        --color-correct: #7AC943;
+        --color-incorrect: #FF1D25;
+        --textarea-border-color: #666;
       }
 
       :host {
@@ -105,6 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         .comfort-logo {
+          display: block; /* IE11 */
           display: initial;
         }
       }
@@ -141,320 +125,340 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       /* IE11 attempted fix */
-      .flex-wrapper {
+      /*.flex-wrapper {
         display: flex;
         flex-direction: column;
-        height: 120vh;
-      }
+        height: 100vh;
+      }*/
 
       app-header-layout {
         display: block;
         display: flex;
-        min-height: 120vh;
-        height: 120vh;
+        min-height: 100vh;
+        height: 100vh;
         flex-direction: column;
       }
 
       [role="main"] {
         flex: 1 1 0%;
       }
+
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      /* IE11-specific styles */
+      @media all and (-ms-high-contrast:none) {
+        .flex-container {
+          display: block;
+        }
+      }
     </style>
 
+    <!-- url-space-regex="^[[rootPath]]" -->
     <app-location route="{{route}}"></app-location>
+
+    <!-- Polymer 1.0 -->
+    <!-- pattern="[[rootPath]]:page" -->
+
+    <!-- 2.0: -->
+    <!-- pattern="[[rootPattern]]:page" -->
     <app-route
-      route="{{route}}"
-      pattern="[[rootPattern]]:page"
-      data="{{routeData}}"
-      tail="{{subroute}}"></app-route>
+        route="{{route}}"
+        pattern="[[rootPath]]:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
 
-    <!-- Main content -->
-    <div class="flex-wrapper">
-      <app-header-layout fullbleed>
-        <app-header slot="header" condenses reveals effects="waterfall">
-          <app-toolbar>
-            <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project" />
-            <span main-title>
-              <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
-            </span>
-          </app-toolbar>
-        </app-header>
+      <!-- Main content -->
+      <div class="flex-wrapper">
+        <!-- <app-header-layout fullbleed> -->
+        <div class="flex-container">
 
-        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
-          <comfort-welcome name="welcome" class="view"></comfort-welcome>
-          <comfort-pretest name="pretest" class="view"></comfort-pretest>
-          <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
-          <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
-          <comfort-preview-family-caregiver-types name="preview-family-caregiver-types" class="view"></comfort-preview-family-caregiver-types>
-          <comfort-family-caregiver-types-summary name="family-caregiver-types-summary" class="view"></comfort-family-caregiver-types-summary>
-          <comfort-manager-caregiver name="manager-caregiver" class="view"></comfort-manager-caregiver>
-          <comfort-carrier-caregiver name="carrier-caregiver" class="view"></comfort-carrier-caregiver>
-          <comfort-partner-caregiver name="partner-caregiver" class="view"></comfort-partner-caregiver>
-          <comfort-lone-caregiver name="lone-caregiver" class="view"></comfort-lone-caregiver>
-          <comfort-posttest name="posttest" class="view"></comfort-posttest>
-          <comfort-done name="done" class="view"></comfort-done>
-          <comfort-view404 name="view404" class="view"></comfort-view404>
-        </iron-pages>
-        
-        <comfort-footer></comfort-footer>
-      </app-header-layout>
-    </div>
+          <app-header condenses reveals effects="waterfall">
+            <app-toolbar>
+              <img id="logo" class="comfort-logo" src="/images/logo.svg" width="112" alt="Comfort Communication Project">
+              <span main-title>
+                <span id="main-title-text" class="comfort-main-title-text">Module F: Family Caregivers</span>
+              </span>
+            </app-toolbar>
+          </app-header>
+
+          <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+            <comfort-kitchen-sink name="kitchen-sink" class="view"></comfort-kitchen-sink>
+            <comfort-welcome name="welcome" class="view"></comfort-welcome>
+            <comfort-pretest name="pretest" class="view"></comfort-pretest>
+            <comfort-introduction name="introduction" class="view" route="{{subroute}}"></comfort-introduction>
+            <comfort-family-communication-patterns name="family-communication-patterns" class="view" route="{{subroute}}"></comfort-family-communication-patterns>
+            <comfort-preview-family-caregiver-types name="preview-family-caregiver-types" class="view"></comfort-preview-family-caregiver-types>
+            <comfort-family-caregiver-types-summary name="family-caregiver-types-summary" class="view"></comfort-family-caregiver-types-summary>
+            <comfort-manager-caregiver name="manager-caregiver" class="view"></comfort-manager-caregiver>
+            <comfort-carrier-caregiver name="carrier-caregiver" class="view"></comfort-carrier-caregiver>
+            <comfort-partner-caregiver name="partner-caregiver" class="view"></comfort-partner-caregiver>
+            <comfort-lone-caregiver name="lone-caregiver" class="view"></comfort-lone-caregiver>
+            <comfort-posttest name="posttest" class="view"></comfort-posttest>
+            <comfort-done name="done" class="view"></comfort-done>
+            <comfort-view404 name="view404" class="view"></comfort-view404>
+          </iron-pages>
+    
+          <comfort-footer></comfort-footer>
+        <!-- </app-header-layout> -->
+        </div>
+      </div>
+
   </template>
 
   <script>
-    "use strict";
+    Polymer({
+      "is": "comfort-app",
 
-    window.addEventListener('WebComponentsReady', function(e) {
-      class ComfortApp extends Polymer.Element {
+      "properties": {
+        "page": {
+          "type": String,
+          "reflectToAttribute": true,
+          "observer": "_pageChanged",
+        },
+        "rootPattern": String,
+        // "rootPattern": {
+        //   "type": String,
+        //   "computed": "computeRootPattern(rootPath)"
+        // },
+        "routeData": Object,
+        "subroute": String,
+        "viewSections": {
+          "type": Object,
+          "value": {
+            "pretest": "1",
+            "introduction": "2",
+            "family-communication-patterns": "3",
+            "preview-family-caregiver-types": "4",
+            "manager-caregiver": "4/a",
+            "carrier-caregiver": "4/b",
+            "partner-caregiver": "4/c",
+            "lone-caregiver": "4/d",
+            "family-caregiver-types-summary": "4",
+            "posttest": "5"
+          }
+        }
+      },
 
-        static get is() { return 'comfort-app'; }
+      "observers": [
+        // '_routePageChanged(routeData.page)'
+        "_routePageChanged(routeData)"
+      ],
 
-        static get properties() {
-          return {
-            "page": {
-              "type": String,
-              "reflectToAttribute": true,
-              "observer": '_pageChanged',
-            },
-            // "rootPattern": String,
-            "rootPattern": {
-              "type": String,
-              "computed": "computeRootPattern(rootPath)",
-            },
-            "routeData": Object,
-            "subroute": String,
-            "viewSections": {
-              "type": Object,
-              "value": {
-                "pretest": "1",
-                "introduction": "2",
-                "family-communication-patterns": "3",
-                "preview-family-caregiver-types": "4",
-                "manager-caregiver": "4/a",
-                "carrier-caregiver": "4/b",
-                "partner-caregiver": "4/c",
-                "lone-caregiver": "4/d",
-                "family-caregiver-types-summary": "4",
-                "posttest": "5"
-              }
+      "computeRootPattern": function (rootPath) {
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+
+        // If URL API isn't supported (IE11), use a regex for the URL pathname.
+        if (!(URL.prototype && 'pathname' in URL.prototype)) {
+          return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
+        }
+
+        return (new URL(rootPath)).pathname;
+      },
+
+      "created": function () {
+        // super();
+
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+        // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+
+        // maybe change to class?
+        window.Comfort = window.Comfort || {};
+
+        Comfort.User = {};
+
+        Comfort.User.answers = {};
+
+        Comfort.visited = Comfort.visited || [];
+
+        Comfort.supports = {
+          "pageOffset": function () {
+            return ( window.pageXOffset !== undefined );
+          }
+        };
+
+        Comfort.supportsPageOffset = Comfort.supports.pageOffset();
+
+        Comfort.is = {
+          "CSS1Compat": function () {
+            return ( ( document.compatMode || "" ) === "CSS1Compat" );
+          }
+        };
+
+        Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
+
+        // Comfort.scrollX = function ( position ) {
+        //   if ( position !== undefined ) {
+        //     if ( 'scroll' in window ) {
+        //       return window.scroll( position, 0 );
+        //     }
+
+        //     if ( 'scrollTo' in window ) {
+        //       return window.scrollTo( position, 0 );
+        //     }
+        //   }
+
+        //   return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
+        // };
+
+        Comfort.scrollY = function ( position ) {
+          if ( position !== undefined ) {
+            if ( 'scroll' in window ) {
+              return window.scroll( 0, position );
             }
-          };
-        }
 
-        static get observers() {
-          return [
-            '_routePageChanged(routeData)',
-          ];
-        }
-
-        computeRootPattern(rootPath) {
-          // Get root pattern for app-route, for more info about `rootPath` see:
-          // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-
-          // If URL API isn't supported (IE11), use a regex for the URL pathname.
-          if (!(URL.prototype && 'pathname' in URL.prototype)) {
-            return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
+            if ( 'scrollTo' in window ) {
+              return window.scrollTo( 0, position );
+            }
           }
 
-          return (new URL(rootPath)).pathname;
+          return ( Comfort.supportsPageOffset ? window.pageYOffset : Comfort.isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop );
+        };
+
+        /*
+          {
+            "page-name": 0 // scroll position
+          },
+          …
+        */
+        Comfort.scrollPositions = Comfort.scrollPositions || {};
+      },
+
+      // connectedCallback
+      "attached": function () {
+        console.log( 'this.page', this.page );
+        console.log( 'this.route', this.route );
+        console.log( 'this.routeData', this.routeData );
+        console.log( 'this.subroute', this.subroute );
+      },
+
+      "_routePageChanged": function( routeData ) {
+        var page = routeData.page;
+        var subroute = this.subroute;
+
+        // console.log( 'subroute', subroute );
+
+        // Polymer 2.0 will call with `undefined` on initialization.
+        // Ignore until we are properly called with a string.
+        if ( page === undefined ) {
+          return;
         }
 
-        constructor() {
-          super();
+        // If no page was found in the route data, page will be an empty string.
+        // Deault to 'welcome' in that case.
+        this.page = page || 'welcome';
 
-          // Get root pattern for app-route, for more info about `rootPath` see:
-          // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-          // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+        // Debounced OnScroll Start
+        var hasScrolled = false;
 
-          // maybe change to class?
-          window.Comfort = window.Comfort || {};
-
-          Comfort.User = {};
-
-          Comfort.User.answers = {};
-
-          Comfort.visited = Comfort.visited || [];
-
-          Comfort.supports = {
-            "pageOffset": function () {
-              return ( window.pageXOffset !== undefined );
-            }
-          };
-
-          Comfort.supportsPageOffset = Comfort.supports.pageOffset();
-
-          Comfort.is = {
-            "CSS1Compat": function () {
-              return ( ( document.compatMode || "" ) === "CSS1Compat" );
-            }
-          };
-
-          Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
-
-          // Comfort.scrollX = function ( position ) {
-          //   if ( position !== undefined ) {
-          //     if ( 'scroll' in window ) {
-          //       return window.scroll( position, 0 );
-          //     }
-
-          //     if ( 'scrollTo' in window ) {
-          //       return window.scrollTo( position, 0 );
-          //     }
-          //   }
-
-          //   return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
-          // };
-
-          Comfort.scrollY = function ( position ) {
-            if ( position !== undefined ) {
-              if ( 'scroll' in window ) {
-                return window.scroll( 0, position );
-              }
-
-              if ( 'scrollTo' in window ) {
-                return window.scrollTo( 0, position );
-              }
-            }
-
-            return ( Comfort.supportsPageOffset ? window.pageYOffset : Comfort.isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop );
-          };
-
-          /*
-            {
-              "page-name": 0 // scroll position
-            },
-            …
-          */
-          Comfort.scrollPositions = Comfort.scrollPositions || {};
+        window.onscroll = function activateHasScrolled() {
+          hasScrolled = true;
+          // console.log( 'activateHasScrolled' );
         }
 
-        connectedCallback() {
-          super.connectedCallback();
-
-        //   // const titleText = this.shadowRoot.querySelector( '#main-title-text' );
-        //   const mainTitle = this.shadowRoot.querySelector( '[main-title]' );
-
-        //   console.log( mainTitle.textContent.length );
-          // console.log( this.routeData );
-        }
-
-        _routePageChanged( routeData ) {
-          var page = routeData.page;
-          var subroute = this.subroute;
-
+        function getPageId() {
+          // console.log( 'routeData', routeData );
           // console.log( 'subroute', subroute );
 
-          // Polymer 2.0 will call with `undefined` on initialization.
-          // Ignore until we are properly called with a string.
-          if ( page === undefined ) {
-            return;
+          if ( subroute && subroute.path && subroute.path.length ) {
+            return routeData.page + '-' + subroute.path.replace( '/', '' );
           }
 
-          // If no page was found in the route data, page will be an empty string.
-          // Deault to 'welcome' in that case.
-          this.page = page || 'welcome';
+          return routeData.page;
+        }
 
-          // Debounced OnScroll Start
-          var hasScrolled = false;
-
-          window.onscroll = function activateHasScrolled() {
-            hasScrolled = true;
-            // console.log( 'activateHasScrolled' );
-          }
-
-          function getPageId() {
-            // console.log( 'routeData', routeData );
-            if ( subroute.path.length ) {
-              return routeData.page + '-' + subroute.path.replace( '/', '' );
-            }
-
-            return routeData.page;
-          }
-
-          function storeScrollPosition( value ) {
-            // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
-            if ( value !== undefined ) {
-              Comfort.scrollPositions[pageId] = value;
-            } else {
-              Comfort.scrollPositions[pageId] = Comfort.scrollY();
-            }
-
-            // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
-          }
-
-          function restoreScrollPosition() {
-            // document.documentElement.scrollTop = Comfort.scrollPositions[page];
-            Comfort.scrollY( Comfort.scrollPositions[pageId] );
-
-            // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions[pageId] );
-          }
-
-          function storeScrollPositionIfHasScrolled() {
-            if ( hasScrolled ) {
-              hasScrolled = false;
-
-              storeScrollPosition();
-            }
-          }
-
-          function storeScrollPositionSetInterval() {
-            storeScrollPositionInterval = setInterval( storeScrollPositionIfHasScrolled, 100 );
-          }
-
-          var pageId = getPageId();
-
-          var storeScrollPositionInterval;
-
-          storeScrollPositionSetInterval();
-          // Debounced OnScroll End
-
-          // Haven't visited this page before
-          if ( Comfort.visited.indexOf( pageId ) === -1 ) {
-            Comfort.visited.push( pageId );
-
-            // clearInterval( storeScrollPositionInterval );
-
-            storeScrollPosition( 0 );
-            restoreScrollPosition();
-
-            // storeScrollPositionSetInterval();
-          // Has visited page before
+        function storeScrollPosition( value ) {
+          // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
+          if ( value !== undefined ) {
+            Comfort.scrollPositions[pageId] = value;
           } else {
-            restoreScrollPosition();
+            Comfort.scrollPositions[pageId] = Comfort.scrollY();
           }
 
-          // console.log( 'Comfort.visited', Comfort.visited );
-          // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );
+          // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
         }
 
-        _pageChanged( page ) {
-          // Load page import on demand. Show 404 page if fails
-          var uri = 'comfort-' + page + '.html';
+        function restoreScrollPosition() {
+          // document.documentElement.scrollTop = Comfort.scrollPositions[page];
+          Comfort.scrollY( Comfort.scrollPositions[pageId] );
 
-          if ( this.viewSections.hasOwnProperty( page ) ) {
-            uri = 'section-' + this.viewSections[page] + '/' + uri;
+          // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions[pageId] );
+        }
+
+        function storeScrollPositionIfHasScrolled() {
+          if ( hasScrolled ) {
+            hasScrolled = false;
+
+            storeScrollPosition();
           }
-
-          var resolvedPageUrl = this.resolveUrl( uri );
-
-          console.log( 'resolvedPageUrl', resolvedPageUrl );
-
-          Polymer.RenderStatus.afterNextRender( this, function () {
-            Polymer.importHref(
-              resolvedPageUrl,
-              null,
-              this._showPage404.bind( this ),
-              true
-            );
-          }.bind( this ) );
         }
 
-        _showPage404() {
-          this.page = 'view404';
+        function storeScrollPositionSetInterval() {
+          storeScrollPositionInterval = setInterval( storeScrollPositionIfHasScrolled, 100 );
         }
-      }
 
-      window.customElements.define( ComfortApp.is, ComfortApp );
-    } );
+        var pageId = getPageId();
+
+        var storeScrollPositionInterval;
+
+        storeScrollPositionSetInterval();
+        // Debounced OnScroll End
+
+        // Haven't visited this page before
+        if ( Comfort.visited.indexOf( pageId ) === -1 ) {
+          Comfort.visited.push( pageId );
+
+          // clearInterval( storeScrollPositionInterval );
+
+          storeScrollPosition( 0 );
+          restoreScrollPosition();
+
+          // storeScrollPositionSetInterval();
+        // Has visited page before
+        } else {
+          restoreScrollPosition();
+        }
+
+        // console.log( 'Comfort.visited', Comfort.visited );
+        // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );
+      },
+
+      // _pageChanged: function(page) {
+      //   // Load page import on demand. Show 404 page if fails
+      //   var resolvedPageUrl = this.resolveUrl('comfort-' + page + '.html');
+      //   this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      // },
+      "_pageChanged": function ( page ) {
+        // Load page import on demand. Show 404 page if fails
+        var uri = 'comfort-' + page + '.html';
+
+        if ( this.viewSections.hasOwnProperty( page ) ) {
+          uri = 'section-' + this.viewSections[page] + '/' + uri;
+        }
+
+        var resolvedPageUrl = this.resolveUrl( uri );
+
+        console.log( 'resolvedPageUrl', resolvedPageUrl );
+
+        Polymer.RenderStatus.afterNextRender( this, function () {
+          this.importHref(
+            resolvedPageUrl,
+            null,
+            this._showPage404.bind( this ),
+            // this._showPage404,
+            true
+          );
+        }.bind( this ) );
+      },
+
+      _showPage404: function () {
+        this.page = 'view404';
+      },
+    });
   </script>
 </dom-module>

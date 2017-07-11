@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="comfort-radio">
@@ -97,7 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       viewBox="0 0 13 13"
     >
       <g>
-        <circle class="radio__circle" cx="6.5" cy="6.5" r="6" />
+        <circle class="radio__circle" cx="6.5" cy="6.5" r="6">
       </g>
     </svg>
     <slot id="label" name="label"></slot>
@@ -106,56 +106,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortRadio extends Polymer.Element {
-      static get is() { return 'comfort-radio'; }
-      static get properties() {
-        return {
-          "checked": {
-            "type": Boolean
-          },
-          "correct": {
-            "type": Boolean
-          },
-          "incorrect": {
-            "type": Boolean
-          },
-          // @icebox: sync with input[required]
-          "required": {
-            "type": Boolean
-          }
-          /* value, name */
-        };
-      }
+    Polymer({
+      "is": "comfort-radio",
 
-      connectedCallback() {
-        super.connectedCallback();
+      "properties": {
+        "checked": {
+          "type": Boolean
+        },
+        "correct": {
+          "type": Boolean
+        },
+        "incorrect": {
+          "type": Boolean
+        },
+        // @icebox: sync with input[required]
+        "required": {
+          "type": Boolean
+        }
+        /* value, name */
+      },
 
-        // const inputSlot = this.shadowRoot.querySelector( '#input' );
-        // const input = inputSlot.assignedNodes()[0];
-
-        // const radio = this.shadowRoot.querySelector( '#radio' );
-
-        const labelSlot = this.shadowRoot.querySelector( '#label' );
-        const label = labelSlot.assignedNodes()[0];
-        const input = label.children[0];
-
-        // console.log( input );
-
-        // function radioOnClickTap( event ) {
-        //   input.checked = true;
-        // }
+      "attached": function () {
+        // var label = labelSlot.assignedNodes()[0];
+        var label = this.getContentChildNodes()[0];
+        var input = label.children[0];
 
         this.setAttribute( 'value', input.value );
         this.setAttribute( 'name', input.name );
 
-        // radio.addEventListener( 'click', radioOnClickTap );
-        // radio.addEventListener( 'touchstart', radioOnClickTap );
-
         input.style.opacity = 0;
         input.style.marginLeft = "-18px";
       }
-    }
+    });
 
-    window.customElements.define( ComfortRadio.is, ComfortRadio );
+    // window.customElements.define( ComfortRadio.is, ComfortRadio );
   </script>
 </dom-module>

@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="comfort-mixins.html">
 <link rel="import" href="comfort-button.html">
 <link rel="import" href="shared-styles.html">
@@ -77,29 +77,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortQuestionResponses extends Comfort.CheckValidity( Polymer.Element ) {
-      static get is() { return 'comfort-question-responses'; }
+    Polymer({
+      "is": "comfort-question-responses",
 
-      static get properties() {
-        return {
-          "questions": {
-            "type": Array,
-            "value": []
-          },
-          "numbering": {
-            "type": String,
-            "value": "a"
-          },
-          "revealed": {
-            "type": Boolean,
-            "value": false,
-            // "observer": "_revealedChanged",
-          },
-          "highlightRequired": {
-            "type": Boolean,
-            "value": false
-          }
-        };
+      "behaviors": [
+        Comfort.CheckValidity
+      ],
+
+      "properties": {
+        "questions": {
+          "type": Array,
+          "value": []
+        },
+        "numbering": {
+          "type": String,
+          "value": "a"
+        },
+        "revealed": {
+          "type": Boolean,
+          "value": false,
+          // "observer": "_revealedChanged",
+        },
+        "highlightRequired": {
+          "type": Boolean,
+          "value": false
+        }
       } // properties
 
       // _revealedChanged( newValue, oldValue ) {
@@ -107,8 +109,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // }
 
       // checkForAnswers
-    }
-
-    window.customElements.define( ComfortQuestionResponses.is, ComfortQuestionResponses );
+    });
   </script>
 </dom-module>

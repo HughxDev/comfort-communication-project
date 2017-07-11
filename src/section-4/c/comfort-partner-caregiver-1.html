@@ -1,4 +1,4 @@
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../comfort-button.html">
 <link rel="import" href="../../comfort-video.html">
 <link rel="import" href="../../shared-styles.html">
@@ -17,7 +17,7 @@
         <h1 class="section-title">The Partner Caregiver</h1>
 
         <div class="full-bleed">
-          <img src="/images/partner-caregiver@0.5x.jpg" srcset="/images/partner-caregiver.jpg 1800w, /images/partner-caregiver@0.5x.jpg 900w, /images/partner-caregiver@0.25x.jpg 450w, /images/partner-caregiver@0.125x.jpg 225w" alt="Painting of three people hugging with their heads facing downward and concealed by each other’s arms" />
+          <img src="/images/partner-caregiver@0.5x.jpg" srcset="/images/partner-caregiver.jpg 1800w, /images/partner-caregiver@0.5x.jpg 900w, /images/partner-caregiver@0.25x.jpg 450w, /images/partner-caregiver@0.125x.jpg 225w" alt="Painting of three people hugging with their heads facing downward and concealed by each other’s arms">
         </div>
       </header>
 
@@ -25,7 +25,7 @@
 
       <p><q>My brother and I had another little mini meeting today and said we are going to have to give dad [patient] the message that we understand he’s bored, he wants his own food and he still thinks he can still try to go to the bathroom and he’s fighting that whole thing and he wants us to take care of him. Certainly we will bring him home during the day, all we have to do is put him in a wheelchair and walk around the corner, so I don’t know. I’m trying to be honest with him and it’s just weird. I heard mom say to dad [patient] yesterday when my brother and I were out of the room when we took her for a visit, I heard her say <q>the kids are in charge now honey and they are doing the best they can for us</q>.</q></p>
 
-      <hr />
+      <hr>
 
       <p><b>How to spot a partner caregiver:</b> You will notice that different family members will be present at different times. Partner caregivers will offer to help the provider team and accept assistance from others. They will share the burden with various family members by engaging in open dialogue about death and dying, which may give rise to conflict. However, conflict results in productive outcomes.</p>
 
@@ -42,10 +42,8 @@
   <script>
     "use strict";
     
-    class ComfortPartnerCaregiver1 extends Polymer.Element {
-      static get is() { return 'comfort-partner-caregiver-1'; }
-    }
-
-    window.customElements.define( ComfortPartnerCaregiver1.is, ComfortPartnerCaregiver1 );
+    Polymer({
+      "is": "comfort-partner-caregiver-1"
+    });
   </script>
 </dom-module>

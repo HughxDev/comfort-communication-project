@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../shared-styles.html">
 
 <link rel="import" href="comfort-introduction-1.html">
@@ -13,14 +13,16 @@
       }
     </style>
 
-    <app-location route="{{route}}"></app-location>
+    <app-location route="[[route]]"></app-location>
     <app-route
       route="{{route}}"
-      pattern="/:page/:number"
+      pattern="/:number"
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
     
     <!-- fallback-selection="introduction" -->
+    <!--  -->
+    <!-- <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1"> -->
     <iron-pages selected="[[routeData.number]]" attr-for-selected="name" fallback-selection="1">
       <comfort-introduction-1 name="1" class="view"></comfort-introduction-1>
       <comfort-introduction-2 name="2" class="view"></comfort-introduction-2>
@@ -32,22 +34,17 @@
   <script>
     "use strict";
     
-    class ComfortIntroduction extends Polymer.Element {
-      static get is() { return 'comfort-introduction'; }
+    Polymer({
+      "is": "comfort-introduction",
 
-      static get observers() {
-        return [
-          '_routePageChanged(routeData)',
-        ];
-      }
+      "observers": [
+        '_routePageChanged(routeData)',
+      ],
 
-      // constructor() {
-      //   super();
-      // }
+      "attached": function () {
+        // super.connectedCallback();
 
-      connectedCallback() {
-        super.connectedCallback();
-
+        console.log( this.route );
         console.log( this.routeData );
         console.log( this.subroute );
 
@@ -62,13 +59,11 @@
         //   this.routeData.number = '1';
         //   this.subroute.path = '/1';
         // }
-      }
+      },
 
-      _routePageChanged( routeData ) {
+      "_routePageChanged": function( routeData ) {
         // console.log( 'routeData', routeData );
       }
-    }
-
-    window.customElements.define( ComfortIntroduction.is, ComfortIntroduction );
+    });
   </script>
 </dom-module>

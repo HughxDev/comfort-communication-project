@@ -32,10 +32,14 @@
   <script>
     "use strict";
     
-    class ComfortFamilyCommunicationPatterns extends Polymer.Element {
-      static get is() { return 'comfort-family-communication-patterns'; }
-    }
+    Polymer({
+      "is": "comfort-family-communication-patterns",
 
-    window.customElements.define( ComfortFamilyCommunicationPatterns.is, ComfortFamilyCommunicationPatterns );
+      "attached": function () {
+        console.log( 'this.route', this.route );
+        console.log( 'this.routeData', this.routeData );
+        console.log( 'this.subroute', this.subroute );
+      }
+    });
   </script>
 </dom-module>

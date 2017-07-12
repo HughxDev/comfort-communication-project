@@ -32,22 +32,17 @@
   <script>
     "use strict";
     
-    class ComfortIntroduction extends Polymer.Element {
-      static get is() { return 'comfort-introduction'; }
+    Polymer({
+      "is": "comfort-introduction",
 
-      static get observers() {
-        return [
-          '_routePageChanged(routeData)',
-        ];
-      }
+      "observers": [
+        '_routePageChanged(routeData)',
+      ],
 
-      // constructor() {
-      //   super();
-      // }
+      "attached": function () {
+        // super.connectedCallback();
 
-      connectedCallback() {
-        super.connectedCallback();
-
+        console.log( this.route );
         console.log( this.routeData );
         console.log( this.subroute );
 
@@ -62,13 +57,11 @@
         //   this.routeData.number = '1';
         //   this.subroute.path = '/1';
         // }
-      }
+      },
 
-      _routePageChanged( routeData ) {
+      "_routePageChanged": function( routeData ) {
         // console.log( 'routeData', routeData );
       }
-    }
-
-    window.customElements.define( ComfortIntroduction.is, ComfortIntroduction );
+    });
   </script>
 </dom-module>

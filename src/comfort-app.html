@@ -202,259 +202,255 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    "use strict";
+    Polymer({
+      "is": "comfort-app",
 
-    window.addEventListener( 'WebComponentsReady', function ( event ) {
-      class ComfortApp extends Polymer.Element {
+      "properties": {
+        "page": {
+          "type": String,
+          "reflectToAttribute": true,
+          "observer": "_pageChanged",
+        },
+        "rootPattern": String,
+        // "rootPattern": {
+        //   "type": String,
+        //   "computed": "computeRootPattern(rootPath)"
+        // },
+        "routeData": Object,
+        "subroute": String,
+        "viewSections": {
+          "type": Object,
+          "value": {
+            "pretest": "1",
+            "introduction": "2",
+            "family-communication-patterns": "3",
+            "preview-family-caregiver-types": "4",
+            "manager-caregiver": "4/a",
+            "carrier-caregiver": "4/b",
+            "partner-caregiver": "4/c",
+            "lone-caregiver": "4/d",
+            "family-caregiver-types-summary": "4",
+            "posttest": "5"
+          }
+        }
+      },
 
-        static get is() { return 'comfort-app'; }
+      "observers": [
+        // '_routePageChanged(routeData.page)'
+        "_routePageChanged(routeData)"
+      ],
 
-        static get properties() {
-          return {
-            "page": {
-              "type": String,
-              "reflectToAttribute": true,
-              "observer": '_pageChanged',
-            },
-            // "rootPattern": String,
-            "rootPattern": {
-              "type": String,
-              "computed": "computeRootPattern(rootPath)",
-            },
-            "routeData": Object,
-            "subroute": String,
-            "viewSections": {
-              "type": Object,
-              "value": {
-                "pretest": "1",
-                "introduction": "2",
-                "family-communication-patterns": "3",
-                "preview-family-caregiver-types": "4",
-                "manager-caregiver": "4/a",
-                "carrier-caregiver": "4/b",
-                "partner-caregiver": "4/c",
-                "lone-caregiver": "4/d",
-                "family-caregiver-types-summary": "4",
-                "posttest": "5"
-              }
+      "computeRootPattern": function (rootPath) {
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+
+        // If URL API isn't supported (IE11), use a regex for the URL pathname.
+        if (!(URL.prototype && 'pathname' in URL.prototype)) {
+          return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
+        }
+
+        return (new URL(rootPath)).pathname;
+      },
+
+      "created": function () {
+        // super();
+
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+        // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+
+        // maybe change to class?
+        window.Comfort = window.Comfort || {};
+
+        Comfort.User = {};
+
+        Comfort.User.answers = {};
+
+        Comfort.visited = Comfort.visited || [];
+
+        Comfort.supports = {
+          "pageOffset": function () {
+            return ( window.pageXOffset !== undefined );
+          }
+        };
+
+        Comfort.supportsPageOffset = Comfort.supports.pageOffset();
+
+        Comfort.is = {
+          "CSS1Compat": function () {
+            return ( ( document.compatMode || "" ) === "CSS1Compat" );
+          }
+        };
+
+        Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
+
+        // Comfort.scrollX = function ( position ) {
+        //   if ( position !== undefined ) {
+        //     if ( 'scroll' in window ) {
+        //       return window.scroll( position, 0 );
+        //     }
+
+        //     if ( 'scrollTo' in window ) {
+        //       return window.scrollTo( position, 0 );
+        //     }
+        //   }
+
+        //   return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
+        // };
+
+        Comfort.scrollY = function ( position ) {
+          if ( position !== undefined ) {
+            if ( 'scroll' in window ) {
+              return window.scroll( 0, position );
             }
-          };
-        }
 
-        static get observers() {
-          return [
-            '_routePageChanged(routeData)',
-          ];
-        }
-
-        computeRootPattern(rootPath) {
-          // Get root pattern for app-route, for more info about `rootPath` see:
-          // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-
-          // If URL API isn't supported (IE11), use a regex for the URL pathname.
-          if (!(URL.prototype && 'pathname' in URL.prototype)) {
-            return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
+            if ( 'scrollTo' in window ) {
+              return window.scrollTo( 0, position );
+            }
           }
 
-          return (new URL(rootPath)).pathname;
+          return ( Comfort.supportsPageOffset ? window.pageYOffset : Comfort.isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop );
+        };
+
+        /*
+          {
+            "page-name": 0 // scroll position
+          },
+          …
+        */
+        Comfort.scrollPositions = Comfort.scrollPositions || {};
+      },
+
+      // connectedCallback
+      "attached": function () {
+        console.log( 'this.page', this.page );
+        console.log( 'this.route', this.route );
+        console.log( 'this.routeData', this.routeData );
+        console.log( 'this.subroute', this.subroute );
+      },
+
+      "_routePageChanged": function( routeData ) {
+        var page = routeData.page;
+        var subroute = this.subroute;
+
+        // console.log( 'subroute', subroute );
+
+        // Polymer 2.0 will call with `undefined` on initialization.
+        // Ignore until we are properly called with a string.
+        if ( page === undefined ) {
+          return;
         }
 
-        constructor() {
-          super();
+        // If no page was found in the route data, page will be an empty string.
+        // Deault to 'welcome' in that case.
+        this.page = page || 'welcome';
 
-          // Get root pattern for app-route, for more info about `rootPath` see:
-          // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-          // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+        // Debounced OnScroll Start
+        var hasScrolled = false;
 
-          // maybe change to class?
-          window.Comfort = window.Comfort || {};
-
-          Comfort.User = {};
-
-          Comfort.User.answers = {};
-
-          Comfort.visited = Comfort.visited || [];
-
-          Comfort.supports = {
-            "pageOffset": function () {
-              return ( window.pageXOffset !== undefined );
-            }
-          };
-
-          Comfort.supportsPageOffset = Comfort.supports.pageOffset();
-
-          Comfort.is = {
-            "CSS1Compat": function () {
-              return ( ( document.compatMode || "" ) === "CSS1Compat" );
-            }
-          };
-
-          Comfort.isCSS1Compat = Comfort.is.CSS1Compat();
-
-          // Comfort.scrollX = function ( position ) {
-          //   if ( position !== undefined ) {
-          //     if ( 'scroll' in window ) {
-          //       return window.scroll( position, 0 );
-          //     }
-
-          //     if ( 'scrollTo' in window ) {
-          //       return window.scrollTo( position, 0 );
-          //     }
-          //   }
-
-          //   return ( Comfort.supportsPageOffset ? window.pageXOffset : Comfort.isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft );
-          // };
-
-          Comfort.scrollY = function ( position ) {
-            if ( position !== undefined ) {
-              if ( 'scroll' in window ) {
-                return window.scroll( 0, position );
-              }
-
-              if ( 'scrollTo' in window ) {
-                return window.scrollTo( 0, position );
-              }
-            }
-
-            return ( Comfort.supportsPageOffset ? window.pageYOffset : Comfort.isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop );
-          };
-
-          /*
-            {
-              "page-name": 0 // scroll position
-            },
-            …
-          */
-          Comfort.scrollPositions = Comfort.scrollPositions || {};
+        window.onscroll = function activateHasScrolled() {
+          hasScrolled = true;
+          // console.log( 'activateHasScrolled' );
         }
 
-        connectedCallback() {
-          super.connectedCallback();
-
-        //   // const titleText = this.shadowRoot.querySelector( '#main-title-text' );
-        //   const mainTitle = this.shadowRoot.querySelector( '[main-title]' );
-
-        //   console.log( mainTitle.textContent.length );
-          // console.log( this.routeData );
-        }
-
-        _routePageChanged( routeData ) {
-          var page = routeData.page;
-          var subroute = this.subroute;
-
+        function getPageId() {
+          // console.log( 'routeData', routeData );
           // console.log( 'subroute', subroute );
 
-          // Polymer 2.0 will call with `undefined` on initialization.
-          // Ignore until we are properly called with a string.
-          if ( page === undefined ) {
-            return;
+          if ( subroute && subroute.path && subroute.path.length ) {
+            return routeData.page + '-' + subroute.path.replace( '/', '' );
           }
 
-          // If no page was found in the route data, page will be an empty string.
-          // Deault to 'welcome' in that case.
-          this.page = page || 'welcome';
+          return routeData.page;
+        }
 
-          // Debounced OnScroll Start
-          var hasScrolled = false;
-
-          window.onscroll = function activateHasScrolled() {
-            hasScrolled = true;
-            // console.log( 'activateHasScrolled' );
-          }
-
-          function getPageId() {
-            // console.log( 'routeData', routeData );
-            if ( subroute.path.length ) {
-              return routeData.page + '-' + subroute.path.replace( '/', '' );
-            }
-
-            return routeData.page;
-          }
-
-          function storeScrollPosition( value ) {
-            // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
-            if ( value !== undefined ) {
-              Comfort.scrollPositions[pageId] = value;
-            } else {
-              Comfort.scrollPositions[pageId] = Comfort.scrollY();
-            }
-
-            // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
-          }
-
-          function restoreScrollPosition() {
-            // document.documentElement.scrollTop = Comfort.scrollPositions[page];
-            Comfort.scrollY( Comfort.scrollPositions[pageId] );
-
-            // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions[pageId] );
-          }
-
-          function storeScrollPositionIfHasScrolled() {
-            if ( hasScrolled ) {
-              hasScrolled = false;
-
-              storeScrollPosition();
-            }
-          }
-
-          function storeScrollPositionSetInterval() {
-            storeScrollPositionInterval = setInterval( storeScrollPositionIfHasScrolled, 100 );
-          }
-
-          var pageId = getPageId();
-
-          var storeScrollPositionInterval;
-
-          storeScrollPositionSetInterval();
-          // Debounced OnScroll End
-
-          // Haven't visited this page before
-          if ( Comfort.visited.indexOf( pageId ) === -1 ) {
-            Comfort.visited.push( pageId );
-
-            // clearInterval( storeScrollPositionInterval );
-
-            storeScrollPosition( 0 );
-            restoreScrollPosition();
-
-            // storeScrollPositionSetInterval();
-          // Has visited page before
+        function storeScrollPosition( value ) {
+          // Comfort.scrollPositions[page] = document.documentElement.scrollTop;
+          if ( value !== undefined ) {
+            Comfort.scrollPositions[pageId] = value;
           } else {
-            restoreScrollPosition();
+            Comfort.scrollPositions[pageId] = Comfort.scrollY();
           }
 
-          // console.log( 'Comfort.visited', Comfort.visited );
-          // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );
+          // console.log( 'Comfort.scrollPositions updated', Comfort.scrollPositions );
         }
 
-        _pageChanged( page ) {
-          // Load page import on demand. Show 404 page if fails
-          var uri = 'comfort-' + page + '.html';
+        function restoreScrollPosition() {
+          // document.documentElement.scrollTop = Comfort.scrollPositions[page];
+          Comfort.scrollY( Comfort.scrollPositions[pageId] );
 
-          if ( this.viewSections.hasOwnProperty( page ) ) {
-            uri = 'section-' + this.viewSections[page] + '/' + uri;
+          // console.log( 'Comfort.scrollPositions read', Comfort.scrollPositions[pageId] );
+        }
+
+        function storeScrollPositionIfHasScrolled() {
+          if ( hasScrolled ) {
+            hasScrolled = false;
+
+            storeScrollPosition();
           }
-
-          var resolvedPageUrl = this.resolveUrl( uri );
-
-          console.log( 'resolvedPageUrl', resolvedPageUrl );
-
-          Polymer.RenderStatus.afterNextRender( this, function () {
-            Polymer.importHref(
-              resolvedPageUrl,
-              null,
-              this._showPage404.bind( this ),
-              true
-            );
-          }.bind( this ) );
         }
 
-        _showPage404() {
-          this.page = 'view404';
+        function storeScrollPositionSetInterval() {
+          storeScrollPositionInterval = setInterval( storeScrollPositionIfHasScrolled, 100 );
         }
-      }
 
-      window.customElements.define( ComfortApp.is, ComfortApp );
-    } );
+        var pageId = getPageId();
+
+        var storeScrollPositionInterval;
+
+        storeScrollPositionSetInterval();
+        // Debounced OnScroll End
+
+        // Haven't visited this page before
+        if ( Comfort.visited.indexOf( pageId ) === -1 ) {
+          Comfort.visited.push( pageId );
+
+          // clearInterval( storeScrollPositionInterval );
+
+          storeScrollPosition( 0 );
+          restoreScrollPosition();
+
+          // storeScrollPositionSetInterval();
+        // Has visited page before
+        } else {
+          restoreScrollPosition();
+        }
+
+        // console.log( 'Comfort.visited', Comfort.visited );
+        // console.log( 'Comfort.scrollPositions', Comfort.scrollPositions );
+      },
+
+      // _pageChanged: function(page) {
+      //   // Load page import on demand. Show 404 page if fails
+      //   var resolvedPageUrl = this.resolveUrl('comfort-' + page + '.html');
+      //   this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      // },
+      "_pageChanged": function ( page ) {
+        // Load page import on demand. Show 404 page if fails
+        var uri = 'comfort-' + page + '.html';
+
+        if ( this.viewSections.hasOwnProperty( page ) ) {
+          uri = 'section-' + this.viewSections[page] + '/' + uri;
+        }
+
+        var resolvedPageUrl = this.resolveUrl( uri );
+
+        console.log( 'resolvedPageUrl', resolvedPageUrl );
+
+        Polymer.RenderStatus.afterNextRender( this, function () {
+          this.importHref(
+            resolvedPageUrl,
+            null,
+            this._showPage404.bind( this ),
+            // this._showPage404,
+            true
+          );
+        }.bind( this ) );
+      },
+
+      _showPage404: function () {
+        this.page = 'view404';
+      },
+    });
   </script>
 </dom-module>

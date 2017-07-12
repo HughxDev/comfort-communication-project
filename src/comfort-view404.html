@@ -24,19 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    "use strict";
-    
-    class ComfortView404 extends Polymer.Element {
-      static get is() { return 'comfort-view404'; }
-      static get properties() {
-        return {
-          // This shouldn't be neccessary, but the Analyzer isn't picking up
-          // Polymer.Element#rootPath
-          rootPath: String,
-        };
-      }
-    }
-
-    window.customElements.define( ComfortView404.is, ComfortView404 );
+    Polymer({
+      is: 'comfort-view404',
+    });
   </script>
 </dom-module>

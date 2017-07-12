@@ -38,10 +38,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     "use strict";
     
-    class ComfortWelcome extends Polymer.Element {
-      static get is() { return 'comfort-welcome'; }
-    }
+    // class ComfortWelcome extends Polymer.Element {
+    //   static get is() { return 'comfort-welcome'; }
+    // }
+    Polymer({
+      "is": "comfort-welcome"
+    });
 
-    window.customElements.define( ComfortWelcome.is, ComfortWelcome );
+    // window.customElements.define( ComfortWelcome.is, ComfortWelcome );
   </script>
 </dom-module>

@@ -34,13 +34,17 @@
   <script>
     "use strict";
     
-    class ComfortFamilyCommunicationPatterns2 extends Comfort.InstructorResponses( Polymer.GestureEventListeners( Polymer.Element ) ) {
-      static get is() { return 'comfort-family-communication-patterns-2'; }
+    Polymer({
+      "is": "comfort-family-communication-patterns-2",
 
-      connectedCallback() {
-        super.connectedCallback();
+      "behaviors": [
+        Comfort.InstructorResponses
+      ],
 
-        this.$questions = this.shadowRoot.querySelector( '#questions' );
+      "attached": function () {
+        // super.connectedCallback();
+
+        this.$questions = Polymer.dom( this.root ).querySelector( '#questions' );
 
         this.$questions.questions = [
           {
@@ -55,8 +59,8 @@
           }
         ];
       } // connectedCallback
-    }
+    });
 
-    window.customElements.define( ComfortFamilyCommunicationPatterns2.is, ComfortFamilyCommunicationPatterns2 );
+    // window.customElements.define( ComfortFamilyCommunicationPatterns2.is, ComfortFamilyCommunicationPatterns2 );
   </script>
 </dom-module>

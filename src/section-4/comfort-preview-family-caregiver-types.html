@@ -77,11 +77,11 @@
   <script>
     "use strict";
     
-    class ComfortPreviewFamilyCaregiverTypes extends Polymer.GestureEventListeners( Polymer.Element ) {
-      static get is() { return 'comfort-preview-family-caregiver-types'; }
+    Polymer({
+      "is": "comfort-preview-family-caregiver-types",
 
-      _toggleDesign() {
-        const $hidden = this.shadowRoot.querySelector( '.design-option[data-sibling][hidden]' );
+      "_toggleDesign": function () {
+        var $hidden = Polymer.dom( this.root ).querySelector( '.design-option[data-sibling][hidden]' );
 
         var whichSibling = $hidden.getAttribute( 'data-sibling' );
 
@@ -91,8 +91,6 @@
 
         $hidden[siblingProperty].hidden = true;
       }
-    }
-
-    window.customElements.define( ComfortPreviewFamilyCaregiverTypes.is, ComfortPreviewFamilyCaregiverTypes );
+    });
   </script>
 </dom-module>

@@ -29,19 +29,11 @@
 
   <script>
     "use strict";
-    /**
-     * `comfort-footer`
-     * Big introductory text with background
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class ComfortFooter extends Polymer.Element {
-      static get is() { return 'comfort-footer'; }
-      static get properties() {}
-    }
 
-    window.customElements.define( ComfortFooter.is, ComfortFooter );
+    Polymer({
+      "is": "comfort-footer"
+    })
+
+    // window.customElements.define( ComfortFooter.is, ComfortFooter );
   </script>
 </dom-module>

@@ -27,13 +27,17 @@
   <script>
     "use strict";
     
-    class ComfortCarrierCaregiver2 extends Comfort.InstructorResponses( Polymer.GestureEventListeners( Polymer.Element ) ) {
-      static get is() { return 'comfort-carrier-caregiver-2'; }
+    Polymer({
+      "is": "comfort-carrier-caregiver-2",
 
-      connectedCallback() {
-        super.connectedCallback();
+      "behaviors": [
+        Comfort.InstructorResponses
+      ],
 
-        this.$questions = this.shadowRoot.querySelector( '#questions' );
+      "attached": function () {
+        // super.connectedCallback();
+
+        this.$questions = Polymer.dom( this.root ).querySelector( '#questions' );
 
         this.$questions.questions = [
           {
@@ -52,8 +56,8 @@
 
         console.log( 'this.$questions.questions', this.$questions.questions );
       }
-    }
+    });
 
-    window.customElements.define( ComfortCarrierCaregiver2.is, ComfortCarrierCaregiver2 );
+    // window.customElements.define( ComfortCarrierCaregiver2.is, ComfortCarrierCaregiver2 );
   </script>
 </dom-module>

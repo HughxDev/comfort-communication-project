@@ -32,6 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </section>
   </template>
 
+  <script src="/family/bower_components/papaparse/papaparse.js"></script>
+
   <script>
     "use strict";
     
@@ -39,8 +41,98 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     //   static get is() { return 'comfort-done'; }
     // }
     Polymer({
-      "is": "comfort-done"
-    })
+      "is": "comfort-done",
+
+      "ready": function () {
+        function dumbQuotify( text ) {
+          if ( text ) {
+            return text.toString().replace( /[“”]/g, '"' ).replace( /[‘’]/g, "'" );
+          }
+          
+          return text;
+        }
+
+        try {
+          var dateEnded = moment().format( 'YYYY-MM-DD HH:mm' );
+
+          var json = JSON.parse( localStorage.getItem( 'user' ) );
+
+          var targets = [ 'pretest', 'posttest' ];
+          var output = {
+            "pretest": [],
+            "posttest": []
+          }
+          var current;
+          var object;
+
+          for ( var i = 0; i < targets.length; i++ ) {
+            current = targets[i];
+
+            for ( var j = 0; j < json.answers[current].length; j++ ) {
+              object = {};
+
+              for ( var key in json.answers[current][j] ) {
+                if ( key === 'answer' ) {
+                  for ( var answerKey in json.answers[current][j].answer ) {
+                    object['answer_' + answerKey] = dumbQuotify( json.answers[current][j].answer[answerKey] );
+                  }
+                } else {
+                  switch ( key ) {
+                    case 'question':
+                      object[key + '_text'] = dumbQuotify( json.answers[current][j][key] );
+                    break;
+
+                    case 'number':
+                    case 'type':
+                      object['question_' + key] = dumbQuotify( json.answers[current][j][key] );
+                    break;
+
+                    default:
+                      object[key] = dumbQuotify( json.answers[current][j][key] );
+                  } // switch
+                }
+              }
+
+              output[current].push( object );
+            }
+          }
+
+          console.log( 'output', output );
+
+          var pretestCsv = Papa.unparse( output.pretest, {
+            "quotes": [ false, false, false, true, false, false ]
+          } );
+
+          var posttestCsv = Papa.unparse( output.posttest, {
+            "quotes": [ false, false, false, true, false, false ]
+          } );
+
+          var csv = pretestCsv + "\n---pretest/posttest separator---\n" + posttestCsv + "\n---pretest/posttest separator---\n" + "\nDate Started: " + json.dateStarted + "\nDate Ended: " + dateEnded;
+
+          console.log( 'csv', csv );
+
+          var xhr = new XMLHttpRequest();
+
+          xhr.onreadystatechange = function() {
+            if ( xhr.readyState === 4 ) {
+              if ( xhr.status === 200 ) {
+                console.log( 'Everything’s copacetic' );
+              } else {
+                console.log( 'Got a ' + xhr.status + ' error:', xhr.responseText, xhr );
+              }
+            }
+          };
+
+          xhr.open( "POST", "/family/src/email.php" );
+
+          xhr.setRequestHeader( "Content-Type", "text/plain" );
+
+          xhr.send( csv );
+        } catch ( error ) {
+          console.log( 'Error: ', error );
+        }
+      } // ready
+    });
 
     // window.customElements.define( ComfortDone.is, ComfortDone );
   </script>

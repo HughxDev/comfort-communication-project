@@ -33,9 +33,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
 <!-- Neon (required by Paper Dialog) -->
-<!-- <link rel="import" href="../bower_components/neon-animation/web-animations.html"> -->
-<!-- <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html"> -->
-<!-- <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html"> -->
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
 
 <!-- Paper -->
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
@@ -270,9 +270,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // maybe change to class?
         window.Comfort = window.Comfort || {};
 
-        Comfort.User = {};
+        var user = localStorage.getItem( 'user' );
 
-        Comfort.User.answers = {};
+        if ( user ) {
+          Comfort.User = JSON.parse( user );
+
+          if ( !Comfort.User.dateStarted ) {
+            Comfort.User.dateStarted = moment().format( 'YYYY-MM-DD HH:mm' );
+          }
+        } else {
+          Comfort.User = {
+            "dateStarted": moment().format( 'YYYY-MM-DD HH:mm' ),
+            "answers": {}
+          };
+
+          localStorage.setItem( 'user', JSON.stringify( Comfort.User ) );
+        }
 
         Comfort.visited = Comfort.visited || [];
 

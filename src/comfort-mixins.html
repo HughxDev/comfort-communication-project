@@ -61,7 +61,9 @@
       // console.log( 'responses', responses );
       Comfort.User.answers[ document.querySelector( 'comfort-app' ).getAttribute( 'page' ) ] = responses;
 
-      console.log( 'Comfort.User', Comfort.User );
+      // console.log( 'Comfort.User', Comfort.User );
+
+      localStorage.setItem( 'user', JSON.stringify( Comfort.User ) );
 
       // event.preventDefault();
     }

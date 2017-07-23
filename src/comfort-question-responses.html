@@ -58,17 +58,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     
-    <!-- <form> -->
-    <ol on-change="clearRequiredHighlightIfApplicable" id="questions" class="questions" type$="[[numbering]]">
-      <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
-        <li>
-          <p><label for="answer-[[questionIndex]]">[[question.text]]</label></p>
-          <textarea class="answer" id="answer-[[questionIndex]]" required></textarea>
-          <p class="response">[[question.response]]</p>
-        </li>
-      </template>
-    </ol>
-    <!-- </form> -->
+    <form id="form">
+      <ol on-change="clearRequiredHighlightIfApplicable" id="questions" class="questions" type$="[[numbering]]">
+        <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
+          <li>
+            <p><label for="answer-[[questionIndex]]">[[question.text]]</label></p>
+            <textarea class="answer" id="answer-[[questionIndex]]" required></textarea>
+            <p class="response">[[question.response]]</p>
+          </li>
+        </template>
+      </ol>
+    </form>
     <div class="response response--epilog">
       <slot></slot>
     </div>
@@ -81,7 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       "is": "comfort-question-responses",
 
       "behaviors": [
-        Comfort.CheckValidity
+        Comfort.CheckValidity,
+        Comfort.PseudoForm
       ],
 
       "properties": {

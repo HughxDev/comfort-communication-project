@@ -190,6 +190,8 @@
 
           Polymer.dom( $button ).textContent = $button.getAttribute( 'after-tap-text' );
 
+          element.$questions._storeAnswers();
+
           element.unlisten( $button, 'tap', '_revealResponses' );
         };
 

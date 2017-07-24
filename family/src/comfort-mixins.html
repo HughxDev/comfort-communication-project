@@ -35,7 +35,7 @@
       // console.log( '$form.elements', $form.elements );
       var $element, question, selected, questionXPath;
 
-      console.log( '$form', $form );
+      console.log( '$form.elements', $form.elements );
 
       for ( var i = 0; i < $form.elements.length; i++ ) {
         $element = $form.elements[i];
@@ -43,7 +43,13 @@
         // questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
         questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
 
+        console.log( 'questionXPath', questionXPath );
+
         question = JSON.search( this.snapshot, questionXPath )[0];
+
+        console.log( 'this.snapshot', this.snapshot );
+
+        console.log( 'question', question );
 
         switch ( $element.type ) {
           case 'radio':

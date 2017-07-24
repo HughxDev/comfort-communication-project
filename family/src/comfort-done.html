@@ -104,20 +104,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     default:
                       object[key] = dumbQuotify( json.answers[current][j][key] );
                   } // switch
-                }
-              }
+                } // if/else
+              } // for key in json.answers[current]
 
               output[current].push( object );
-            }
-          }
+
+              unparsed.push( Papa.unparse( object, {
+                "quotes": [ false, false, false, true, false, false ]
+              } ) );
+            } // for j < json.answers[current].length
+          } // for i < targets.length
 
           // console.log( 'output', output );
 
-          for ( key in output ) {
-            unparsed.push( Papa.unparse( output[key], {
-              "quotes": [ false, false, false, true, false, false ]
-            } ) );
-          }
+          // for ( i = 0; i < targets.length; i++ ) {}
 
           // join
           var csv = unparsed.join( separator ) + separator + "\nDate Started: " + json.dateStarted + "\nDate Ended: " + dateEnded;

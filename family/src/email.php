@@ -8,6 +8,7 @@ $entityBody = file_get_contents( 'php://input' );
 
 if ( !empty( $entityBody ) ) {
   $files = explode( "\n---pretest/posttest separator---\n", $entityBody );
+  $dates = array_values( array_slice( $files, -1 ) )[0];
 
   $mail = new PHPMailer;
 
@@ -35,12 +36,16 @@ if ( !empty( $entityBody ) ) {
   // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
   // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
   $mail->addStringAttachment( $files[0], 'pretest.csv' );
-  $mail->addStringAttachment( $files[1], 'posttest.csv' );
+  $mail->addStringAttachment( $files[1], 'partner-caregiver.csv' );
+  $mail->addStringAttachment( $files[2], 'manager-caregiver.csv' );
+  $mail->addStringAttachment( $files[3], 'lone-caregiver.csv' );
+  $mail->addStringAttachment( $files[4], 'carrier-caregiver.csv' );
+  $mail->addStringAttachment( $files[5], 'posttest.csv' );
   $mail->isHTML(false);                                    // Set email format to HTML
 
   $mail->Subject = 'Module Completed';
   // $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-  $mail->Body = "IP address: " . $_SERVER[ 'REMOTE_ADDR' ] . $files[2];
+  $mail->Body = "IP address: " . $_SERVER[ 'REMOTE_ADDR' ] . $dates;
   // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
   $mail->CharSet = 'UTF-8';
 

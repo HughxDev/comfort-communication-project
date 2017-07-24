@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <ol on-change="clearRequiredHighlightIfApplicable" id="questions" class="questions" type$="[[numbering]]">
         <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
           <li>
-            <p><label for="answer-[[questionIndex]]">[[question.text]]</label></p>
+            <p><label for="answer-[[questionIndex]]">[[question.question]]</label></p>
             <textarea class="answer" id="answer-[[questionIndex]]" required></textarea>
             <p class="response">[[question.response]]</p>
           </li>

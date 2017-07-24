@@ -45,7 +45,13 @@
 
         console.log( 'questionXPath', questionXPath );
 
-        question = JSON.search( this.snapshot, questionXPath )[0];
+        console.log( 'JSON.search', JSON.search );
+
+        question = JSON.search( this.snapshot, questionXPath );
+
+        console.log( 'question', question );
+        
+        question = question[0];
 
         console.log( 'this.snapshot', this.snapshot );
 

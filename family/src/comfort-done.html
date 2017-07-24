@@ -56,15 +56,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var dateEnded = moment().format( 'YYYY-MM-DD HH:mm' );
 
           var json = JSON.parse( localStorage.getItem( 'user' ) );
-
-          var targets = [
-            'pretest',
-            'partner-caregiver',
-            'manager-caregiver',
-            'lone-caregiver',
-            'carrier-caregiver',
-            'posttest'
-          ];
           
           var output = {
             "pretest": [],
@@ -75,18 +66,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             "posttest": []
           };
 
+          var targets = Object.keys( output );
+
+          var i;
           var current;
           var object;
+          var j;
+          var key;
+          var answerKey;
 
-          for ( var i = 0; i < targets.length; i++ ) {
+          var unparsed = [];
+
+          var separator = "\n---pretest/posttest separator---\n";
+
+          for ( i = 0; i < targets.length; i++ ) {
             current = targets[i];
 
-            for ( var j = 0; j < json.answers[current].length; j++ ) {
+            for ( j = 0; j < json.answers[current].length; j++ ) {
               object = {};
 
-              for ( var key in json.answers[current][j] ) {
+              for ( key in json.answers[current][j] ) {
                 if ( key === 'answer' ) {
-                  for ( var answerKey in json.answers[current][j].answer ) {
+                  for ( answerKey in json.answers[current][j].answer ) {
                     object['answer_' + answerKey] = dumbQuotify( json.answers[current][j].answer[answerKey] );
                   }
                 } else {
@@ -110,17 +111,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           }
 
-          console.log( 'output', output );
+          // console.log( 'output', output );
 
-          var pretestCsv = Papa.unparse( output.pretest, {
-            "quotes": [ false, false, false, true, false, false ]
-          } );
+          for ( key in output ) {
+            unparsed.push( Papa.unparse( output[key], {
+              "quotes": [ false, false, false, true, false, false ]
+            } ) );
+          }
 
-          var posttestCsv = Papa.unparse( output.posttest, {
-            "quotes": [ false, false, false, true, false, false ]
-          } );
-
-          var csv = pretestCsv + "\n---pretest/posttest separator---\n" + posttestCsv + "\n---pretest/posttest separator---\n" + "\nDate Started: " + json.dateStarted + "\nDate Ended: " + dateEnded;
+          // join
+          var csv = unparsed.join( separator ) + separator + "\nDate Started: " + json.dateStarted + "\nDate Ended: " + dateEnded;
 
           console.log( 'csv', csv );
 

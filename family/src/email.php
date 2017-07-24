@@ -23,7 +23,7 @@ if ( !empty( $entityBody ) ) {
 
   $mail->setFrom('noreply@communicatecomfort.com', 'Family Caregiver Bot');
 
-  if ( strpos( $_SERVER[ 'SERVER_NAME' ], 'hughguiney.com' ) !== 1 ) {
+  if ( strpos( $_SERVER[ 'SERVER_NAME' ], 'hughguiney.com' ) !== false ) {
     $mail->addAddress('hugh@hughguiney.com', 'Hugh Guiney');     // Add a recipient
   } else {
     $mail->addAddress('communicatecomfort@gmail.com');               // Name is optional

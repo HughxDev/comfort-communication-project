@@ -27,7 +27,7 @@ if ( !empty( $entityBody ) ) {
   if ( strpos( $_SERVER[ 'SERVER_NAME' ], 'hughguiney.com' ) !== false ) {
     $mail->addAddress('hugh@hughguiney.com', 'Hugh Guiney');     // Add a recipient
   } else {
-    // $mail->addAddress('communicatecomfort@gmail.com');               // Name is optional
+    $mail->addAddress('communicatecomfort@gmail.com');           // Name is optional
   }
   // $mail->addReplyTo('info@example.com', 'Information');
   // $mail->addCC('cc@example.com');

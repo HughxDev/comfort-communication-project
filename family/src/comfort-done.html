@@ -108,18 +108,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               } // for key in json.answers[current]
 
               output[current].push( object );
-
-              unparsed.push( Papa.unparse( object, {
-                "quotes": [ false, false, false, true, false, false ]
-              } ) );
             } // for j < json.answers[current].length
           } // for i < targets.length
 
-          console.log( 'output', output );
+          // console.log( 'output', output );
 
-          console.log( 'unparsed', unparsed );
-
-          // for ( i = 0; i < targets.length; i++ ) {}
+          for ( i = 0; i < targets.length; i++ ) {
+            unparsed.push( Papa.unparse( output[targets[i]], {
+              "quotes": [ false, false, false, true, false, false ]
+            } ) );
+          }
 
           // join
           var csv = unparsed.join( separator ) + separator + "\nDate Started: " + json.dateStarted + "\nDate Ended: " + dateEnded;

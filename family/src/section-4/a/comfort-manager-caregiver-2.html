@@ -1,0 +1,65 @@
+<!-- <link rel="import" href="../../../bower_components/polymer/polymer.html"> -->
+<link rel="import" href="../../comfort-mixins.html">
+<link rel="import" href="../../comfort-button.html">
+<link rel="import" href="../../comfort-question-responses.html">
+<link rel="import" href="../../shared-styles.html">
+
+<dom-module id="comfort-manager-caregiver-2">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 4A</p>
+        <h1 class="section-title">The Manager Caregiver</h1>
+      </header>
+
+      <comfort-question-responses id="questions" numbering="1"></comfort-question-responses>
+
+      <comfort-button on-tap="_revealResponses" href="/family/carrier-caregiver/" after-tap-text="Continue to Section 4B">Instructor Responses</comfort-button>
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+    
+    Polymer({
+      "is": "comfort-manager-caregiver-2",
+  
+      "behaviors": [
+        Comfort.InstructorResponses
+      ],
+
+      "attached": function () {
+        // super.connectedCallback();
+
+        this.$questions = Polymer.dom( this.root ).querySelector( '#questions' );
+
+        this.$questions.questions = [
+          {
+            "question": "How would you describe the family patterns for these two sisters (high or low talk; high or low obligation) and why?",
+            "response": "Both family talk and family obligation are high. Why? Both sisters are present for the family meeting and we see that Ellen supports Denice when she takes Denice’s hand when the physician asks how they are doing. Denice also offers a comment that they are a close family that talks all the time."
+          },
+          {
+            "question": "Identify some of the manager caregiver characteristics Denice displays in the video.",
+            "response": "Denice is heavily prepared. She did research and brings materials in to the meeting with her. She demonstrates high health literacy and uses medical terminology. She also stresses action over process: “We just need a plan to move on.” And she minimizes the nurse’s suggestion for addressing Ellen’s concerns by taking control of the conversation to what she believes is best for her mother."
+          },
+          {
+            "question": "How do the healthcare providers attempt to include both Denice and Ellen in the conversation?",
+            "response": "The nurse addresses Ellen specifically to invite her into the conversation. She asks Ellen what her concerns are. She suggests that food can be brought in for mother to smell and taste."
+          },
+          {
+            "question": "What else could the healthcare providers do to ensure decisions are made in ways that honor process over swift decision-making?",
+            "response": "Because Denice dominates the conversation in ways that fail to regard Ellen’s concerns and in spite of the doctor’s and nurse’s attempt to moderate, you should create a one-on-one opportunity for Ellen to express her concerns and ask questions."
+          }
+        ];
+      }
+
+      // _revealResponses
+    });
+  </script>
+</dom-module>

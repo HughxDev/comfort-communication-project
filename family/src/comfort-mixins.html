@@ -1,0 +1,302 @@
+<script>
+  // (function () {
+  'use strict';
+
+  window.Comfort = window.Comfort || {};
+
+  // https://stackoverflow.com/a/31479176/214325
+  Comfort.Browser = {
+    "isIE": ( function () { return /*@cc_on!@*/false || !!document.documentMode; } )()
+  };
+
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
+  Comfort.PseudoForm = {
+    "_storeAnswers": function ( event ) {
+      function formatResponse( question, questionNumber, selected, selectedNumber ) {
+        var response = {};
+
+        response.question = question.question;
+        response.number = questionNumber;
+        response.type = question.type;
+        response.answer = selected;
+        response.answer.number = selectedNumber;
+
+        return response;
+      }
+
+      var $form = Polymer.dom( this.root ).querySelector( 'form' );
+
+      // var values = {};
+      var responses = [];
+
+      // console.log( '$form.elements', $form.elements );
+      var $element, question, selected, questionXPath;
+
+      console.log( '$form.elements', $form.elements );
+
+      for ( var i = 0; i < $form.elements.length; i++ ) {
+        $element = $form.elements[i];
+
+        // questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
+        questionXPath = '//d:item[' + parseInt( $element.name, 10 ) + ']';
+
+        console.log( 'questionXPath', questionXPath );
+
+        console.log( 'JSON.search', JSON.search );
+
+        question = JSON.search( this.snapshot, questionXPath );
+
+        console.log( 'question', question );
+        
+        question = question[0];
+
+        console.log( 'this.snapshot', this.snapshot );
+
+        console.log( 'question', question );
+
+        switch ( $element.type ) {
+          case 'radio':
+          case 'checkbox':
+            if ( $element.checked ) {
+              selected = JSON.search( this.snapshot, questionXPath + '/answers[' + $element.value + ']' )[0];
+              
+              responses.push( formatResponse( question, $element.name, selected, $element.value ) );
+            } 
+          break;
+
+          default:
+            responses.push( formatResponse( question, $element.name, { "text": $element.value, "correct": null }, '1' ) );
+        }
+      }
+
+      // console.log( 'responses', responses );
+      Comfort.User.answers[ document.querySelector( 'comfort-app' ).getAttribute( 'page' ) ] = responses;
+
+      // console.log( 'Comfort.User', Comfort.User );
+
+      localStorage.setItem( 'user', JSON.stringify( Comfort.User ) );
+
+      // event.preventDefault();
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
+  Comfort.CheckValidity = {
+    "checkForAnswers": function () {
+      var $requiredTextareas = Polymer.dom( this.root ).querySelectorAll( 'textarea[required]' );
+
+      var hasUnansweredQuestions = false;
+      var $requiredTextarea;
+      var $requiredRadiogroup;
+      var i;
+
+      // for ( var $requiredTextarea of $requiredTextareas ) {
+      for ( i = 0; i < $requiredTextareas.length; ++i ) {
+        $requiredTextarea = $requiredTextareas[i];
+
+        if ( !$requiredTextarea.value || $requiredTextarea.value.trim() === "" ) {
+          $requiredTextarea.classList.remove( 'answer--answered' );
+
+          // return false;
+          hasUnansweredQuestions = true;
+        }
+      }
+
+      var $requiredRadiogroups = Polymer.dom( this.root ).querySelectorAll( 'comfort-radiogroup[aria-required="true"]' );
+
+      // for ( var $requiredRadiogroup of $requiredRadiogroups ) {
+      for ( i = 0; i < $requiredRadiogroups.length; ++i ) {
+        $requiredRadiogroup = $requiredRadiogroups[i];
+
+        if ( !$requiredRadiogroup.querySelector( 'comfort-radio[checked]' ) ) {
+          // return false;
+          $requiredRadiogroup.classList.remove( 'answers--answered' );
+
+          hasUnansweredQuestions = true;
+        }
+      }
+
+      return !hasUnansweredQuestions;
+    }, // checkForAnswers
+
+    "clearRequiredHighlightIfApplicable": function ( event ) {
+      var $requiredField = event.target;
+
+      if ( ( $requiredField.nodeName.toLowerCase() === 'input' ) ) {
+        $requiredField.classList.add( 'answer--answered' );
+
+        var $ancestor = $requiredField.parentNode;
+
+        while ( $ancestor.nodeName.toLowerCase() !== 'comfort-radiogroup' ) {
+          $ancestor = $ancestor.parentNode;
+        }
+
+        $ancestor.classList.add( 'answers--answered' );
+      } else if ( $requiredField.value && $requiredField.value.trim() !== "" ) {
+        $requiredField.classList.add( 'answer--answered' );
+      }
+    },
+
+    "alertIfUnansweredQuestionsRemain": function ( event ) {
+      var $test = Polymer.dom( this.root ).querySelector( '#test' );
+
+      var $missingAnswers = document.querySelector( '#missing-answers' );
+
+      var answered = $test.checkForAnswers();
+
+      if ( answered ) {
+        // this._storeAnswers
+        // $test.removeAttribute( 'highlight-required', '' );
+
+        $test._storeAnswers();
+      } else {
+        event.preventDefault();
+
+        $test.setAttribute( 'highlight-required', '' );
+
+        $missingAnswers.open();
+      }
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
+  Comfort.InstructorResponses = {
+    // IE11 hack
+    "_restoreLinkBehavior": function ( event ) {
+      window.location.href = this.getAttribute( 'href' );
+    },
+
+    "revealed": false,
+
+    "_revealResponses": function ( event ) {
+      console.log( '_revealResponses' );
+
+      var element = this;
+
+      var answered = this.$questions.checkForAnswers();
+
+      if ( answered ) {
+        console.log( 'answered' );
+
+        this.$questions.removeAttribute( 'highlight-required' );
+        
+        var $button = event.currentTarget;
+
+        var noScroll = $button.hasAttribute( 'no-scroll' );
+
+        var reveal = function () {
+          element.revealed = true;
+
+          element.$questions.setAttribute( 'revealed', '' );
+
+          var href = $button.getAttribute( 'data-href' );
+
+          Polymer.dom( $button ).textContent = $button.getAttribute( 'after-tap-text' );
+
+          element.$questions._storeAnswers();
+
+          element.unlisten( $button, 'tap', '_revealResponses' );
+        };
+
+        if ( noScroll ) {
+          reveal();
+        } else {
+          Comfort.scrollY( 0 );
+          window.onscroll = reveal;
+        }
+      } // if answered
+      else {
+        var $missingAnswers = document.querySelector( '#missing-answers' );
+
+        $missingAnswers.open();
+
+        this.$questions.setAttribute( 'highlight-required', '' );
+      }
+
+      event.preventDefault();
+    }
+  };
+
+  // @todo: subsume into PseudoForm?
+  /**
+   * @polymerElement
+   * @memberof Polymer
+   */
+  Comfort.CorrectIncorrect = {
+    "_markCorrectIncorrectOnInputChange": function () {
+      var element = this;
+
+      var $questions = Polymer.dom( this.root ).querySelector( '#questions' );
+    
+      $questions.addEventListener( 'change', function ( event ) {
+        var input = event.target;
+        var questionNumber = input.name;
+        var answerNumber = input.value;
+
+        // The question in question: //d:item[1]
+        // var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
+        var questionXPath = '//d:item[' + parseInt( questionNumber, 10 ) + ']';
+
+        // Correct answer: //d:item[1]/answers[correct="true"]
+        var correct = JSON.search( element.snapshot, questionXPath + '/answers[correct="true"]' )[0];
+
+        // Incorrect answer: //d:item[1]/answers[correct="false"]
+        var incorrect = JSON.search( element.snapshot, questionXPath + '/answers[correct="false"]' )[0];
+        
+        /* Selected answer: //d:item[1]/answers[1] */
+        var selected = JSON.search( element.snapshot, questionXPath + '/answers[' + answerNumber + ']' )[0];
+
+        var radio = input;
+
+        while( radio && radio.nodeName.toLowerCase() !== 'comfort-radio' ) { // 11 = DOCUMENT_FRAGMENT_NODE
+          radio = radio.parentNode;
+        }
+
+        var highlightCorrect = false;
+
+        if ( selected && selected.correct === true ) {
+          // alert( 'Correct!' );
+          radio.setAttribute( 'correct', '' );
+        } else {
+          // alert( 'Incorrect.' );
+          radio.setAttribute( 'incorrect', '' );
+          highlightCorrect = true;
+        }
+
+        var comfortRadioLabels = Array.prototype.slice.call(
+          Polymer.dom( element.root ).querySelectorAll(
+            'comfort-radio[name="' + questionNumber + '"] > label'
+          )
+        );
+           
+        for ( var i = 0; i < comfortRadioLabels.length; i++ ) {
+          // 0 = text, 1 = input, 2 = text
+          comfortRadioLabels[i].childNodes[1].disabled = true;
+
+          if ( highlightCorrect && ( comfortRadioLabels[i].textContent.trim() === correct.text ) ) {
+            setTimeout( function ( i ) { 
+              comfortRadioLabels[i].parentNode.setAttribute( 'correct', '' );
+            }.bind( element, i ), 250 );
+            // break;
+          }
+        }
+      } );
+
+      // $next.addEventListener( 'click', function ( event ) {
+      //   console.log( 'document.forms', document.forms );
+      // } );
+    }
+  };
+  // })();
+</script>

@@ -1,0 +1,65 @@
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
+<link rel="import" href="../comfort-mixins.html">
+<link rel="import" href="../comfort-button.html">
+<link rel="import" href="../comfort-question-responses.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="comfort-family-communication-patterns-2">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <section>
+      <header>
+        <p class="h3 section-subtitle">Section 3</p>
+        <h1 class="section-title">Family Communication Patterns</h1>
+      </header>
+
+      <div class="advice">
+        <h2 class="h2--alt">Reflection and Assessment</h2>
+        <p>Take a moment to consider your family’s communication pattern.</p>
+      </div>
+
+      <comfort-question-responses id="questions" numbering="1"></comfort-question-responses>
+
+      <comfort-button href="/family/family-communication-patterns/3">I’ve answered</comfort-button>
+       
+    </section>
+  </template>
+
+  <script>
+    "use strict";
+
+    Polymer({
+      "is": "comfort-family-communication-patterns-2",
+
+      "behaviors": [
+        Comfort.InstructorResponses
+      ],
+
+      "attached": function () {
+        // super.connectedCallback();
+
+        this.$questions = Polymer.dom( this.root ).querySelector( '#questions' );
+
+        this.$questions.questions = [
+          {
+            // @todo: handle (or ignore) HTML
+            "question": "Do you come from a “high family talk” or “low family talk” family? Why? Provide an example to support your assessment."
+          },
+          {
+            "question": "Do you come from a “high obligation” or “low obligation” family? Why? Provide an example to support your assessment."
+          },
+          {
+            "question": "What might be some communication challenges for you as a healthcare professional in interacting with each family type about issues facing one of their members?"
+          }
+        ];
+      } // connectedCallback
+    });
+
+    // window.customElements.define( ComfortFamilyCommunicationPatterns2.is, ComfortFamilyCommunicationPatterns2 );
+  </script>
+</dom-module>

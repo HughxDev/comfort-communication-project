@@ -7,7 +7,7 @@ setlocale( LC_ALL, "en_US.UTF-8" );
 $entityBody = file_get_contents( 'php://input' );
 
 if ( !empty( $entityBody ) ) {
-  $files = split( "\n---pretest/posttest separator---\n", $entityBody );
+  $files = explode( "\n---pretest/posttest separator---\n", $entityBody );
 
   $mail = new PHPMailer;
 

@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <p>Support of the family caregiver enables family members to best support the patient. Thank you for completing this module.</p>
     
-      <comfort-button href="[[rootPath]]">Restart</comfort-button>
+      <comfort-button on-tap="_restart" href="[[rootPath]]">Restart</comfort-button>
     </section>
   </template>
 
@@ -42,6 +42,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // }
     Polymer({
       "is": "comfort-done",
+
+      "_restart": function ( event ) {
+        event.preventDefault();
+        
+        Comfort = {
+          "restart": true
+        };
+
+        location.href = event.target.getAttribute( 'href' );
+      },
 
       "ready": function () {
         function dumbQuotify( text ) {

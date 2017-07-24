@@ -268,7 +268,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
 
         // maybe change to class?
-        window.Comfort = window.Comfort || {};
+        if ( window.Comfort && ( 'restart' in window.Comfort ) ) {
+          window.Comfort = {};
+          localStorage.clear();
+        } else {
+          window.Comfort = window.Comfort || {};
+        }
 
         var user = localStorage.getItem( 'user' );
 

@@ -22,8 +22,12 @@ if ( !empty( $entityBody ) ) {
   // $mail->Port = 587;                                    // TCP port to connect to
 
   $mail->setFrom('noreply@communicatecomfort.com', 'Family Caregiver Bot');
-  // $mail->addAddress('hugh@hughguiney.com', 'Hugh Guiney');     // Add a recipient
-  $mail->addAddress('communicatecomfort@gmail.com');               // Name is optional
+
+  if ( strpos( $_SERVER[ 'SERVER_NAME' ], 'hughguiney.com' ) !== 1 ) {
+    $mail->addAddress('hugh@hughguiney.com', 'Hugh Guiney');     // Add a recipient
+  } else {
+    $mail->addAddress('communicatecomfort@gmail.com');               // Name is optional
+  }
   // $mail->addReplyTo('info@example.com', 'Information');
   // $mail->addCC('cc@example.com');
   // $mail->addBCC('bcc@example.com');

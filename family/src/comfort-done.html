@@ -57,12 +57,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           var json = JSON.parse( localStorage.getItem( 'user' ) );
 
-          var targets = [ 'pretest', 'manager-caregiver', 'posttest' ];
+          var targets = [
+            'pretest',
+            'partner-caregiver',
+            'manager-caregiver',
+            'lone-caregiver',
+            'carrier-caregiver',
+            'posttest'
+          ];
+          
           var output = {
             "pretest": [],
+            "partner-caregiver": []
             "manager-caregiver": [],
+            "lone-caregiver": [],
+            "carrier-caregiver": []
             "posttest": []
-          }
+          };
+
           var current;
           var object;
 

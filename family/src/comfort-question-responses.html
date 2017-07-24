@@ -103,7 +103,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           "type": Boolean,
           "value": false
         }
-      } // properties
+      }, // properties
+
+      // maybe change to observer
+      "ready": function () {
+        // super();
+        var element = this;
+
+        Defiant.getSnapshot( this.questions, function ( snapshot ) {
+          // Caching for performance. May be unnecessary since dataset is not that big.
+          element.snapshot = snapshot;
+        } );
+      },
 
       // _revealedChanged( newValue, oldValue ) {
 

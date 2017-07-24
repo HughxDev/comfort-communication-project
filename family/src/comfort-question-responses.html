@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" items="{{questions}}" as="question" index-as="questionIndex">
           <li>
             <p><label for="answer-[[questionIndex]]">[[question.question]]</label></p>
-            <textarea class="answer" id="answer-[[questionIndex]]" required></textarea>
+            <textarea class="answer" name$="[[increment(questionIndex)]]" id="answer-[[questionIndex]]" required></textarea>
             <p class="response">[[question.response]]</p>
           </li>
         </template>
@@ -115,6 +115,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           element.snapshot = snapshot;
         } );
       },
+
+      "increment": function( integer ) {
+        return ++integer;
+      }
 
       // _revealedChanged( newValue, oldValue ) {
 

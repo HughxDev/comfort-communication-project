@@ -88,7 +88,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       "properties": {
         "questions": {
           "type": Array,
-          "value": []
+          "value": [],
+          "observer": "_questionsChanged"
         },
         "numbering": {
           "type": String,
@@ -106,7 +107,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }, // properties
 
       // maybe change to observer
-      "ready": function () {
+      "_questionsChanged": function () {
+        console.log( '_questionsChanged' );
         // super();
         var element = this;
 

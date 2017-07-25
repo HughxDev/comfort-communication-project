@@ -46,11 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       "_restart": function ( event ) {
         event.preventDefault();
         
-        Comfort = {
-          "restart": true
-        };
+        window.Comfort.restart = true;
 
-        location.href = this.rootPath;
+        window.location.href = this.rootPath;
       },
 
       "ready": function () {

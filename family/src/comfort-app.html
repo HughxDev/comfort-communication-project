@@ -269,9 +269,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // maybe change to class?
         if ( window.Comfort && ( 'restart' in window.Comfort ) ) {
+          console.log( 'Restarting…' );
+
           window.Comfort = {};
+
           localStorage.clear();
         } else {
+          console.log( 'Starting…' );
+
           window.Comfort = window.Comfort || {};
         }
 

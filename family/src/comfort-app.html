@@ -260,14 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return (new URL(rootPath)).pathname;
       },
 
-      "created": function () {
-        // super();
-
-        // Get root pattern for app-route, for more info about `rootPath` see:
-        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-        // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
-
-        // maybe change to class?        
+      "_init": function () {
         console.log( 'Starting…' );
 
         window.Comfort = window.Comfort || {};
@@ -344,8 +337,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Comfort.scrollPositions = Comfort.scrollPositions || {};
       },
 
+      "created": function () {
+        console.log( 'created' );
+        // super();
+
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+        // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
+
+        // maybe change to class?        
+        this._init();
+      },
+
       // connectedCallback
       "attached": function () {
+        console.log( 'attached' );
         console.log( 'this.page', this.page );
         console.log( 'this.route', this.route );
         console.log( 'this.routeData', this.routeData );
@@ -365,9 +371,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
+          console.log( 'Restarting…' );
+
           window.Comfort = {};
 
           localStorage.clear();
+
+          this._init();
         }
 
         // If no page was found in the route data, page will be an empty string.

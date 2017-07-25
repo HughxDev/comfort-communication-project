@@ -58,13 +58,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         localStorage.clear();
 
-        setTimeout(function () {
-          console.log( 'Reloaded' );
+        window.location.reload( true );
 
-          window.location.reload( true );
-
-          window.location.href = rootPath;
-        }, 1000);
+        window.location.href = rootPath;
       },
 
       "ready": function () {

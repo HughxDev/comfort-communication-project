@@ -48,16 +48,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         console.log( '_restart' );
         
-        window.Comfort.restart = true;
+        // window.Comfort.restart = true;
 
         var rootPath = this.rootPath;
 
-        var interval = setInterval(function () {
-          if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
-            clearInterval( interval );
+        window.Comfort = {
+          "restart": true
+        };
 
-            window.location.href = rootPath;
-          }
+        localStorage.clear();
+
+        window.location.href = rootPath;
+
+        setTimeout(function () {
+          console.log( 'Reloaded' );
+
+          window.location.reload( true );
         }, 1000);
       },
 

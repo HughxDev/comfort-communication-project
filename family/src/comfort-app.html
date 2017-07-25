@@ -359,15 +359,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
           console.log( 'Restarting…' );
-
-          window.Comfort = {};
-
-          localStorage.clear();
-
-          this._init();
         } else {
-          this._init();
+          console.log( 'what the fuck' );
         }
+
+        //   window.Comfort = {};
+
+        //   localStorage.clear();
+
+        //   this._init();
+        // } else {
+        //   this._init();
+        // }
       },
 
       "_routePageChanged": function( routeData ) {

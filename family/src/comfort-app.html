@@ -350,12 +350,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log( 'this.route', this.route );
         console.log( 'this.routeData', this.routeData );
         console.log( 'this.subroute', this.subroute );
-
-        if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
-          window.Comfort = {};
-
-          localStorage.clear();
-        }
       },
 
       "_routePageChanged": function( routeData ) {
@@ -368,6 +362,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Ignore until we are properly called with a string.
         if ( page === undefined ) {
           return;
+        }
+
+        if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
+          window.Comfort = {};
+
+          localStorage.clear();
         }
 
         // If no page was found in the route data, page will be an empty string.

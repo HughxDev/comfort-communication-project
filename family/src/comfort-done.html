@@ -44,13 +44,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       "is": "comfort-done",
 
       "_restart": function ( event ) {
-        console.log( '_restart' );
-
         event.preventDefault();
+        
+        console.log( '_restart' );
         
         window.Comfort.restart = true;
 
-        window.location.href = this.rootPath;
+        var rootPath = this.rootPath;
+
+        var interval = setInterval(function () {
+          if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
+            clearInterval( interval );
+
+            window.location.href = rootPath;
+          }
+        }, 1000);
       },
 
       "ready": function () {

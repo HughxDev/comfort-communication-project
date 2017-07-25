@@ -268,7 +268,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
 
         // maybe change to class?
-        if ( window.Comfort && ( 'restart' in window.Comfort ) ) {
+        if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
           console.log( 'Restarting…' );
 
           window.Comfort = {};

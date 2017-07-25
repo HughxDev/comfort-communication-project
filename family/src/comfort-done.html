@@ -58,12 +58,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         localStorage.clear();
 
-        window.location.href = rootPath;
-
         setTimeout(function () {
           console.log( 'Reloaded' );
 
           window.location.reload( true );
+
+          window.location.href = rootPath;
         }, 1000);
       },
 

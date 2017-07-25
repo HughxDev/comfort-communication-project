@@ -381,9 +381,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         function getPageId() {
           // console.log( 'routeData', routeData );
           // console.log( 'subroute', subroute );
+          var subrouteCleaned;
 
-          if ( subroute && subroute.path && subroute.path.length ) {
-            return routeData.page + '-' + subroute.path.replace( '/', '' );
+          if ( subroute && subroute.path ) {
+            subrouteCleaned = subroute.path.replace( '/', '' ).trim();
+
+            if ( subrouteCleaned.length ) {
+              return routeData.page + '-' + subrouteCleaned;
+            }
+
+            return routeData.page;
           }
 
           return routeData.page;

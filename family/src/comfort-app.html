@@ -267,18 +267,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
         // this.rootPattern = ( new URL( this.rootPath ) ).pathname;
 
-        // maybe change to class?
-        if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
-          console.log( 'Restarting…' );
+        // maybe change to class?        
+        console.log( 'Starting…' );
 
-          window.Comfort = {};
-
-          localStorage.clear();
-        } else {
-          console.log( 'Starting…' );
-
-          window.Comfort = window.Comfort || {};
-        }
+        window.Comfort = window.Comfort || {};
 
         var user = localStorage.getItem( 'user' );
 
@@ -358,6 +350,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log( 'this.route', this.route );
         console.log( 'this.routeData', this.routeData );
         console.log( 'this.subroute', this.subroute );
+
+        if ( !!window.Comfort && window.Comfort.hasOwnProperty( 'restart' ) ) {
+          window.Comfort = {};
+
+          localStorage.clear();
+        }
       },
 
       "_routePageChanged": function( routeData ) {
